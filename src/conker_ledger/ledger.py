@@ -365,12 +365,13 @@ def write_scatter_svg(
     x_key: str,
     y_key: str,
     label_key: str,
+    reference_line: bool = False,
     width: int = 960,
     height: int = 480,
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    points = [(row.get(x_key), row.get(y_key), row.get(label_key)) for row in rows]
-    points = [(float(x), float(y), str(label)) for x, y, label in points if x is not None and y is not None]
+    points = [(row.get(x_key), row.get(y_key), row.get(label_key), row.get("family_id", "")) for row in rows]
+    points = [(float(x), float(y), str(label), str(fam)) for x, y, label, fam in points if x is not None and y is not None]
     if not points:
         path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
         return
@@ -390,18 +391,52 @@ def write_scatter_svg(
         max_y += 1e-9
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
-        '<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .point{fill:#c23b22;opacity:0.8}</style>',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333}'
+        ' .title{font-size:16px;font-weight:700;fill:#111}'
+        ' .axis{stroke:#888;stroke-width:1}'
+        ' .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4}'
+        ' .tick{font-size:10px;fill:#666}'
+        ' .ref{stroke:#bbb;stroke-width:1;stroke-dasharray:6,3}</style>',
         f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
-        f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>',
-        f'<line class="axis" x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{margin_top + plot_height}"/>',
     ]
-    for x, y, label in points:
+    # gridlines and ticks — x axis
+    for tick in _nice_ticks(min_x, max_x, 5):
+        px = margin_left + (tick - min_x) / (max_x - min_x) * plot_width
+        parts.append(f'<line class="grid" x1="{px:.1f}" y1="{margin_top}" x2="{px:.1f}" y2="{margin_top + plot_height}"/>')
+        parts.append(f'<text class="tick" x="{px:.1f}" y="{margin_top + plot_height + 16}" text-anchor="middle">{tick:.4f}</text>')
+    # gridlines and ticks — y axis
+    for tick in _nice_ticks(min_y, max_y, 5):
+        py = margin_top + plot_height - (tick - min_y) / (max_y - min_y) * plot_height
+        parts.append(f'<line class="grid" x1="{margin_left}" y1="{py:.1f}" x2="{width - margin_right}" y2="{py:.1f}"/>')
+        parts.append(f'<text class="tick" x="{margin_left - 6}" y="{py + 4:.1f}" text-anchor="end">{tick:.4f}</text>')
+    # axes
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>')
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{margin_top + plot_height}"/>')
+    # y=x reference line
+    if reference_line:
+        ref_min = max(min_x, min_y)
+        ref_max = min(max_x, max_y)
+        if ref_min < ref_max:
+            rx1 = margin_left + (ref_min - min_x) / (max_x - min_x) * plot_width
+            ry1 = margin_top + plot_height - (ref_min - min_y) / (max_y - min_y) * plot_height
+            rx2 = margin_left + (ref_max - min_x) / (max_x - min_x) * plot_width
+            ry2 = margin_top + plot_height - (ref_max - min_y) / (max_y - min_y) * plot_height
+            parts.append(f'<line class="ref" x1="{rx1:.1f}" y1="{ry1:.1f}" x2="{rx2:.1f}" y2="{ry2:.1f}"/>')
+    # points — collect y positions for collision offset
+    rendered: list[float] = []
+    for x, y, label, fam in points:
         px = margin_left + (x - min_x) / (max_x - min_x) * plot_width
         py = margin_top + plot_height - (y - min_y) / (max_y - min_y) * plot_height
-        parts.append(f'<circle class="point" cx="{px:.2f}" cy="{py:.2f}" r="4"/>')
-        parts.append(f'<text x="{px + 6:.2f}" y="{py - 6:.2f}">{_svg_escape(label)}</text>')
-    parts.append(f'<text x="{margin_left}" y="{height - 12}">{x_key}: min {min_x:.6f}, max {max_x:.6f}</text>')
-    parts.append(f'<text x="{width - margin_right}" y="{height - 12}" text-anchor="end">{y_key}: min {min_y:.6f}, max {max_y:.6f}</text>')
+        color = _family_color(fam)
+        parts.append(f'<circle fill="{color}" opacity="0.8" cx="{px:.2f}" cy="{py:.2f}" r="5"/>')
+        # offset label if it collides with a previous label
+        label_y = py - 6
+        for prev_y in rendered:
+            if abs(label_y - prev_y) < 14:
+                label_y = prev_y - 14
+        rendered.append(label_y)
+        truncated = _truncate_label(_svg_escape(label), 28)
+        parts.append(f'<text x="{px + 7:.2f}" y="{label_y:.2f}">{truncated}</text>')
     parts.append("</svg>")
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 

@@ -102,3 +102,38 @@ def test_bar_svg_4dp_values(tmp_path: Path):
     path = tmp_path / "bar.svg"
     write_bar_svg(path, "Test", ["a"], [0.123456])
     content = path.read_text()
+    assert "0.1235" in content
+    assert "0.123456" not in content
+
+
+def test_scatter_svg_has_gridlines(tmp_path: Path):
+    path = tmp_path / "scatter.svg"
+    rows = [
+        {"x": 0.5, "y": 0.6, "label": "a", "family_id": "fam1"},
+        {"x": 0.7, "y": 0.8, "label": "b", "family_id": "fam2"},
+    ]
+    write_scatter_svg(path, "Test", rows, x_key="x", y_key="y", label_key="label")
+    content = path.read_text()
+    assert "stroke-dasharray" in content
+
+
+def test_scatter_svg_has_tick_labels(tmp_path: Path):
+    path = tmp_path / "scatter.svg"
+    rows = [
+        {"x": 0.5, "y": 0.6, "label": "a", "family_id": "fam1"},
+        {"x": 0.7, "y": 0.8, "label": "b", "family_id": "fam2"},
+    ]
+    write_scatter_svg(path, "Test", rows, x_key="x", y_key="y", label_key="label")
+    content = path.read_text()
+    assert 'class="tick"' in content
+
+
+def test_scatter_svg_has_reference_line(tmp_path: Path):
+    path = tmp_path / "scatter.svg"
+    rows = [
+        {"x": 0.5, "y": 0.6, "label": "a", "family_id": "fam1"},
+        {"x": 0.7, "y": 0.8, "label": "b", "family_id": "fam2"},
+    ]
+    write_scatter_svg(path, "Test", rows, x_key="x", y_key="y", label_key="label", reference_line=True)
+    content = path.read_text()
+    assert "ref" in content
