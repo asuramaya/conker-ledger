@@ -5,7 +5,7 @@
     "family_id": "conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000",
     "seed": 42,
     "child_bpb": 0.5122250855951872,
-    "child_path": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
+    "child_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
   },
   {
     "parent_run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed42",
@@ -13,7 +13,7 @@
     "family_id": "conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000",
     "seed": 42,
     "child_bpb": 0.5183208278512051,
-    "child_path": "conker/out/conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_save_2026-03-28.json"
+    "child_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_save_2026-03-28.json"
   },
   {
     "parent_run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed42",
@@ -21,7 +21,7 @@
     "family_id": "conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000",
     "seed": 42,
     "child_bpb": 0.5097073605109663,
-    "child_path": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
+    "child_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
   },
   {
     "parent_run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed42",
@@ -29,6 +29,6 @@
     "family_id": "conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000",
     "seed": 42,
     "child_bpb": 0.5125641658720483,
-    "child_path": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
+    "child_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json"
   }
 ]

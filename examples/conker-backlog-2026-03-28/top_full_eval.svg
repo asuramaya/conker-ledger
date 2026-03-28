@@ -1,41 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
-<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>
-<text class="title" x="220" y="28">Top Full-Eval Rows</text>
-<line class="axis" x1="220" y1="450" x2="920" y2="450"/>
-<text x="210" y="72" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000:fp16</text>
-<rect class="bar" x="220" y="50" width="651.66" height="24"/>
-<text x="879.66" y="72">0.528307</text>
-<text x="210" y="106" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000:int6</text>
-<rect class="bar" x="220" y="84" width="655.66" height="24"/>
-<text x="883.66" y="106">0.531547</text>
-<text x="210" y="140" text-anchor="end">conker4b_tandem_seq256_steps1800_lr5e4:fp16</text>
-<rect class="bar" x="220" y="118" width="670.48" height="24"/>
-<text x="898.48" y="140">0.543561</text>
-<text x="210" y="174" text-anchor="end">conker4b_tandem_seq256_steps1800_lr5e4:int6</text>
-<rect class="bar" x="220" y="152" width="675.71" height="24"/>
-<text x="903.71" y="174">0.547801</text>
-<text x="210" y="208" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
-<rect class="bar" x="220" y="186" width="678.28" height="24"/>
-<text x="906.28" y="208">0.549885</text>
-<text x="210" y="242" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
-<rect class="bar" x="220" y="220" width="678.59" height="24"/>
-<text x="906.59" y="242">0.550138</text>
-<text x="210" y="276" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
-<rect class="bar" x="220" y="254" width="679.42" height="24"/>
-<text x="907.42" y="276">0.550814</text>
-<text x="210" y="310" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
-<rect class="bar" x="220" y="288" width="682.91" height="24"/>
-<text x="910.91" y="310">0.553636</text>
-<text x="210" y="344" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
-<rect class="bar" x="220" y="322" width="683.09" height="24"/>
-<text x="911.09" y="344">0.553783</text>
-<text x="210" y="378" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
-<rect class="bar" x="220" y="356" width="683.94" height="24"/>
-<text x="911.94" y="378">0.554477</text>
-<text x="210" y="412" text-anchor="end">conker4b_tandem_seq256_steps1000_lr5e4:fp16</text>
-<rect class="bar" x="220" y="390" width="696.70" height="24"/>
-<text x="924.70" y="412">0.564823</text>
-<text x="210" y="446" text-anchor="end">conker4b_tandem_seq256_steps1200_lr5e4:fp16</text>
-<rect class="bar" x="220" y="424" width="700.00" height="24"/>
-<text x="928.00" y="446">0.567495</text>
+<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .axis{stroke:#888;stroke-width:1} .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4} .tick{font-size:10px;fill:#666} .val{font-size:10px;fill:#333}</style>
+<text class="title" x="260" y="28">Top Full-Eval Rows</text>
+<line class="grid" x1="260.0" y1="50" x2="260.0" y2="440"/>
+<text class="tick" x="260.0" y="456" text-anchor="middle">0.0000</text>
+<line class="grid" x1="478.5" y1="50" x2="478.5" y2="440"/>
+<text class="tick" x="478.5" y="456" text-anchor="middle">0.2000</text>
+<line class="grid" x1="697.0" y1="50" x2="697.0" y2="440"/>
+<text class="tick" x="697.0" y="456" text-anchor="middle">0.4000</text>
+<line class="axis" x1="260" y1="440" x2="880" y2="440"/>
+<text x="252" y="75" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="50" width="577.19" height="27" rx="2"/>
+<text class="val" x="843.19" y="75">0.5283</text>
+<text x="252" y="108" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="83" width="580.73" height="27" rx="2"/>
+<text class="val" x="846.73" y="108">0.5315</text>
+<text x="252" y="141" text-anchor="end">conker4b_tandem_seq256_steps1800_lr…</text>
+<rect fill="#98df8a" x="260" y="116" width="593.85" height="27" rx="2"/>
+<text class="val" x="859.85" y="141">0.5436</text>
+<text x="252" y="174" text-anchor="end">conker4b_tandem_seq256_steps1800_lr…</text>
+<rect fill="#98df8a" x="260" y="149" width="598.48" height="27" rx="2"/>
+<text class="val" x="864.48" y="174">0.5478</text>
+<text x="252" y="207" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="182" width="600.76" height="27" rx="2"/>
+<text class="val" x="866.76" y="207">0.5499</text>
+<text x="252" y="240" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="215" width="601.04" height="27" rx="2"/>
+<text class="val" x="867.04" y="240">0.5501</text>
+<text x="252" y="273" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="248" width="601.78" height="27" rx="2"/>
+<text class="val" x="867.78" y="273">0.5508</text>
+<text x="252" y="306" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="281" width="604.86" height="27" rx="2"/>
+<text class="val" x="870.86" y="306">0.5536</text>
+<text x="252" y="339" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="314" width="605.02" height="27" rx="2"/>
+<text class="val" x="871.02" y="339">0.5538</text>
+<text x="252" y="372" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#ffbb78" x="260" y="347" width="605.78" height="27" rx="2"/>
+<text class="val" x="871.78" y="372">0.5545</text>
+<text x="252" y="405" text-anchor="end">conker4b_tandem_seq256_steps1000_lr…</text>
+<rect fill="#17becf" x="260" y="380" width="617.08" height="27" rx="2"/>
+<text class="val" x="883.08" y="405">0.5648</text>
+<text x="252" y="438" text-anchor="end">conker4b_tandem_seq256_steps1200_lr…</text>
+<rect fill="#e377c2" x="260" y="413" width="620.00" height="27" rx="2"/>
+<text class="val" x="886.00" y="438">0.5675</text>
 </svg>

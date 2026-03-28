@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="400">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .legend{font-size:11px}</style>
+<text class="title" x="240" y="24" text-anchor="middle">Survival Status</text>
+<path d="M240,210 L240.00,60.00 A150,150 0 0,1 268.39,62.71 Z" fill="#2ca02c"/>
+<text x="249.3" y="112.9" text-anchor="middle" fill="#fff" font-weight="700">11</text>
+<rect x="10" y="330" width="12" height="12" fill="#2ca02c"/>
+<text class="legend" x="28" y="340">survived_full_eval (3%)</text>
+<path d="M240,210 L268.39,62.71 A150,150 0 0,1 275.99,64.38 Z" fill="#c23b22"/>
+<text x="260.9" y="114.8" text-anchor="middle" fill="#fff" font-weight="700">3</text>
+<rect x="10" y="350" width="12" height="12" fill="#c23b22"/>
+<text class="legend" x="28" y="360">full_eval_failed (1%)</text>
+<path d="M240,210 L275.99,64.38 A150,150 0 1,1 240.00,60.00 Z" fill="#7f7f7f"/>
+<text x="228.2" y="306.8" text-anchor="middle" fill="#fff" font-weight="700">349</text>
+<rect x="10" y="370" width="12" height="12" fill="#7f7f7f"/>
+<text class="legend" x="28" y="380">bridge_only (96%)</text>
+</svg>

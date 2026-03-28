@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .axis{stroke:#888;stroke-width:1} .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4} .tick{font-size:10px;fill:#666} .val{font-size:10px;fill:#333} .legend{font-size:11px}</style>
+<text class="title" x="260" y="28">Bridge vs Full-Eval by Family</text>
+<rect x="760" y="10" width="12" height="12" fill="#2f6fed"/>
+<text class="legend" x="776" y="21">bridge_fp16</text>
+<rect x="760" y="28" width="12" height="12" fill="#c23b22"/>
+<text class="legend" x="776" y="39">full_fp16</text>
+<line class="grid" x1="260.0" y1="50" x2="260.0" y2="440"/>
+<text class="tick" x="260.0" y="456" text-anchor="middle">0.0000</text>
+<line class="grid" x1="473.4" y1="50" x2="473.4" y2="440"/>
+<text class="tick" x="473.4" y="456" text-anchor="middle">0.2000</text>
+<line class="grid" x1="686.8" y1="50" x2="686.8" y2="440"/>
+<text class="tick" x="686.8" y="456" text-anchor="middle">0.4000</text>
+<line class="axis" x1="260" y1="440" x2="880" y2="440"/>
+<text x="252" y="82" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#2f6fed" x="260" y="50" width="553.05" height="27" rx="2"/>
+<text class="val" x="817.05" y="75">0.5183</text>
+<rect fill="#c23b22" x="260" y="79" width="563.71" height="27" rx="2"/>
+<text class="val" x="827.71" y="104">0.5283</text>
+<text x="252" y="148" text-anchor="end">conker4b_tandem_seq256_steps1800_lr…</text>
+<rect fill="#2f6fed" x="260" y="116" width="569.97" height="27" rx="2"/>
+<text class="val" x="833.97" y="141">0.5342</text>
+<rect fill="#c23b22" x="260" y="145" width="579.98" height="27" rx="2"/>
+<text class="val" x="843.98" y="170">0.5436</text>
+<text x="252" y="214" text-anchor="end">conker4b_tandem_seq256_steps1500_lr…</text>
+<rect fill="#2f6fed" x="260" y="182" width="575.27" height="27" rx="2"/>
+<text class="val" x="839.27" y="207">0.5391</text>
+<rect fill="#c23b22" x="260" y="211" width="586.73" height="27" rx="2"/>
+<text class="val" x="850.73" y="236">0.5499</text>
+<text x="252" y="280" text-anchor="end">conker4b_tandem_seq256_steps1200_lr…</text>
+<rect fill="#2f6fed" x="260" y="248" width="594.81" height="27" rx="2"/>
+<text class="val" x="858.81" y="273">0.5575</text>
+<rect fill="#c23b22" x="260" y="277" width="605.52" height="27" rx="2"/>
+<text class="val" x="869.52" y="302">0.5675</text>
+<text x="252" y="346" text-anchor="end">conker4b_tandem_seq256_steps1000_lr…</text>
+<rect fill="#2f6fed" x="260" y="314" width="598.89" height="27" rx="2"/>
+<text class="val" x="862.89" y="339">0.5613</text>
+<rect fill="#c23b22" x="260" y="343" width="609.10" height="27" rx="2"/>
+<text class="val" x="873.10" y="368">0.5708</text>
+<text x="252" y="412" text-anchor="end">conker4b_tandem_seq512_steps1000_bs…</text>
+<rect fill="#2f6fed" x="260" y="380" width="610.86" height="27" rx="2"/>
+<text class="val" x="874.86" y="405">0.5725</text>
+<rect fill="#c23b22" x="260" y="409" width="620.00" height="27" rx="2"/>
+<text class="val" x="884.00" y="434">0.5811</text>
+</svg>

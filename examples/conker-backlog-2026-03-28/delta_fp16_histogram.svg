@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="400">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .axis{stroke:#888;stroke-width:1} .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4} .tick{font-size:10px;fill:#666} .bar{fill:#2f6fed;opacity:0.85}</style>
+<text class="title" x="60" y="28">Bridge-to-Full Delta (FP16)</text>
+<line class="grid" x1="60" y1="350.0" x2="920" y2="350.0"/>
+<text class="tick" x="54" y="354.0" text-anchor="end">0</text>
+<line class="grid" x1="60" y1="250.0" x2="920" y2="250.0"/>
+<text class="tick" x="54" y="254.0" text-anchor="end">1</text>
+<line class="grid" x1="60" y1="150.0" x2="920" y2="150.0"/>
+<text class="tick" x="54" y="154.0" text-anchor="end">2</text>
+<line class="grid" x1="60" y1="50.0" x2="920" y2="50.0"/>
+<text class="tick" x="54" y="54.0" text-anchor="end">3</text>
+<line class="axis" x1="60" y1="350" x2="920" y2="350"/>
+<line class="axis" x1="60" y1="50" x2="60" y2="350"/>
+<rect class="bar" x="61.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<rect class="bar" x="147.0" y="350.0" width="84.0" height="0.0" rx="1"/>
+<rect class="bar" x="233.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<rect class="bar" x="319.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<rect class="bar" x="405.0" y="150.0" width="84.0" height="200.0" rx="1"/>
+<rect class="bar" x="491.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<rect class="bar" x="577.0" y="50.0" width="84.0" height="300.0" rx="1"/>
+<rect class="bar" x="663.0" y="350.0" width="84.0" height="0.0" rx="1"/>
+<rect class="bar" x="749.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<rect class="bar" x="835.0" y="250.0" width="84.0" height="100.0" rx="1"/>
+<text class="tick" x="230.5" y="366" text-anchor="middle">0.0090</text>
+<text class="tick" x="428.1" y="366" text-anchor="middle">0.0095</text>
+<text class="tick" x="625.8" y="366" text-anchor="middle">0.0100</text>
+<text class="tick" x="823.4" y="366" text-anchor="middle">0.0105</text>
+</svg>

@@ -10,10 +10,10 @@
     "delta_fp16": null,
     "delta_int6": null,
     "status": "full_eval_failed",
-    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "bridge_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
     "full_paths": {
-      "int6": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
-      "fp16": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+      "int6": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
     }
   },
   {
@@ -27,10 +27,10 @@
     "delta_fp16": null,
     "delta_int6": null,
     "status": "full_eval_failed",
-    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "bridge_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
     "full_paths": {
-      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
-      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+      "int6": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
     }
   },
   {
@@ -44,10 +44,10 @@
     "delta_fp16": null,
     "delta_int6": null,
     "status": "full_eval_failed",
-    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "bridge_path": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
     "full_paths": {
-      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
-      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+      "int6": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
     }
   }
 ]

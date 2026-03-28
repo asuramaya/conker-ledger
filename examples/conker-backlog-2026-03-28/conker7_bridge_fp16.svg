@@ -1,56 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
-<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>
-<text class="title" x="220" y="28">Conker-7 Bridge FP16 Rows</text>
-<line class="axis" x1="220" y1="450" x2="920" y2="450"/>
-<text x="210" y="62" text-anchor="end">conker7_bidirectional_exact23_tw01_seq256_steps1000</text>
-<rect class="bar" x="220" y="50" width="597.43" height="14"/>
-<text x="825.43" y="62">0.577634</text>
-<text x="210" y="86" text-anchor="end">conker7_bidirectional_exact23_tw01_start250_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="74" width="531.71" height="14"/>
-<text x="759.71" y="86">0.514095</text>
-<text x="210" y="110" text-anchor="end">conker7_bidirectional_exact23_tw01_start500_seq256_steps1000</text>
-<rect class="bar" x="220" y="98" width="585.98" height="14"/>
-<text x="813.98" y="110">0.566566</text>
-<text x="210" y="134" text-anchor="end">conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="122" width="529.78" height="14"/>
-<text x="757.78" y="134">0.512225</text>
-<text x="210" y="158" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="146" width="536.08" height="14"/>
-<text x="764.08" y="158">0.518321</text>
-<text x="210" y="182" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="170" width="536.08" height="14"/>
-<text x="764.08" y="182">0.518321</text>
-<text x="210" y="206" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="194" width="536.08" height="14"/>
-<text x="764.08" y="206">0.518321</text>
-<text x="210" y="230" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="218" width="536.08" height="14"/>
-<text x="764.08" y="230">0.518321</text>
-<text x="210" y="254" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps500</text>
-<rect class="bar" x="220" y="242" width="554.07" height="14"/>
-<text x="782.07" y="254">0.535706</text>
-<text x="210" y="278" text-anchor="end">conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="266" width="527.18" height="14"/>
-<text x="755.18" y="278">0.509707</text>
-<text x="210" y="302" text-anchor="end">conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="290" width="530.13" height="14"/>
-<text x="758.13" y="302">0.512564</text>
-<text x="210" y="326" text-anchor="end">conker7_bidirectional_exact23_tw0p15_warmstart_tandem1500_seq256_steps1000</text>
-<rect class="bar" x="220" y="314" width="540.13" height="14"/>
-<text x="768.13" y="326">0.522234</text>
-<text x="210" y="350" text-anchor="end">conker7_future_exact23_seq256_steps1000</text>
-<rect class="bar" x="220" y="338" width="637.97" height="14"/>
-<text x="865.97" y="350">0.616831</text>
-<text x="210" y="374" text-anchor="end">conker7_future_exact23_seq256_steps500</text>
-<rect class="bar" x="220" y="362" width="700.00" height="14"/>
-<text x="928.00" y="374">0.676805</text>
-<text x="210" y="398" text-anchor="end">conker7_future_exact23_tw01_seq256_steps1000</text>
-<rect class="bar" x="220" y="386" width="599.04" height="14"/>
-<text x="827.04" y="398">0.579190</text>
-<text x="210" y="422" text-anchor="end">conker7_future_exact23_tw025_seq256_steps1000</text>
-<rect class="bar" x="220" y="410" width="614.91" height="14"/>
-<text x="842.91" y="422">0.594535</text>
-<text x="210" y="446" text-anchor="end">conker7_future_exact3only_tw01_seq256_steps1000</text>
-<rect class="bar" x="220" y="434" width="601.85" height="14"/>
-<text x="829.85" y="446">0.581907</text>
+<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .axis{stroke:#888;stroke-width:1} .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4} .tick{font-size:10px;fill:#666} .val{font-size:10px;fill:#333}</style>
+<text class="title" x="260" y="28">Conker-7 Bridge FP16 Rows</text>
+<line class="grid" x1="260.0" y1="50" x2="260.0" y2="440"/>
+<text class="tick" x="260.0" y="456" text-anchor="middle">0.0000</text>
+<line class="grid" x1="443.2" y1="50" x2="443.2" y2="440"/>
+<text class="tick" x="443.2" y="456" text-anchor="middle">0.2000</text>
+<line class="grid" x1="626.4" y1="50" x2="626.4" y2="440"/>
+<text class="tick" x="626.4" y="456" text-anchor="middle">0.4000</text>
+<line class="grid" x1="809.6" y1="50" x2="809.6" y2="440"/>
+<text class="tick" x="809.6" y="456" text-anchor="middle">0.6000</text>
+<line class="axis" x1="260" y1="440" x2="880" y2="440"/>
+<text x="252" y="65" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#e377c2" x="260" y="50" width="529.15" height="17" rx="2"/>
+<text class="val" x="795.15" y="65">0.5776</text>
+<text x="252" y="88" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#ff7f0e" x="260" y="73" width="470.95" height="17" rx="2"/>
+<text class="val" x="736.95" y="88">0.5141</text>
+<text x="252" y="111" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#98df8a" x="260" y="96" width="519.01" height="17" rx="2"/>
+<text class="val" x="785.01" y="111">0.5666</text>
+<text x="252" y="134" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#e377c2" x="260" y="119" width="469.23" height="17" rx="2"/>
+<text class="val" x="735.23" y="134">0.5122</text>
+<text x="252" y="157" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="142" width="474.82" height="17" rx="2"/>
+<text class="val" x="740.82" y="157">0.5183</text>
+<text x="252" y="180" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="165" width="474.82" height="17" rx="2"/>
+<text class="val" x="740.82" y="180">0.5183</text>
+<text x="252" y="203" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="188" width="474.82" height="17" rx="2"/>
+<text class="val" x="740.82" y="203">0.5183</text>
+<text x="252" y="226" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#8c564b" x="260" y="211" width="474.82" height="17" rx="2"/>
+<text class="val" x="740.82" y="226">0.5183</text>
+<text x="252" y="249" text-anchor="end">conker7_bidirectional_exact23_tw01_…</text>
+<rect fill="#17becf" x="260" y="234" width="490.74" height="17" rx="2"/>
+<text class="val" x="756.74" y="249">0.5357</text>
+<text x="252" y="272" text-anchor="end">conker7_bidirectional_exact23_tw0p0…</text>
+<rect fill="#ff7f0e" x="260" y="257" width="466.93" height="17" rx="2"/>
+<text class="val" x="732.93" y="272">0.5097</text>
+<text x="252" y="295" text-anchor="end">conker7_bidirectional_exact23_tw0p0…</text>
+<rect fill="#2ca02c" x="260" y="280" width="469.54" height="17" rx="2"/>
+<text class="val" x="735.54" y="295">0.5126</text>
+<text x="252" y="318" text-anchor="end">conker7_bidirectional_exact23_tw0p1…</text>
+<rect fill="#aec7e8" x="260" y="303" width="478.40" height="17" rx="2"/>
+<text class="val" x="744.40" y="318">0.5222</text>
+<text x="252" y="341" text-anchor="end">conker7_future_exact23_seq256_steps…</text>
+<rect fill="#2ca02c" x="260" y="326" width="565.06" height="17" rx="2"/>
+<text class="val" x="831.06" y="341">0.6168</text>
+<text x="252" y="364" text-anchor="end">conker7_future_exact23_seq256_steps…</text>
+<rect fill="#d62728" x="260" y="349" width="620.00" height="17" rx="2"/>
+<text class="val" x="886.00" y="364">0.6768</text>
+<text x="252" y="387" text-anchor="end">conker7_future_exact23_tw01_seq256_…</text>
+<rect fill="#c23b22" x="260" y="372" width="530.58" height="17" rx="2"/>
+<text class="val" x="796.58" y="387">0.5792</text>
+<text x="252" y="410" text-anchor="end">conker7_future_exact23_tw025_seq256…</text>
+<rect fill="#e377c2" x="260" y="395" width="544.63" height="17" rx="2"/>
+<text class="val" x="810.63" y="410">0.5945</text>
+<text x="252" y="433" text-anchor="end">conker7_future_exact3only_tw01_seq2…</text>
+<rect fill="#9467bd" x="260" y="418" width="533.07" height="17" rx="2"/>
+<text class="val" x="799.07" y="433">0.5819</text>
 </svg>
