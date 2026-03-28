@@ -557,6 +557,74 @@ def write_histogram_svg(
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 
 
+def write_grouped_bar_svg(
+    path: Path,
+    title: str,
+    rows: list[dict[str, Any]],
+    *,
+    key_a: str,
+    key_b: str,
+    label_key: str,
+    width: int = 960,
+    height: int = 480,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    filtered = [r for r in rows if r.get(key_a) is not None and r.get(key_b) is not None]
+    if not filtered:
+        path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
+        return
+    margin_left = 260
+    margin_right = 80
+    margin_top = 50
+    margin_bottom = 40
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    group_gap = 10
+    bar_gap = 2
+    group_height = max(16, (plot_height - group_gap * (len(filtered) - 1)) // max(len(filtered), 1))
+    sub_bar = (group_height - bar_gap) // 2
+    all_vals = [r[key_a] for r in filtered] + [r[key_b] for r in filtered]
+    vmax = max(all_vals) if all_vals else 1e-12
+    ticks = _nice_ticks(0, vmax, 5)
+    color_a = "#2f6fed"
+    color_b = "#c23b22"
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333}'
+        ' .title{font-size:16px;font-weight:700;fill:#111}'
+        ' .axis{stroke:#888;stroke-width:1}'
+        ' .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4}'
+        ' .tick{font-size:10px;fill:#666}'
+        ' .val{font-size:10px;fill:#333}'
+        ' .legend{font-size:11px}</style>',
+        f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
+        # legend
+        f'<rect x="{width - 200}" y="10" width="12" height="12" fill="{color_a}"/>',
+        f'<text class="legend" x="{width - 184}" y="21">{_svg_escape(key_a)}</text>',
+        f'<rect x="{width - 200}" y="28" width="12" height="12" fill="{color_b}"/>',
+        f'<text class="legend" x="{width - 184}" y="39">{_svg_escape(key_b)}</text>',
+    ]
+    # gridlines
+    for tick in ticks:
+        x = margin_left + plot_width * (tick / vmax) if vmax > 0 else margin_left
+        parts.append(f'<line class="grid" x1="{x:.1f}" y1="{margin_top}" x2="{x:.1f}" y2="{margin_top + plot_height}"/>')
+        parts.append(f'<text class="tick" x="{x:.1f}" y="{margin_top + plot_height + 16}" text-anchor="middle">{tick:.4f}</text>')
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>')
+    for idx, row in enumerate(filtered):
+        y = margin_top + idx * (group_height + group_gap)
+        label = _truncate_label(_svg_escape(str(row.get(label_key, ""))), 36)
+        va, vb = float(row[key_a]), float(row[key_b])
+        wa = plot_width * (va / vmax) if vmax > 0 else 0
+        wb = plot_width * (vb / vmax) if vmax > 0 else 0
+        parts.append(f'<text x="{margin_left - 8}" y="{y + group_height // 2 + 4}" text-anchor="end">{label}</text>')
+        parts.append(f'<rect fill="{color_a}" x="{margin_left}" y="{y}" width="{wa:.2f}" height="{sub_bar}" rx="2"/>')
+        parts.append(f'<text class="val" x="{margin_left + wa + 4:.2f}" y="{y + sub_bar - 2}">{va:.4f}</text>')
+        parts.append(f'<rect fill="{color_b}" x="{margin_left}" y="{y + sub_bar + bar_gap}" width="{wb:.2f}" height="{sub_bar}" rx="2"/>')
+        parts.append(f'<text class="val" x="{margin_left + wb + 4:.2f}" y="{y + group_height - 2}">{vb:.4f}</text>')
+    parts.append("</svg>")
+    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+
+
 def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
     scanned = scan_results(root)
     records = scanned["records"]

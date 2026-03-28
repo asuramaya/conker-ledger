@@ -10,6 +10,7 @@ from conker_ledger.ledger import (
     write_scatter_svg,
     write_pie_svg,
     write_histogram_svg,
+    write_grouped_bar_svg,
 )
 
 
@@ -188,5 +189,25 @@ def test_histogram_svg_single_value(tmp_path: Path):
 def test_histogram_svg_empty(tmp_path: Path):
     path = tmp_path / "hist.svg"
     write_histogram_svg(path, "Empty", [])
+    content = path.read_text()
+    assert "<svg" in content
+
+
+def test_grouped_bar_svg_writes_file(tmp_path: Path):
+    path = tmp_path / "grouped.svg"
+    rows = [
+        {"label": "fam_a", "bridge": 0.55, "full": 0.57},
+        {"label": "fam_b", "bridge": 0.52, "full": 0.53},
+    ]
+    write_grouped_bar_svg(path, "Bridge vs Full", rows, key_a="bridge", key_b="full", label_key="label")
+    content = path.read_text()
+    assert content.startswith("<svg")
+    assert "Bridge vs Full" in content
+    assert "fam_a" in content
+
+
+def test_grouped_bar_svg_empty(tmp_path: Path):
+    path = tmp_path / "grouped.svg"
+    write_grouped_bar_svg(path, "Empty", [], key_a="a", key_b="b", label_key="l")
     content = path.read_text()
     assert "<svg" in content
