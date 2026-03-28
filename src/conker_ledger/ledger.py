@@ -276,6 +276,42 @@ def _svg_escape(text: str) -> str:
     )
 
 
+_PALETTE = [
+    "#2f6fed", "#c23b22", "#2ca02c", "#9467bd", "#e377c2",
+    "#8c564b", "#17becf", "#bcbd22", "#ff7f0e", "#7f7f7f",
+    "#1f77b4", "#d62728", "#98df8a", "#aec7e8", "#ffbb78",
+]
+
+
+def _family_color(family_id: str) -> str:
+    return _PALETTE[hash(family_id) % len(_PALETTE)]
+
+
+def _truncate_label(label: str, max_chars: int = 32) -> str:
+    if len(label) <= max_chars:
+        return label
+    return label[: max_chars - 1] + "\u2026"
+
+
+def _nice_ticks(vmin: float, vmax: float, target_count: int = 5) -> list[float]:
+    span = vmax - vmin
+    if span <= 0:
+        return [vmin]
+    raw_step = span / max(target_count, 1)
+    magnitude = 10 ** math.floor(math.log10(raw_step))
+    for nice in [1, 2, 5, 10]:
+        step = nice * magnitude
+        if step >= raw_step:
+            break
+    start = math.ceil(vmin / step) * step
+    ticks: list[float] = []
+    val = start
+    while val <= vmax + step * 0.001:
+        ticks.append(round(val, 10))
+        val += step
+    return ticks
+
+
 def write_bar_svg(path: Path, title: str, labels: list[str], values: list[float], *, width: int = 960, height: int = 480) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not labels or not values:

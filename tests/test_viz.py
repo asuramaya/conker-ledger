@@ -4,6 +4,8 @@ import math
 from pathlib import Path
 from conker_ledger.ledger import (
     _svg_escape,
+    _family_color,
+    _truncate_label,
     write_bar_svg,
     write_scatter_svg,
 )
@@ -46,3 +48,29 @@ def test_scatter_svg_empty(tmp_path: Path):
     write_scatter_svg(path, "Test", [], x_key="x", y_key="y", label_key="label")
     content = path.read_text()
     assert "<svg" in content
+
+
+def test_family_color_deterministic():
+    c1 = _family_color("conker4b_tandem")
+    c2 = _family_color("conker4b_tandem")
+    c3 = _family_color("conker7_bidir")
+    assert c1 == c2
+    assert c1.startswith("#")
+    assert c3.startswith("#")
+
+
+def test_truncate_label_short():
+    assert _truncate_label("short", 32) == "short"
+
+
+def test_truncate_label_long():
+    result = _truncate_label("a" * 50, 32)
+    assert len(result) == 32
+    assert result.endswith("\u2026")
+
+
+def test_nice_ticks_basic():
+    from conker_ledger.ledger import _nice_ticks
+    ticks = _nice_ticks(0.5, 0.6, 5)
+    assert len(ticks) >= 2
+    assert all(0.5 <= t <= 0.61 for t in ticks)
