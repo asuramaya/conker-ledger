@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>
+<text class="title" x="220" y="28">Top Full-Eval Rows</text>
+<line class="axis" x1="220" y1="450" x2="920" y2="450"/>
+<text x="210" y="72" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000:fp16</text>
+<rect class="bar" x="220" y="50" width="651.66" height="24"/>
+<text x="879.66" y="72">0.528307</text>
+<text x="210" y="106" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000:int6</text>
+<rect class="bar" x="220" y="84" width="655.66" height="24"/>
+<text x="883.66" y="106">0.531547</text>
+<text x="210" y="140" text-anchor="end">conker4b_tandem_seq256_steps1800_lr5e4:fp16</text>
+<rect class="bar" x="220" y="118" width="670.48" height="24"/>
+<text x="898.48" y="140">0.543561</text>
+<text x="210" y="174" text-anchor="end">conker4b_tandem_seq256_steps1800_lr5e4:int6</text>
+<rect class="bar" x="220" y="152" width="675.71" height="24"/>
+<text x="903.71" y="174">0.547801</text>
+<text x="210" y="208" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
+<rect class="bar" x="220" y="186" width="678.28" height="24"/>
+<text x="906.28" y="208">0.549885</text>
+<text x="210" y="242" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
+<rect class="bar" x="220" y="220" width="678.59" height="24"/>
+<text x="906.59" y="242">0.550138</text>
+<text x="210" y="276" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:fp16</text>
+<rect class="bar" x="220" y="254" width="679.42" height="24"/>
+<text x="907.42" y="276">0.550814</text>
+<text x="210" y="310" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
+<rect class="bar" x="220" y="288" width="682.91" height="24"/>
+<text x="910.91" y="310">0.553636</text>
+<text x="210" y="344" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
+<rect class="bar" x="220" y="322" width="683.09" height="24"/>
+<text x="911.09" y="344">0.553783</text>
+<text x="210" y="378" text-anchor="end">conker4b_tandem_seq256_steps1500_lr5e4:int6</text>
+<rect class="bar" x="220" y="356" width="683.94" height="24"/>
+<text x="911.94" y="378">0.554477</text>
+<text x="210" y="412" text-anchor="end">conker4b_tandem_seq256_steps1000_lr5e4:fp16</text>
+<rect class="bar" x="220" y="390" width="696.70" height="24"/>
+<text x="924.70" y="412">0.564823</text>
+<text x="210" y="446" text-anchor="end">conker4b_tandem_seq256_steps1200_lr5e4:fp16</text>
+<rect class="bar" x="220" y="424" width="700.00" height="24"/>
+<text x="928.00" y="446">0.567495</text>
+</svg>

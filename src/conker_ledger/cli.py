@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from .ledger import dumps_json, lineage_rows, render_table, scan_results, sort_records, survival_rows
+from .ledger import dumps_json, lineage_rows, render_table, scan_results, sort_records, survival_rows, write_report_bundle
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -31,6 +31,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_lineage.add_argument("root")
     p_lineage.add_argument("--top", type=int, default=50)
     p_lineage.add_argument("--json")
+
+    p_report = sub.add_parser("report", help="Write a public report bundle with JSON, CSV, and SVG outputs")
+    p_report.add_argument("root")
+    p_report.add_argument("out_dir")
+    p_report.add_argument("--top", type=int, default=20)
+    p_report.add_argument("--json")
 
     return parser
 
@@ -82,6 +88,11 @@ def main() -> None:
         else:
             columns = ["parent_run_id", "child_run_id", "seed", "child_bpb", "family_id"]
             write_output(render_table(rows, columns, top=args.top), None)
+        return
+
+    if args.command == "report":
+        result = write_report_bundle(root, Path(args.out_dir), top=args.top)
+        write_output(dumps_json(result), args.json)
         return
 
     raise ValueError(f"Unknown command: {args.command}")

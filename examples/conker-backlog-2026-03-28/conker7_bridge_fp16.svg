@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>
+<text class="title" x="220" y="28">Conker-7 Bridge FP16 Rows</text>
+<line class="axis" x1="220" y1="450" x2="920" y2="450"/>
+<text x="210" y="62" text-anchor="end">conker7_bidirectional_exact23_tw01_seq256_steps1000</text>
+<rect class="bar" x="220" y="50" width="597.43" height="14"/>
+<text x="825.43" y="62">0.577634</text>
+<text x="210" y="86" text-anchor="end">conker7_bidirectional_exact23_tw01_start250_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="74" width="531.71" height="14"/>
+<text x="759.71" y="86">0.514095</text>
+<text x="210" y="110" text-anchor="end">conker7_bidirectional_exact23_tw01_start500_seq256_steps1000</text>
+<rect class="bar" x="220" y="98" width="585.98" height="14"/>
+<text x="813.98" y="110">0.566566</text>
+<text x="210" y="134" text-anchor="end">conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="122" width="529.78" height="14"/>
+<text x="757.78" y="134">0.512225</text>
+<text x="210" y="158" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="146" width="536.08" height="14"/>
+<text x="764.08" y="158">0.518321</text>
+<text x="210" y="182" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="170" width="536.08" height="14"/>
+<text x="764.08" y="182">0.518321</text>
+<text x="210" y="206" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="194" width="536.08" height="14"/>
+<text x="764.08" y="206">0.518321</text>
+<text x="210" y="230" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="218" width="536.08" height="14"/>
+<text x="764.08" y="230">0.518321</text>
+<text x="210" y="254" text-anchor="end">conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps500</text>
+<rect class="bar" x="220" y="242" width="554.07" height="14"/>
+<text x="782.07" y="254">0.535706</text>
+<text x="210" y="278" text-anchor="end">conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="266" width="527.18" height="14"/>
+<text x="755.18" y="278">0.509707</text>
+<text x="210" y="302" text-anchor="end">conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="290" width="530.13" height="14"/>
+<text x="758.13" y="302">0.512564</text>
+<text x="210" y="326" text-anchor="end">conker7_bidirectional_exact23_tw0p15_warmstart_tandem1500_seq256_steps1000</text>
+<rect class="bar" x="220" y="314" width="540.13" height="14"/>
+<text x="768.13" y="326">0.522234</text>
+<text x="210" y="350" text-anchor="end">conker7_future_exact23_seq256_steps1000</text>
+<rect class="bar" x="220" y="338" width="637.97" height="14"/>
+<text x="865.97" y="350">0.616831</text>
+<text x="210" y="374" text-anchor="end">conker7_future_exact23_seq256_steps500</text>
+<rect class="bar" x="220" y="362" width="700.00" height="14"/>
+<text x="928.00" y="374">0.676805</text>
+<text x="210" y="398" text-anchor="end">conker7_future_exact23_tw01_seq256_steps1000</text>
+<rect class="bar" x="220" y="386" width="599.04" height="14"/>
+<text x="827.04" y="398">0.579190</text>
+<text x="210" y="422" text-anchor="end">conker7_future_exact23_tw025_seq256_steps1000</text>
+<rect class="bar" x="220" y="410" width="614.91" height="14"/>
+<text x="842.91" y="422">0.594535</text>
+<text x="210" y="446" text-anchor="end">conker7_future_exact3only_tw01_seq256_steps1000</text>
+<rect class="bar" x="220" y="434" width="601.85" height="14"/>
+<text x="829.85" y="446">0.581907</text>
+</svg>

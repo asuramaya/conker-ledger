@@ -1,0 +1,120 @@
+{
+  "root": "conker/out",
+  "record_count": 401,
+  "by_kind": {
+    "bridge": 366,
+    "full_eval": 32,
+    "study": 3
+  },
+  "family_count": 229,
+  "top_families": [
+    [
+      "conker4b_tandem_seq256_steps1000_lr5e4",
+      16
+    ],
+    [
+      "conker4b_tandem_seq256_steps1500_lr5e4",
+      9
+    ],
+    [
+      "conker4b_tandem_seq512_steps1000_bs8_lr5e4",
+      7
+    ],
+    [
+      "conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000",
+      6
+    ],
+    [
+      "conker2_base_golf_bridge",
+      3
+    ],
+    [
+      "conker2_correction_only_golf_bridge",
+      3
+    ],
+    [
+      "conker2_equal_logit_golf_bridge",
+      3
+    ],
+    [
+      "conker2_linear_only_fft_golf_bridge",
+      3
+    ],
+    [
+      "conker2_linear_only_golf_bridge",
+      3
+    ],
+    [
+      "conker2_linear_only_scale_1p75_golf_bridge",
+      3
+    ],
+    [
+      "conker2_linear_only_scale_2p0_golf_bridge",
+      3
+    ],
+    [
+      "conker2_no_bias_golf_bridge",
+      3
+    ],
+    [
+      "conker2_probability_mix_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_fft_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_scale_10p0_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_scale_11p5_lr5em4_steps1500_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_scale_11p5_lr5em4_steps1800_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_scale_11p75_lr5em4_steps1500_golf_bridge",
+      3
+    ],
+    [
+      "conker2_untied_base_scale_12p0_lr5em4_steps1500_golf_bridge",
+      3
+    ]
+  ],
+  "skipped": [
+    "conker1_golf_bridge_seed42_2026-03-25.json",
+    "conker1_golf_bridge_seed43_2026-03-25.json",
+    "conker1_golf_bridge_seed44_2026-03-25.json",
+    "conker2_golf_bridge_seed42_2026-03-25.json",
+    "conker2_golf_bridge_seed43_2026-03-25.json",
+    "conker2_golf_bridge_seed44_2026-03-25.json",
+    "conker2_quant_ladder_seed42_2026-03-25.json",
+    "conker2_quant_ladder_seed43_2026-03-25.json",
+    "conker2_quant_ladder_seed44_2026-03-25.json",
+    "conker3_matched_decay_bank_scale8_2026-03-26.json",
+    "conker3_window4_scale_10p0_steps1500_half_life_16_ttt_probe_seed42_2026-03-26.json",
+    "conker4b_tandem_seq256_steps1000_lr5e4_seed43_fresh_eval_2026-03-27.json",
+    "conker6_legality_cacheonly_2026-03-28.json",
+    "conker6_legality_cacheonly_exactspan512_2026-03-28.json",
+    "conker6_online_cache_probe_2026-03-28.json",
+    "conker6_seed_residual_compare_2026-03-28.json",
+    "conker_detect_compare_good_vs_combo_2026-03-28.json",
+    "conker_detect_compare_good_vs_start500_2026-03-28.json",
+    "conker_detect_compare_good_vs_tw0p05_2026-03-28.json",
+    "golf_overlap_audit_2026-03-27.json",
+    "hierarchical_v6_fast_mid_delay_golf_bridge_seed42_2026-03-25.json",
+    "hierarchical_v6_fast_mid_delay_golf_bridge_seed43_2026-03-25.json",
+    "hierarchical_v6_fast_mid_delay_golf_bridge_seed44_2026-03-25.json",
+    "hierarchical_v6_silenced_golf_bridge_seed42_2026-03-25.json",
+    "hierarchical_v6_silenced_golf_bridge_seed43_2026-03-25.json",
+    "hierarchical_v6_silenced_golf_bridge_seed44_2026-03-25.json"
+  ]
+}

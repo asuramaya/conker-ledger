@@ -1,0 +1,53 @@
+[
+  {
+    "run_id": "conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5122250855951872,
+    "bridge_int6": 0.524202795767721,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5097073605109663,
+    "bridge_int6": 0.5220992522003182,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5125641658720483,
+    "bridge_int6": 0.5248642814343933,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  }
+]

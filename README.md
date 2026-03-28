@@ -40,6 +40,10 @@ It is built for the backlog that accumulates in `conker/out`, but it is generic 
 - trace warm-start ancestry through `loaded_state_path -> saved_state_path`
 - identify which branches descend from which checkpoints
 
+5. `report`
+- write a public report bundle with JSON, CSV, SVG, and a short README
+- useful for publishing backlog state without a notebook
+
 ## Install
 
 ```bash
@@ -78,6 +82,12 @@ Show checkpoint lineage:
 conker-ledger lineage /path/to/conker/out
 ```
 
+Write a public report bundle:
+
+```bash
+conker-ledger report /path/to/conker/out examples/conker-backlog-YYYY-MM-DD
+```
+
 ## Current Scope
 
 This tool is intentionally backlog-first, not notebook-first.
@@ -95,3 +105,10 @@ But it should replace ad hoc one-off scripts for the recurring questions:
 - “which family actually scales?”
 - “what did this row warm-start from?”
 
+## Public Example
+
+This repo can carry public report bundles generated from real experiment backlogs under `examples/`.
+
+Current example:
+
+- [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)

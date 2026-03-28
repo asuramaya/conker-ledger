@@ -1,0 +1,240 @@
+[
+  {
+    "run_id": "conker4b_tandem_seq256_steps1000_lr5e4_seed42",
+    "family_id": "conker4b_tandem_seq256_steps1000_lr5e4",
+    "seed": 42,
+    "bridge_fp16": 0.561959042562641,
+    "bridge_int6": null,
+    "full_fp16": 0.5718232495381582,
+    "full_int6": 0.5754158908109605,
+    "delta_fp16": 0.009864206975517265,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1000_lr5e4_seed43",
+    "family_id": "conker4b_tandem_seq256_steps1000_lr5e4",
+    "seed": 43,
+    "bridge_fp16": 0.5621587535997826,
+    "bridge_int6": 0.5747415705571823,
+    "full_fp16": 0.5716063655635316,
+    "full_int6": 0.5751724958658886,
+    "delta_fp16": 0.009447611963748992,
+    "delta_int6": 0.0004309253087062537,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed43_saveeval_2026-03-27.json",
+    "full_paths": {
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed43_fullval_test_none_2026-03-27.json",
+      "int6": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed43_fullval_test_int6_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1000_lr5e4_seed44",
+    "family_id": "conker4b_tandem_seq256_steps1000_lr5e4",
+    "seed": 44,
+    "bridge_fp16": 0.5612762490760358,
+    "bridge_int6": null,
+    "full_fp16": 0.5708446882188564,
+    "full_int6": 0.5744944135170192,
+    "delta_fp16": 0.009568439142820573,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed44_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed44_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed44_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1200_lr5e4_seed42",
+    "family_id": "conker4b_tandem_seq256_steps1200_lr5e4",
+    "seed": 42,
+    "bridge_fp16": 0.5574558826344467,
+    "bridge_int6": null,
+    "full_fp16": 0.5674945941697401,
+    "full_int6": 0.5713424492420136,
+    "delta_fp16": 0.010038711535293454,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1200_lr5e4_seed42_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1200_lr5e4_seed42_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1200_lr5e4_seed42_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed42",
+    "family_id": "conker4b_tandem_seq256_steps1500_lr5e4",
+    "seed": 42,
+    "bridge_fp16": 0.5409159747635801,
+    "bridge_int6": null,
+    "full_fp16": 0.5508137843465436,
+    "full_int6": 0.554477458022022,
+    "delta_fp16": 0.00989780958296349,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed42_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed42_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed42_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed43",
+    "family_id": "conker4b_tandem_seq256_steps1500_lr5e4",
+    "seed": 43,
+    "bridge_fp16": 0.5397694523715802,
+    "bridge_int6": null,
+    "full_fp16": 0.5501383279315781,
+    "full_int6": 0.5536357435240347,
+    "delta_fp16": 0.010368875559997881,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed43_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed43_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed43_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1500_lr5e4_seed44",
+    "family_id": "conker4b_tandem_seq256_steps1500_lr5e4",
+    "seed": 44,
+    "bridge_fp16": 0.5391405525604805,
+    "bridge_int6": null,
+    "full_fp16": 0.5498849114896311,
+    "full_int6": 0.5537828295921913,
+    "delta_fp16": 0.0107443589291506,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed44_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed44_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1500_lr5e4_seed44_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq256_steps1800_lr5e4_seed42",
+    "family_id": "conker4b_tandem_seq256_steps1800_lr5e4",
+    "seed": 42,
+    "bridge_fp16": 0.5341759081788323,
+    "bridge_int6": null,
+    "full_fp16": 0.5435609386239969,
+    "full_int6": 0.5478008421777423,
+    "delta_fp16": 0.009385030445164588,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq256_steps1800_lr5e4_seed42_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq256_steps1800_lr5e4_seed42_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq256_steps1800_lr5e4_seed42_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed43",
+    "family_id": "conker4b_tandem_seq512_steps1000_bs8_lr5e4",
+    "seed": 43,
+    "bridge_fp16": 0.5724945896367911,
+    "bridge_int6": null,
+    "full_fp16": 0.5810632608156661,
+    "full_int6": 0.5792339444149665,
+    "delta_fp16": 0.008568671178874943,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed43_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed43_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed43_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed44",
+    "family_id": "conker4b_tandem_seq512_steps1000_bs8_lr5e4",
+    "seed": 44,
+    "bridge_fp16": 0.5723104429101339,
+    "bridge_int6": null,
+    "full_fp16": 0.5813278557894209,
+    "full_int6": 0.579503485938908,
+    "delta_fp16": 0.009017412879287034,
+    "delta_int6": null,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed44_saveeval_2026-03-27.json",
+    "full_paths": {
+      "int6": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed44_fullval_test_int6_2026-03-27.json",
+      "fp16": "conker/out/conker4b_tandem_seq512_steps1000_bs8_lr5e4_seed44_fullval_test_none_2026-03-27.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5122250855951872,
+    "bridge_int6": 0.524202795767721,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw01_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_save",
+    "family_id": "conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5183208278512051,
+    "bridge_int6": 0.5301491898334916,
+    "full_fp16": 0.5283073840076614,
+    "full_int6": 0.5315472562226734,
+    "delta_fp16": 0.009986556156456272,
+    "delta_int6": 0.001398066389181829,
+    "status": "survived_full_eval",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_save_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw01_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5097073605109663,
+    "bridge_int6": 0.5220992522003182,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_start500_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  },
+  {
+    "run_id": "conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42",
+    "family_id": "conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000",
+    "seed": 42,
+    "bridge_fp16": 0.5125641658720483,
+    "bridge_int6": 0.5248642814343933,
+    "full_fp16": null,
+    "full_int6": null,
+    "delta_fp16": null,
+    "delta_int6": null,
+    "status": "full_eval_failed",
+    "bridge_path": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_2026-03-28.json",
+    "full_paths": {
+      "int6": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_int6_2026-03-28.json",
+      "fp16": "conker/out/conker7_bidirectional_exact23_tw0p05_warmstart_tandem1500_seq256_steps1000_seed42_fullval_test_none_2026-03-28.json"
+    }
+  }
+]

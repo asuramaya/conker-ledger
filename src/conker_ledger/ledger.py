@@ -6,6 +6,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
+import csv
 
 
 DATE_SUFFIX_RE = re.compile(r"_\d{4}-\d{2}-\d{2}$")
@@ -256,3 +257,227 @@ def render_table(rows: list[dict[str, Any]], columns: list[str], top: int | None
     ]
     return "\n".join([header, sep, *body])
 
+
+def write_csv(path: Path, rows: list[dict[str, Any]], columns: list[str]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({column: row.get(column) for column in columns})
+
+
+def _svg_escape(text: str) -> str:
+    return (
+        str(text)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+    )
+
+
+def write_bar_svg(path: Path, title: str, labels: list[str], values: list[float], *, width: int = 960, height: int = 480) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not labels or not values:
+        path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
+        return
+    margin_left = 220
+    margin_right = 40
+    margin_top = 50
+    margin_bottom = 30
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    bar_gap = 10
+    bar_height = max(8, (plot_height - bar_gap * (len(values) - 1)) // max(len(values), 1))
+    vmax = max(max(values), 1e-12)
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>',
+        f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
+        f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>',
+    ]
+    for idx, (label, value) in enumerate(zip(labels, values)):
+        y = margin_top + idx * (bar_height + bar_gap)
+        bar_w = plot_width * (value / vmax)
+        parts.append(f'<text x="{margin_left - 10}" y="{y + bar_height - 2}" text-anchor="end">{_svg_escape(label)}</text>')
+        parts.append(f'<rect class="bar" x="{margin_left}" y="{y}" width="{bar_w:.2f}" height="{bar_height}"/>')
+        parts.append(f'<text x="{margin_left + bar_w + 8:.2f}" y="{y + bar_height - 2}">{value:.6f}</text>')
+    parts.append("</svg>")
+    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+
+
+def write_scatter_svg(
+    path: Path,
+    title: str,
+    rows: list[dict[str, Any]],
+    *,
+    x_key: str,
+    y_key: str,
+    label_key: str,
+    width: int = 960,
+    height: int = 480,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    points = [(row.get(x_key), row.get(y_key), row.get(label_key)) for row in rows]
+    points = [(float(x), float(y), str(label)) for x, y, label in points if x is not None and y is not None]
+    if not points:
+        path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
+        return
+    margin_left = 70
+    margin_right = 40
+    margin_top = 50
+    margin_bottom = 50
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    min_x, max_x = min(xs), max(xs)
+    min_y, max_y = min(ys), max(ys)
+    if max_x == min_x:
+        max_x += 1e-9
+    if max_y == min_y:
+        max_y += 1e-9
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .point{fill:#c23b22;opacity:0.8}</style>',
+        f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
+        f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>',
+        f'<line class="axis" x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{margin_top + plot_height}"/>',
+    ]
+    for x, y, label in points:
+        px = margin_left + (x - min_x) / (max_x - min_x) * plot_width
+        py = margin_top + plot_height - (y - min_y) / (max_y - min_y) * plot_height
+        parts.append(f'<circle class="point" cx="{px:.2f}" cy="{py:.2f}" r="4"/>')
+        parts.append(f'<text x="{px + 6:.2f}" y="{py - 6:.2f}">{_svg_escape(label)}</text>')
+    parts.append(f'<text x="{margin_left}" y="{height - 12}">{x_key}: min {min_x:.6f}, max {max_x:.6f}</text>')
+    parts.append(f'<text x="{width - margin_right}" y="{height - 12}" text-anchor="end">{y_key}: min {min_y:.6f}, max {max_y:.6f}</text>')
+    parts.append("</svg>")
+    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+
+
+def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
+    scanned = scan_results(root)
+    records = scanned["records"]
+    top_full_eval = sort_records([r for r in records if r["kind"] == "full_eval"], "bpb")[:top]
+    top_bridge = sort_records([r for r in records if r["kind"] == "bridge"], "bpb")[:top]
+    survival = survival_rows(records)
+    survival_non_bridge = [row for row in survival if row["status"] != "bridge_only"]
+    failed = [row for row in survival if row["status"] == "full_eval_failed"]
+    lineage = lineage_rows(records)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "scan_summary.json").write_text(
+        dumps_json(
+            {
+                "root": scanned["root"],
+                "record_count": scanned["record_count"],
+                "by_kind": scanned["by_kind"],
+                "family_count": scanned["family_count"],
+                "top_families": scanned["top_families"],
+                "skipped": scanned["skipped"],
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    (out_dir / "top_full_eval.json").write_text(dumps_json(top_full_eval) + "\n", encoding="utf-8")
+    (out_dir / "top_bridge.json").write_text(dumps_json(top_bridge) + "\n", encoding="utf-8")
+    (out_dir / "survival.json").write_text(dumps_json(survival_non_bridge) + "\n", encoding="utf-8")
+    (out_dir / "failed_full_eval.json").write_text(dumps_json(failed) + "\n", encoding="utf-8")
+    (out_dir / "lineage.json").write_text(dumps_json(lineage) + "\n", encoding="utf-8")
+
+    write_csv(out_dir / "top_full_eval.csv", top_full_eval, ["family_id", "run_id", "seed", "quant_label", "bpb", "artifact_bytes", "path"])
+    write_csv(out_dir / "survival.csv", survival_non_bridge, ["family_id", "run_id", "seed", "bridge_fp16", "full_fp16", "bridge_int6", "full_int6", "delta_fp16", "delta_int6", "status"])
+    write_csv(out_dir / "failed_full_eval.csv", failed, ["family_id", "run_id", "seed", "bridge_fp16", "bridge_int6", "status", "bridge_path"])
+
+    full_labels = [f"{row['family_id']}:{row.get('quant_label')}" for row in top_full_eval[: min(12, len(top_full_eval))]]
+    full_values = [row["bpb"] for row in top_full_eval[: min(12, len(top_full_eval))] if row.get("bpb") is not None]
+    if full_values:
+        write_bar_svg(out_dir / "top_full_eval.svg", "Top Full-Eval Rows", full_labels[: len(full_values)], full_values)
+
+    gap_rows = [row for row in survival_non_bridge if row.get("bridge_fp16") is not None and row.get("full_fp16") is not None][:20]
+    write_scatter_svg(
+        out_dir / "bridge_vs_full_fp16.svg",
+        "Bridge FP16 vs Full FP16",
+        gap_rows,
+        x_key="bridge_fp16",
+        y_key="full_fp16",
+        label_key="family_id",
+    )
+
+    conker7_rows = [row for row in survival if str(row["family_id"]).startswith("conker7_")]
+    write_bar_svg(
+        out_dir / "conker7_bridge_fp16.svg",
+        "Conker-7 Bridge FP16 Rows",
+        [row["family_id"] for row in conker7_rows],
+        [row["bridge_fp16"] for row in conker7_rows if row.get("bridge_fp16") is not None],
+    )
+
+    summary_lines = [
+        "# Public Backlog Report",
+        "",
+        f"- root: `{root}`",
+        f"- normalized records: `{scanned['record_count']}`",
+        f"- bridge rows: `{scanned['by_kind'].get('bridge', 0)}`",
+        f"- full eval rows: `{scanned['by_kind'].get('full_eval', 0)}`",
+        f"- study rows: `{scanned['by_kind'].get('study', 0)}`",
+        f"- experiment families: `{scanned['family_count']}`",
+        "",
+        "## Headline",
+        "",
+    ]
+    if top_full_eval:
+        best = top_full_eval[0]
+        summary_lines.extend(
+            [
+                f"- best normalized full eval in this backlog: `{best['family_id']}` `{best['quant_label']}` at `{best['bpb']:.6f} bpb`",
+            ]
+        )
+    if failed:
+        summary_lines.append(f"- full-eval failures detected after optimistic bridge results: `{len(failed)}`")
+    summary_lines.extend(
+        [
+            "",
+            "## Files",
+            "",
+            "- `scan_summary.json`",
+            "- `top_full_eval.json` / `top_full_eval.csv` / `top_full_eval.svg`",
+            "- `top_bridge.json`",
+            "- `survival.json` / `survival.csv` / `bridge_vs_full_fp16.svg`",
+            "- `failed_full_eval.json` / `failed_full_eval.csv`",
+            "- `lineage.json`",
+            "- `conker7_bridge_fp16.svg`",
+            "",
+            "## Visuals",
+            "",
+            "### Top Full-Eval Rows",
+            "",
+            "![Top full eval rows](./top_full_eval.svg)",
+            "",
+            "### Bridge vs Full-Eval FP16",
+            "",
+            "![Bridge vs full fp16](./bridge_vs_full_fp16.svg)",
+            "",
+            "### Conker-7 Bridge Rows",
+            "",
+            "![Conker-7 bridge rows](./conker7_bridge_fp16.svg)",
+        ]
+    )
+    if failed:
+        summary_lines.extend(["", "## Failed Full-Eval Rows", ""])
+        for row in failed[:20]:
+            summary_lines.append(
+                f"- `{row['family_id']}` seed `{row.get('seed')}` bridge fp16 `{row.get('bridge_fp16')}` bridge int6 `{row.get('bridge_int6')}`"
+            )
+    (out_dir / "README.md").write_text("\n".join(summary_lines) + "\n", encoding="utf-8")
+
+    return {
+        "scan_summary": {
+            "record_count": scanned["record_count"],
+            "by_kind": scanned["by_kind"],
+            "family_count": scanned["family_count"],
+        },
+        "best_full_eval": top_full_eval[0] if top_full_eval else None,
+        "failed_full_eval_count": len(failed),
+        "report_dir": str(out_dir),
+    }
