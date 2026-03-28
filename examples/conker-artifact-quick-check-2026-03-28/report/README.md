@@ -3,6 +3,18 @@
 - scope: selected artifact-level quick checks over `conker4b_tandem`, `conker4b_strict`, and `conker6_mask_geometry`
 - strongest supported claim: Tier 1 with Tier 2 warnings attached
 - reason the ladder stops here: this public bundle does not include a runtime replay adapter or behavioral legality run
+- target of this postmortem: [parameter-golf PR #998](https://github.com/openai/parameter-golf/pull/998), opened on March 28, 2026
+
+## Why This Kills The PR
+
+PR #998 packaged `Conker-5 Tandem Residual Exact Experts (MLX, non-record)` and claimed:
+
+- pre-quant full held-out `val_bpb = 0.57180453`
+- packaged int6 full held-out `val_bpb = 0.57546632`
+- `3,720,359` artifact bytes
+- a supposedly "boringly valid" packaged run
+
+This bundle is the answer to that claim. The score was real. The package was real. The causal cleanliness was not.
 
 ## Headline Findings
 

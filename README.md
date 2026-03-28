@@ -153,7 +153,14 @@ If you want the point of validity packaging in one page, read the `conker` quick
 
 - [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 
-The short version is ugly:
+The short version is ugly, and it kills a real submission: [parameter-golf PR #998](https://github.com/openai/parameter-golf/pull/998), opened on March 28, 2026.
+
+That PR packaged `Conker-5 Tandem Residual Exact Experts (MLX, non-record)` and claimed:
+
+- full held-out fp16 `val_bpb = 0.57180453`
+- full held-out int6 `val_bpb = 0.57546632`
+- artifact bytes `= 3,720,359`
+- a supposedly "boringly valid" packaged run
 
 - `conker4b_tandem` looked strong on score at `0.5718232495381582 bpb` on full eval, but its extracted causal mask still carried forbidden-region structure with `upper_plus_diag_frac = 0.04358700722704721`.
 - `conker4b_strict` removed that leak completely and the score collapsed to `2.0971244136143423 bpb`.
