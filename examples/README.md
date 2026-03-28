@@ -3,3 +3,9 @@
 - [carver-quick-check-2026-03-28](./carver-quick-check-2026-03-28/report/README.md)
 - [conker-artifact-quick-check-2026-03-28](./conker-artifact-quick-check-2026-03-28/report/README.md)
 - [conker-backlog-2026-03-28](./conker-backlog-2026-03-28/README.md)
+
+Reading order:
+
+- `carver-quick-check`: historical reservoir-side checkpoint
+- `conker-artifact-quick-check`: artifact-boundary, structural leakage, and invalidation checkpoint
+- `conker-backlog`: full backlog, family, lineage, and survival view

@@ -24,6 +24,28 @@ This bundle is the answer to that claim. The score was real. The package was rea
 - `conker6_mask_geometry` shows explicit forbidden structure in the saved mask audit: `upper_frac = 0.011201489739837839`, `diag_frac = 0.017354798229237627`.
 - In the attached `conker6_mask_geometry` source summary, replacing the learned mask with its Toeplitz mean blows up `full_test_bpb` from `0.07209327818598087` to `5.752106388513692`.
 
+## Artifact-Boundary Reading
+
+This bundle is also a reminder that there were three different artifact stories in the same branch family:
+
+1. raw replay checkpoints
+- huge `.npz` files used for debugging and faithful replay
+- not the same thing as submission artifacts
+
+2. broken packed artifacts
+- old tandem payloads that accidentally serialized regenerated deterministic substrate such as `base.linear_kernel`
+- these inflated to about `11.87 MB`
+
+3. corrected packed artifacts
+- deterministic substrate omitted correctly
+- corrected invalid tandem artifact dropped to about `3.72 MB`
+- strict packed artifact landed around `3.73 MB`
+
+So the size story and the legality story were separate:
+
+- one bug packed things that should have been regenerated
+- another bug let supposedly fixed structural tensors become trainable and dominate the score
+
 ## Included Evidence
 
 - [`claim.json`](../claim.json)
@@ -48,4 +70,5 @@ This bundle is the answer to that claim. The score was real. The package was rea
 
 - This is a thin public quick-check layer over saved artifacts.
 - It is strong enough to surface obvious structural problems quickly.
+- It is also meant to separate boundary/accounting failures from model-legality failures.
 - It is not a runtime legality certificate.

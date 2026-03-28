@@ -16,6 +16,7 @@ Where `conker-detect` asks:
 - which bridge wins survived full eval?
 - which recipes die on honest replay?
 - what warm-start lineage produced the current frontier?
+- which artifact stories were boundary bugs, invalid models, or clean strict descendants?
 
 It is built for the backlog that accumulates in `conker/out`, but it is generic enough for other JSON-first research labs with bridge/full-eval workflows.
 
@@ -147,6 +148,11 @@ Current examples:
 - [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)
 
+The `conker` examples are intentionally split:
+
+- `conker-artifact-quick-check` is the artifact-boundary and invalidation layer
+- `conker-backlog` is the run-history, lineage, and survival layer
+
 ## Brutal Example
 
 If you want the point of validity packaging in one page, read the `conker` quick check:
@@ -165,6 +171,14 @@ That PR packaged `Conker-5 Tandem Residual Exact Experts (MLX, non-record)` and 
 - `conker4b_tandem` looked strong on score at `0.5718232495381582 bpb` on full eval, but its extracted causal mask still carried forbidden-region structure with `upper_plus_diag_frac = 0.04358700722704721`.
 - `conker4b_strict` removed that leak completely and the score collapsed to `2.0971244136143423 bpb`.
 - `conker6_mask_geometry` had smaller-looking forbidden mass, `upper_frac = 0.011201489739837839` and `diag_frac = 0.017354798229237627`, but replacing the learned mask with its Toeplitz mean still detonated `full_test_bpb` from `0.07209327818598087` to `5.752106388513692`.
+
+There was also a separate artifact-boundary failure in the same branch family:
+
+- an old tandem packed artifact bloated to `11.87 MB` because it incorrectly serialized regenerated deterministic substrate
+- the corrected packed tandem artifact dropped to about `3.72 MB`
+- the strict packed artifact also landed around `3.73 MB`
+
+That is why `conker-ledger` tracks more than scores. The important public question is not just “what number did this branch claim?” It is also “what exactly was stored, and what class of artifact was this?”
 
 That is the whole reason this repo exists:
 
