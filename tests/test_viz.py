@@ -17,7 +17,8 @@ from conker_ledger.ledger import (
 
 
 def test_svg_escape():
-    assert _svg_escape("a < b &amp; c > d") == "a &lt; b &amp;amp; c &gt; d"
+    assert _svg_escape("a < b & c > d") == "a &lt; b &amp; c &gt; d"
+    assert _svg_escape('say "hello"') == "say &quot;hello&quot;"
 
 
 def test_bar_svg_writes_file(tmp_path: Path):

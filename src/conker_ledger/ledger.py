@@ -273,6 +273,7 @@ def _svg_escape(text: str) -> str:
         .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
+        .replace('"', "&quot;")
     )
 
 
@@ -349,7 +350,7 @@ def write_bar_svg(path: Path, title: str, labels: list[str], values: list[float]
         y = margin_top + idx * (bar_height + bar_gap)
         bar_w = plot_width * (value / vmax) if vmax > 0 else 0
         color = _family_color(label.split(":")[0])
-        truncated = _truncate_label(_svg_escape(label), 36)
+        truncated = _svg_escape(_truncate_label(label, 36))
         parts.append(f'<text x="{margin_left - 8}" y="{y + bar_height - 2}" text-anchor="end">{truncated}</text>')
         parts.append(f'<rect fill="{color}" x="{margin_left}" y="{y}" width="{bar_w:.2f}" height="{bar_height}" rx="2"/>')
         parts.append(f'<text class="val" x="{margin_left + bar_w + 6:.2f}" y="{y + bar_height - 2}">{value:.4f}</text>')
@@ -435,7 +436,7 @@ def write_scatter_svg(
             if abs(label_y - prev_y) < 14:
                 label_y = prev_y - 14
         rendered.append(label_y)
-        truncated = _truncate_label(_svg_escape(label), 28)
+        truncated = _svg_escape(_truncate_label(label, 28))
         parts.append(f'<text x="{px + 7:.2f}" y="{label_y:.2f}">{truncated}</text>')
     parts.append("</svg>")
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
@@ -612,7 +613,7 @@ def write_grouped_bar_svg(
     parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>')
     for idx, row in enumerate(filtered):
         y = margin_top + idx * (group_height + group_gap)
-        label = _truncate_label(_svg_escape(str(row.get(label_key, ""))), 36)
+        label = _svg_escape(_truncate_label(str(row.get(label_key, "")), 36))
         va, vb = float(row[key_a]), float(row[key_b])
         wa = plot_width * (va / vmax) if vmax > 0 else 0
         wb = plot_width * (vb / vmax) if vmax > 0 else 0
