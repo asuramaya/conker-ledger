@@ -147,11 +147,13 @@ Current examples:
 - [`examples/carver-quick-check-2026-03-28`](./examples/carver-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)
+- [`examples/conker-frontier-reset-2026-03-28`](./examples/conker-frontier-reset-2026-03-28/report/README.md)
 
 The `conker` examples are intentionally split:
 
 - `conker-artifact-quick-check` is the artifact-boundary and invalidation layer
 - `conker-backlog` is the run-history, lineage, and survival layer
+- `conker-frontier-reset` is the reset-era strict-anchor bundle after the contaminated frontier died
 
 ## Brutal Example
 

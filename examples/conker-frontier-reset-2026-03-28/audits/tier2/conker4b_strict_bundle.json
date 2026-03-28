@@ -1,0 +1,223 @@
+{
+  "bundle": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.npz",
+  "tensor_count": 3,
+  "tensors": [
+    {
+      "name": "base.local_readout.layers.0.weight",
+      "shape": [
+        1280,
+        1280
+      ],
+      "spectral": {
+        "fro_norm": 92.52787676889288,
+        "sigma1": 19.059406551098828,
+        "sigma16": 10.870575501993065,
+        "sigma_last": 1.644718869915433e-05,
+        "top16_energy_frac": 0.3604779229188941,
+        "decay_1_to_16": 1.7533024399310213,
+        "decay_1_to_last": 1158824.58088894
+      },
+      "regions": {
+        "upper_l2": 55.51580186429567,
+        "diag_l2": 2.540480705844997,
+        "lower_l2": 73.97938686219689,
+        "upper_frac": 0.5999900116908294,
+        "diag_frac": 0.027456381736612873,
+        "upper_plus_diag_frac": 0.600617904350868
+      }
+    },
+    {
+      "name": "causal_mask",
+      "shape": [
+        256,
+        256
+      ],
+      "spectral": {
+        "fro_norm": 180.66543665017943,
+        "sigma1": 162.65660800398388,
+        "sigma16": 5.254928589929197,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.987383626386984,
+        "decay_1_to_16": 30.953152877416258,
+        "decay_1_to_last": 162656608003983.88
+      },
+      "regions": {
+        "upper_l2": 0.0,
+        "diag_l2": 0.0,
+        "lower_l2": 180.66543665017943,
+        "upper_frac": 0.0,
+        "diag_frac": 0.0,
+        "upper_plus_diag_frac": 0.0
+      },
+      "mask_geometry": {
+        "active_mean": 1.0,
+        "active_std": 0.0,
+        "active_min": 1.0,
+        "active_max": 1.0,
+        "mean_lag_std": 0.0,
+        "toeplitz": {
+          "mask_l1_deviation": 0.0,
+          "mask_l2_deviation": 0.0,
+          "mask_max_abs_deviation": 0.0,
+          "mask_cosine_similarity": 1.0000000000000002
+        },
+        "residual_norm": 0.0,
+        "residual_mean_abs": 0.0,
+        "lag_profile_head": [
+          {
+            "lag": 1,
+            "count": 255,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 2,
+            "count": 254,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 3,
+            "count": 253,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 4,
+            "count": 252,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 5,
+            "count": 251,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 6,
+            "count": 250,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 7,
+            "count": 249,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 8,
+            "count": 248,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 9,
+            "count": 247,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 10,
+            "count": 246,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 11,
+            "count": 245,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 12,
+            "count": 244,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 13,
+            "count": 243,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 14,
+            "count": 242,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 15,
+            "count": 241,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          },
+          {
+            "lag": 16,
+            "count": 240,
+            "mean": 1.0,
+            "std": 0.0,
+            "min": 1.0,
+            "max": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "recency_kernel",
+      "shape": [
+        256,
+        256
+      ],
+      "spectral": {
+        "fro_norm": 39.6170523222914,
+        "sigma1": 11.939244107794815,
+        "sigma16": 4.958503770330823,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.7321347295058597,
+        "decay_1_to_16": 2.4078320115905147,
+        "decay_1_to_last": 11939244107794.816
+      },
+      "regions": {
+        "upper_l2": 0.0,
+        "diag_l2": 0.0,
+        "lower_l2": 39.6170523222914,
+        "upper_frac": 0.0,
+        "diag_frac": 0.0,
+        "upper_plus_diag_frac": 0.0
+      }
+    }
+  ]
+}

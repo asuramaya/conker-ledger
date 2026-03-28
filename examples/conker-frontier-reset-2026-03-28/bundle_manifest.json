@@ -1,0 +1,121 @@
+{
+  "bundle_id": "conker-frontier-reset-2026-03-28",
+  "claim": {
+    "candidate_id": "conker-frontier-reset-2026-03-28",
+    "requested_label": "Tier-2 structurally audited",
+    "summary": "Current clean strict anchor and first memory-first restart after the March 28 reset."
+  },
+  "metrics": {
+    "conker4b_strict": {
+      "bridge_bpb": 2.0589387458211483,
+      "full_eval_bpb": 2.0971244136143423,
+      "full_eval_int6_bpb": 2.105479516818886,
+      "artifact_bytes": 3730410
+    },
+    "conker10": {
+      "bridge_bpb": 2.2397347450734397,
+      "packed_memory_bytes": 12599296,
+      "int6_bpb": 2.2608215482672507
+    },
+    "conker10a": {
+      "memory_only_bpb": 6.089214172588595,
+      "fixed_blend_bpb": 2.84364327924912,
+      "fixed_blend_int6_bpb": 2.87529217250881
+    }
+  },
+  "provenance": {
+    "source_repo": "/Users/asuramaya/Code/carving_machine_v3/conker",
+    "source_root": "/Users/asuramaya/Code/carving_machine_v3/conker/out",
+    "notes": [
+      "This bundle separates the broken tandem artifact, the corrected invalid tandem artifact, the strict clean artifact, and the first Conker-10 restart.",
+      "It is a public static bundle, not a runtime legality replay."
+    ],
+    "artifact_paths": [
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker5_seed43_int6_model.ptz",
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker5_tandem_seq256_steps1000_lr5e4_seed42_int6_model.ptz",
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42.int6.ptz",
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10_packedmix_b2048_seq256_steps500_lr5e4_seed42_2026-03-28.npz"
+    ]
+  },
+  "audits": {
+    "tier1": {
+      "status": "pass",
+      "summary": "Metrics and source artifacts for the reset frontier are attached."
+    },
+    "tier2": {
+      "status": "warn",
+      "summary": "Artifact-boundary and structural audits attached. Old tandem artifact packed deterministic substrate; corrected tandem still carries structural-control payload; strict artifact removes it."
+    },
+    "tier3": {
+      "status": "missing",
+      "summary": "No runtime replay adapter is attached in this public reset bundle."
+    }
+  },
+  "attachments": [
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker5_broken_artifact.json",
+      "dest": "audits/tier2/conker5_broken_artifact.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker5_corrected_artifact.json",
+      "dest": "audits/tier2/conker5_corrected_artifact.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker4b_strict_artifact.json",
+      "dest": "audits/tier2/conker4b_strict_artifact.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker4b_strict_bundle.json",
+      "dest": "audits/tier2/conker4b_strict_bundle.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker4b_tandem_vs_strict_compare.json",
+      "dest": "audits/tier2/conker4b_tandem_vs_strict_compare.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/tool_reports/frontier_reset_2026-03-28/detect/conker10_bundle.json",
+      "dest": "audits/tier2/conker10_bundle.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.json",
+      "dest": "artifacts/source/conker4b_strict_bridge.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_none_2026-03-28.json",
+      "dest": "artifacts/source/conker4b_strict_fullval.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_int6_2026-03-28.json",
+      "dest": "artifacts/source/conker4b_strict_fullval_int6.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10_packedmix_b2048_seq256_steps500_lr5e4_seed42_2026-03-28.json",
+      "dest": "artifacts/source/conker10_bridge.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10a_memoryonly_b2048_seq256_seed42_2026-03-28.json",
+      "dest": "artifacts/source/conker10a_memoryonly.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10a_fixedblend_b2048_seq256_steps500_lr5e4_seed42_2026-03-28.json",
+      "dest": "artifacts/source/conker10a_fixedblend.json",
+      "kind": "file"
+    }
+  ],
+  "source_manifest": "/Users/asuramaya/Code/carving_machine_v3/conker-ledger/examples/conker-frontier-reset-2026-03-28/bundle_manifest.json",
+  "claim_level": {
+    "level": 1,
+    "label": "Bridge metric only"
+  }
+}

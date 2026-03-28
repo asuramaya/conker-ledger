@@ -1,0 +1,1284 @@
+{
+  "artifact": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker5_tandem_seq256_steps1000_lr5e4_seed42_int6_model.ptz",
+  "compressed_bytes": 3723959,
+  "raw_pickle_bytes": 8956303,
+  "entry_count": 67,
+  "class_counts": {
+    "structural_control": 10,
+    "learned_payload": 50,
+    "deterministic_substrate": 7
+  },
+  "class_payload_bytes": {
+    "structural_control": 278528,
+    "learned_payload": 8651014,
+    "deterministic_substrate": 22564
+  },
+  "kind_payload_bytes": {
+    "fp16": 337194,
+    "quant": 8614912
+  },
+  "largest_entries": [
+    {
+      "name": "base.linear_readout.layers.0.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 3688960,
+      "numel": 3687680,
+      "shapes": {
+        "q": [
+          1280,
+          2880
+        ],
+        "scale": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.layers.0.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1640960,
+      "numel": 1639680,
+      "shapes": {
+        "q": [
+          1280,
+          1280
+        ],
+        "scale": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.out.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1312768,
+      "numel": 1311744,
+      "shapes": {
+        "q": [
+          1024,
+          1280
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.out.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1312768,
+      "numel": 1311744,
+      "shapes": {
+        "q": [
+          1024,
+          1280
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.linear_embedding.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 329728,
+      "numel": 328704,
+      "shapes": {
+        "q": [
+          1024,
+          320
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_embedding.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 329728,
+      "numel": 328704,
+      "shapes": {
+        "q": [
+          1024,
+          320
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "causal_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 131072,
+      "numel": 65536,
+      "shapes": {
+        "data": [
+          256,
+          256
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "recency_kernel",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 131072,
+      "numel": 65536,
+      "shapes": {
+        "data": [
+          256,
+          256
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "delim_subtype_token_mask",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 12288,
+      "numel": 6144,
+      "shapes": {
+        "data": [
+          6,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "class_to_token_mask",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 10240,
+      "numel": 5120,
+      "shapes": {
+        "data": [
+          5,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "wordclass_token_mask",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 10240,
+      "numel": 5120,
+      "shapes": {
+        "data": [
+          5,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "stack_closer_token_mask",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 8192,
+      "numel": 4096,
+      "shapes": {
+        "data": [
+          4,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.layers.0.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2560,
+      "numel": 1280,
+      "shapes": {
+        "data": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.layers.0.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2560,
+      "numel": 1280,
+      "shapes": {
+        "data": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "attr_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.out.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    }
+  ],
+  "entries": [
+    {
+      "name": "attr_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.bank_gate_logits",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 4,
+      "numel": 2,
+      "shapes": {
+        "data": [
+          2
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.linear_embedding.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 329728,
+      "numel": 328704,
+      "shapes": {
+        "q": [
+          1024,
+          320
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.layers.0.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2560,
+      "numel": 1280,
+      "shapes": {
+        "data": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.layers.0.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 3688960,
+      "numel": 3687680,
+      "shapes": {
+        "q": [
+          1280,
+          2880
+        ],
+        "scale": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.out.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.linear_readout.out.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1312768,
+      "numel": 1311744,
+      "shapes": {
+        "q": [
+          1024,
+          1280
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_embedding.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 329728,
+      "numel": 328704,
+      "shapes": {
+        "q": [
+          1024,
+          320
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.layers.0.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2560,
+      "numel": 1280,
+      "shapes": {
+        "data": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.layers.0.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1640960,
+      "numel": 1639680,
+      "shapes": {
+        "q": [
+          1280,
+          1280
+        ],
+        "scale": [
+          1280
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.out.bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "base.local_readout.out.weight",
+      "kind": "quant",
+      "class": "learned_payload",
+      "payload_bytes": 1312768,
+      "numel": 1311744,
+      "shapes": {
+        "q": [
+          1024,
+          1280
+        ],
+        "scale": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "q": "int8",
+        "scale": "float16"
+      }
+    },
+    {
+      "name": "bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "causal_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 131072,
+      "numel": 65536,
+      "shapes": {
+        "data": [
+          256,
+          256
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "class_axis",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 10,
+      "numel": 5,
+      "shapes": {
+        "data": [
+          5
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "class_to_token_mask",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 10240,
+      "numel": 5120,
+      "shapes": {
+        "data": [
+          5,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "delim_subtype_axis",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 12,
+      "numel": 6,
+      "shapes": {
+        "data": [
+          6
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "delim_subtype_ids",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "delim_subtype_token_mask",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 12288,
+      "numel": 6144,
+      "shapes": {
+        "data": [
+          6,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "delimiter_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "entity_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "markup_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "number_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "recency_kernel",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 131072,
+      "numel": 65536,
+      "shapes": {
+        "data": [
+          256,
+          256
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "special_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "stack_close_ids",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "stack_closer_token_mask",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 8192,
+      "numel": 4096,
+      "shapes": {
+        "data": [
+          4,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "stack_open_ids",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_abstain_bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_abstain_feature_weights",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 12,
+      "numel": 6,
+      "shapes": {
+        "data": [
+          6
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_bias",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 22,
+      "numel": 11,
+      "shapes": {
+        "data": [
+          11
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_feature_weights",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 132,
+      "numel": 66,
+      "shapes": {
+        "data": [
+          11,
+          6
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_flag_weights",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 22,
+      "numel": 11,
+      "shapes": {
+        "data": [
+          11
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "support_gate_mass_weights",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 22,
+      "numel": 11,
+      "shapes": {
+        "data": [
+          11
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "token_class_ids",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "urlpath_mask",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "vocab_axis",
+      "kind": "fp16",
+      "class": "structural_control",
+      "payload_bytes": 2048,
+      "numel": 1024,
+      "shapes": {
+        "data": [
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_attr2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_attr2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_base",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_delim2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_delim2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_delimsub2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_delimsub2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_entity2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_entity2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact1",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact1_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact3",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_exact3_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_markup2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_markup2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_number2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_number2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_recency",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_recency_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_special2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_special2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_stack2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_stack2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_urlpath2",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_urlpath2_flag",
+      "kind": "fp16",
+      "class": "learned_payload",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_wordclass2",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "w_wordclass2_flag",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 2,
+      "numel": 1,
+      "shapes": {
+        "data": []
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    },
+    {
+      "name": "wordclass_token_mask",
+      "kind": "fp16",
+      "class": "deterministic_substrate",
+      "payload_bytes": 10240,
+      "numel": 5120,
+      "shapes": {
+        "data": [
+          5,
+          1024
+        ]
+      },
+      "dtypes": {
+        "data": "float16"
+      }
+    }
+  ],
+  "alerts": [
+    "artifact includes deterministic substrate entries (7 entries, 22564 raw bytes)",
+    "artifact includes structural-control entries (10 entries, 278528 raw bytes)"
+  ]
+}

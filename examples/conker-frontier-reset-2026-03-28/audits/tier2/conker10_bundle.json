@@ -1,0 +1,19 @@
+{
+  "bundle": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10_packedmix_b2048_seq256_steps500_lr5e4_seed42_2026-03-28.npz",
+  "tensor_count": 1,
+  "tensors": [
+    {
+      "name": "packed_bigram_counts",
+      "shape": [
+        1024,
+        1024
+      ],
+      "nonzero_count": 94958,
+      "nonzero_frac": 0.09055900573730469,
+      "sum": 999999.0,
+      "mean": 0.9536733627319336,
+      "max": 2451.0,
+      "min": 0.0
+    }
+  ]
+}

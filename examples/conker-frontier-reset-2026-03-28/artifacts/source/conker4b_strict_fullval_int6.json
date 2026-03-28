@@ -1,0 +1,24 @@
+{
+  "summary_json": "/Users/asuramaya/code/carving_machine_V3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.json",
+  "state_npz": "/Users/asuramaya/code/carving_machine_V3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.npz",
+  "split": "test",
+  "transform": "none",
+  "transform_seed": 42,
+  "full_split": true,
+  "quant_bits": 6,
+  "eval_loss": 3.555013969196163,
+  "eval_bits_per_token": 5.128801023650294,
+  "eval_bpb": 2.105479516818886,
+  "eval_tokens": 62021632,
+  "source_tokens": 62021632,
+  "packed_stats": {
+    "bits": 6.0,
+    "payload_bytes_est": 6474004.0,
+    "payload_mb_est": 6.174091339111328,
+    "quantized_params": 8601600,
+    "kept_params": 4746
+  },
+  "artifact_bytes_zlib": 3730410,
+  "artifact_bytes_raw": 8627492,
+  "artifact_out": "/Users/asuramaya/code/carving_machine_V3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42.int6.ptz"
+}

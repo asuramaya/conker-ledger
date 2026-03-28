@@ -1,0 +1,107 @@
+{
+  "lhs_bundle": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_2026-03-27.npz",
+  "rhs_bundle": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.npz",
+  "shared_tensor_count": 2,
+  "lhs_only": [],
+  "rhs_only": [],
+  "tensors": [
+    {
+      "name": "causal_mask",
+      "lhs_name": "causal_mask",
+      "rhs_name": "causal_mask",
+      "shape": [
+        256,
+        256
+      ],
+      "compare": {
+        "cosine_to_reference": 0.9988050701217123,
+        "l2_deviation": 0.04797664797049938,
+        "l1_deviation": 0.03544918724042262,
+        "max_abs_deviation": 0.5975669622421265
+      },
+      "lhs_spectral": {
+        "fro_norm": 188.98709734493244,
+        "sigma1": 171.12052706842962,
+        "sigma16": 5.415941993960139,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.9889378851710786,
+        "decay_1_to_16": 31.595708975329373,
+        "decay_1_to_last": 171120527068429.62
+      },
+      "rhs_spectral": {
+        "fro_norm": 180.66543665017943,
+        "sigma1": 162.65660800398388,
+        "sigma16": 5.254928589929197,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.987383626386984,
+        "decay_1_to_16": 30.953152877416258,
+        "decay_1_to_last": 162656608003983.88
+      },
+      "lhs_regions": {
+        "upper_l2": 5.631595792830689,
+        "diag_l2": 6.011621301631351,
+        "lower_l2": 188.80749058502656,
+        "upper_frac": 0.0297988374441886,
+        "diag_frac": 0.03180969169900079,
+        "upper_plus_diag_frac": 0.04358700722704721
+      },
+      "rhs_regions": {
+        "upper_l2": 0.0,
+        "diag_l2": 0.0,
+        "lower_l2": 180.66543665017943,
+        "upper_frac": 0.0,
+        "diag_frac": 0.0,
+        "upper_plus_diag_frac": 0.0
+      }
+    },
+    {
+      "name": "recency_kernel",
+      "lhs_name": "recency_kernel",
+      "rhs_name": "recency_kernel",
+      "shape": [
+        256,
+        256
+      ],
+      "compare": {
+        "cosine_to_reference": 0.9999999999999999,
+        "l2_deviation": 0.0,
+        "l1_deviation": 0.0,
+        "max_abs_deviation": 0.0
+      },
+      "lhs_spectral": {
+        "fro_norm": 39.6170523222914,
+        "sigma1": 11.939244107794815,
+        "sigma16": 4.958503770330823,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.7321347295058597,
+        "decay_1_to_16": 2.4078320115905147,
+        "decay_1_to_last": 11939244107794.816
+      },
+      "rhs_spectral": {
+        "fro_norm": 39.6170523222914,
+        "sigma1": 11.939244107794815,
+        "sigma16": 4.958503770330823,
+        "sigma_last": 0.0,
+        "top16_energy_frac": 0.7321347295058597,
+        "decay_1_to_16": 2.4078320115905147,
+        "decay_1_to_last": 11939244107794.816
+      },
+      "lhs_regions": {
+        "upper_l2": 0.0,
+        "diag_l2": 0.0,
+        "lower_l2": 39.6170523222914,
+        "upper_frac": 0.0,
+        "diag_frac": 0.0,
+        "upper_plus_diag_frac": 0.0
+      },
+      "rhs_regions": {
+        "upper_l2": 0.0,
+        "diag_l2": 0.0,
+        "lower_l2": 39.6170523222914,
+        "upper_frac": 0.0,
+        "diag_frac": 0.0,
+        "upper_plus_diag_frac": 0.0
+      }
+    }
+  ]
+}

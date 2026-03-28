@@ -1,0 +1,143 @@
+{
+  "title": "conker-10 golf bridge cell",
+  "config": {
+    "data": {
+      "path": null,
+      "limit_chars": 10000000,
+      "split": 0.9,
+      "alphabet": " abcdefghijklmnopqrstuvwxyz",
+      "tokenizer": "char",
+      "bpe_vocab_size": 1024,
+      "bpe_cache_path": null
+    },
+    "regime_switch": {
+      "root": null,
+      "book_files": [
+        "pg3200.txt",
+        "pg5600.txt",
+        "pg200.txt",
+        "pg11800.txt"
+      ],
+      "split": 0.9,
+      "alphabet": " abcdefghijklmnopqrstuvwxyz",
+      "tokenizer": "char",
+      "bpe_vocab_size": 1024,
+      "bpe_cache_path": null,
+      "skip_chars": 4096,
+      "chars_per_book": 1500000,
+      "total_chars": 4000000,
+      "block_chars": 2048,
+      "block_jitter": 512,
+      "seed": 42
+    },
+    "ouroboros": {
+      "prompt_len": 64,
+      "rollout_len": 128,
+      "num_prompts": 16,
+      "boundary_band": 128
+    },
+    "train": {
+      "seq_len": 256,
+      "batch_size": 16,
+      "learning_rate": 0.0005,
+      "weight_decay": 1e-05,
+      "grad_clip": 1.0,
+      "steps": 500,
+      "log_every": 100,
+      "eval_batches": 50,
+      "seeds": [
+        42
+      ]
+    },
+    "reservoir": {
+      "size": 5000,
+      "connectivity": 0.1,
+      "spectral_radius": 0.99,
+      "embedding_dim": 32,
+      "topology": "erdos_renyi",
+      "rewire_prob": 0.1,
+      "seed": 42
+    },
+    "profile": "pilot"
+  },
+  "dataset": {
+    "source_path": "conker/data/datasets/fineweb10B_sp1024/fineweb_train_*.bin :: conker/data/datasets/fineweb10B_sp1024/fineweb_val_*.bin",
+    "tokenizer": "sp1024",
+    "tokenizer_path": "conker/data/tokenizers/fineweb_1024_bpe.model",
+    "train_token_count": 1000000000,
+    "test_token_count": 62021846,
+    "test_tokens_per_byte": 0.4105207785675556,
+    "test_bytes_per_token": 2.4359302919801884
+  },
+  "model": {
+    "preset": "conker10",
+    "variant": "window4",
+    "scale": 10.0,
+    "freeze_base": false,
+    "params": 8606406,
+    "seed": 42,
+    "packed_tokens": 1000000,
+    "trigram_buckets": 2048,
+    "packed_bytes": 12599296,
+    "alpha_bigram": 4.0,
+    "alpha_trigram": 2.0,
+    "controller_hidden": 16,
+    "controller_temperature": 1.0
+  },
+  "train": {
+    "steps": 500,
+    "train_time_sec": 28.43624496459961,
+    "train_eval_loss": 3.8381064558029174,
+    "test_eval_loss": 3.7816985273361206,
+    "overfit_pct": 0.18311749291715085,
+    "nats_per_token": 3.8381064558029174,
+    "bits_per_token": 5.537217150190784,
+    "bits_per_byte": 2.273142695593942
+  },
+  "test": {
+    "nats_per_token": 3.7816985273361206,
+    "bits_per_token": 5.455837711524917,
+    "bits_per_byte": 2.2397347450734397
+  },
+  "artifact": {
+    "trainable_payload_bytes_est": 34425624.0,
+    "trainable_payload_mb_est": 32.830833435058594,
+    "packed_memory_bytes": 12599296,
+    "total_bytes_est": 47024920.0,
+    "total_mb_est": 44.846458435058594
+  },
+  "quantized": [
+    {
+      "bits": 4,
+      "train_nats_per_token": 4.354362058639526,
+      "test_nats_per_token": 4.394645080566407,
+      "test_bits_per_token": 6.340132664200234,
+      "test_bits_per_byte": 2.6027561975290707,
+      "stats": {
+        "bits": 4.0,
+        "payload_bytes_est": 4323724.0,
+        "payload_mb_est": 4.123424530029297,
+        "quantized_params": 8601600.0,
+        "kept_params": 4806.0,
+        "total_bytes_est": 16923020.0,
+        "total_mb_est": 16.139049530029297
+      }
+    },
+    {
+      "bits": 6,
+      "train_nats_per_token": 3.984401617050171,
+      "test_nats_per_token": 3.817302713394165,
+      "test_bits_per_token": 5.507203694185746,
+      "test_bits_per_byte": 2.2608215482672507,
+      "stats": {
+        "bits": 6.0,
+        "payload_bytes_est": 6474124.0,
+        "payload_mb_est": 6.174205780029297,
+        "quantized_params": 8601600.0,
+        "kept_params": 4806.0,
+        "total_bytes_est": 19073420.0,
+        "total_mb_est": 18.189830780029297
+      }
+    }
+  ]
+}

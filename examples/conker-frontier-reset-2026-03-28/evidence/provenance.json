@@ -1,0 +1,14 @@
+{
+  "source_repo": "/Users/asuramaya/Code/carving_machine_v3/conker",
+  "source_root": "/Users/asuramaya/Code/carving_machine_v3/conker/out",
+  "notes": [
+    "This bundle separates the broken tandem artifact, the corrected invalid tandem artifact, the strict clean artifact, and the first Conker-10 restart.",
+    "It is a public static bundle, not a runtime legality replay."
+  ],
+  "artifact_paths": [
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker5_seed43_int6_model.ptz",
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker5_tandem_seq256_steps1000_lr5e4_seed42_int6_model.ptz",
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42.int6.ptz",
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker10_packedmix_b2048_seq256_steps500_lr5e4_seed42_2026-03-28.npz"
+  ]
+}

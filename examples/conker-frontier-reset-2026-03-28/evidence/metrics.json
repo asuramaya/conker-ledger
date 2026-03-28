@@ -1,0 +1,18 @@
+{
+  "conker4b_strict": {
+    "bridge_bpb": 2.0589387458211483,
+    "full_eval_bpb": 2.0971244136143423,
+    "full_eval_int6_bpb": 2.105479516818886,
+    "artifact_bytes": 3730410
+  },
+  "conker10": {
+    "bridge_bpb": 2.2397347450734397,
+    "packed_memory_bytes": 12599296,
+    "int6_bpb": 2.2608215482672507
+  },
+  "conker10a": {
+    "memory_only_bpb": 6.089214172588595,
+    "fixed_blend_bpb": 2.84364327924912,
+    "fixed_blend_int6_bpb": 2.87529217250881
+  }
+}

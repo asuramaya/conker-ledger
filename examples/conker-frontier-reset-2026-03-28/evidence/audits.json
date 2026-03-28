@@ -1,0 +1,14 @@
+{
+  "tier1": {
+    "status": "pass",
+    "summary": "Metrics and source artifacts for the reset frontier are attached."
+  },
+  "tier2": {
+    "status": "warn",
+    "summary": "Artifact-boundary and structural audits attached. Old tandem artifact packed deterministic substrate; corrected tandem still carries structural-control payload; strict artifact removes it."
+  },
+  "tier3": {
+    "status": "missing",
+    "summary": "No runtime replay adapter is attached in this public reset bundle."
+  }
+}
