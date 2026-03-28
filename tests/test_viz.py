@@ -250,3 +250,39 @@ def test_render_survival_mermaid_basic():
 def test_render_survival_mermaid_empty():
     result = render_survival_mermaid([])
     assert "graph LR" in result
+
+
+def test_report_bundle_produces_new_files(tmp_path: Path):
+    import json
+    from conker_ledger.ledger import scan_results, write_report_bundle
+
+    # Create minimal test data: one bridge + one full_eval for the same run
+    src_dir = tmp_path / "src"
+    src_dir.mkdir()
+    bridge = {
+        "model": {
+            "test_bpb": 0.55,
+            "saved_state_path": "/tmp/fam_a_seed42.npz",
+            "loaded_state_path": "/tmp/parent_seed42.npz",
+            "seed": 42,
+        },
+        "quantization": [],
+    }
+    full_eval = {
+        "eval_bpb": 0.56,
+        "state_npz": "/tmp/fam_a_seed42.npz",
+        "quant_bits": 0,
+    }
+    (src_dir / "fam_a_seed42_2026-03-28.json").write_text(json.dumps(bridge))
+    (src_dir / "fam_a_seed42_fullval_test_none_2026-03-28.json").write_text(json.dumps(full_eval))
+
+    out_dir = tmp_path / "report"
+    write_report_bundle(src_dir, out_dir)
+
+    assert (out_dir / "survival_status.svg").exists()
+    assert (out_dir / "delta_fp16_histogram.svg").exists()
+    assert (out_dir / "bridge_vs_full_grouped.svg").exists()
+    readme = (out_dir / "README.md").read_text()
+    assert "```mermaid" in readme
+    assert "graph TD" in readme
+    assert "graph LR" in readme

@@ -724,6 +724,7 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
     write_csv(out_dir / "survival.csv", survival_non_bridge, ["family_id", "run_id", "seed", "bridge_fp16", "full_fp16", "bridge_int6", "full_int6", "delta_fp16", "delta_int6", "status"])
     write_csv(out_dir / "failed_full_eval.csv", failed, ["family_id", "run_id", "seed", "bridge_fp16", "bridge_int6", "status", "bridge_path"])
 
+    # --- existing SVG charts (improved) ---
     full_labels = [f"{row['family_id']}:{row.get('quant_label')}" for row in top_full_eval[: min(12, len(top_full_eval))]]
     full_values = [row["bpb"] for row in top_full_eval[: min(12, len(top_full_eval))] if row.get("bpb") is not None]
     if full_values:
@@ -737,16 +738,66 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
         x_key="bridge_fp16",
         y_key="full_fp16",
         label_key="family_id",
+        reference_line=True,
     )
 
     conker7_rows = [row for row in survival if str(row["family_id"]).startswith("conker7_")]
+    conker7_with_bpb = [row for row in conker7_rows if row.get("bridge_fp16") is not None]
     write_bar_svg(
         out_dir / "conker7_bridge_fp16.svg",
         "Conker-7 Bridge FP16 Rows",
-        [row["family_id"] for row in conker7_rows],
-        [row["bridge_fp16"] for row in conker7_rows if row.get("bridge_fp16") is not None],
+        [row["family_id"] for row in conker7_with_bpb],
+        [row["bridge_fp16"] for row in conker7_with_bpb],
     )
 
+    # --- new SVG charts ---
+    # survival status pie
+    survived_count = sum(1 for r in survival if r["status"] == "survived_full_eval")
+    failed_count = len(failed)
+    bridge_only_count = sum(1 for r in survival if r["status"] == "bridge_only")
+    pie_labels = []
+    pie_values: list[float] = []
+    pie_colors = []
+    if survived_count:
+        pie_labels.append("survived_full_eval")
+        pie_values.append(survived_count)
+        pie_colors.append("#2ca02c")
+    if failed_count:
+        pie_labels.append("full_eval_failed")
+        pie_values.append(failed_count)
+        pie_colors.append("#c23b22")
+    if bridge_only_count:
+        pie_labels.append("bridge_only")
+        pie_values.append(bridge_only_count)
+        pie_colors.append("#7f7f7f")
+    write_pie_svg(out_dir / "survival_status.svg", "Survival Status", pie_labels, pie_values, pie_colors)
+
+    # delta histogram
+    deltas = [row["delta_fp16"] for row in survival_non_bridge if row.get("delta_fp16") is not None]
+    write_histogram_svg(out_dir / "delta_fp16_histogram.svg", "Bridge-to-Full Delta (FP16)", deltas)
+
+    # grouped bar: bridge vs full by family
+    family_best: dict[str, dict[str, Any]] = {}
+    for row in survival_non_bridge:
+        fid = row["family_id"]
+        if row.get("bridge_fp16") is not None and row.get("full_fp16") is not None:
+            if fid not in family_best or (row["full_fp16"] < family_best[fid]["full_fp16"]):
+                family_best[fid] = row
+    grouped_rows = sort_records(list(family_best.values()), "full_fp16")[:12]
+    write_grouped_bar_svg(
+        out_dir / "bridge_vs_full_grouped.svg",
+        "Bridge vs Full-Eval by Family",
+        grouped_rows,
+        key_a="bridge_fp16",
+        key_b="full_fp16",
+        label_key="family_id",
+    )
+
+    # --- mermaid diagrams ---
+    lineage_mermaid = render_lineage_mermaid(lineage)
+    survival_mermaid = render_survival_mermaid(survival)
+
+    # --- README ---
     summary_lines = [
         "# Public Backlog Report",
         "",
@@ -762,27 +813,43 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
     ]
     if top_full_eval:
         best = top_full_eval[0]
-        summary_lines.extend(
-            [
-                f"- best normalized full eval in this backlog: `{best['family_id']}` `{best['quant_label']}` at `{best['bpb']:.6f} bpb`",
-            ]
+        summary_lines.append(
+            f"- best normalized full eval in this backlog: `{best['family_id']}` `{best['quant_label']}` at `{best['bpb']:.6f} bpb`"
         )
     if failed:
         summary_lines.append(f"- full-eval failures detected after optimistic bridge results: `{len(failed)}`")
     summary_lines.extend(
         [
             "",
+            "## Survival Pipeline",
+            "",
+            "```mermaid",
+            survival_mermaid,
+            "```",
+            "",
+            "## Lineage",
+            "",
+            "```mermaid",
+            lineage_mermaid,
+            "```",
+            "",
             "## Files",
             "",
             "- `scan_summary.json`",
             "- `top_full_eval.json` / `top_full_eval.csv` / `top_full_eval.svg`",
             "- `top_bridge.json`",
-            "- `survival.json` / `survival.csv` / `bridge_vs_full_fp16.svg`",
+            "- `survival.json` / `survival.csv` / `survival_status.svg`",
             "- `failed_full_eval.json` / `failed_full_eval.csv`",
             "- `lineage.json`",
+            "- `bridge_vs_full_fp16.svg` / `bridge_vs_full_grouped.svg`",
+            "- `delta_fp16_histogram.svg`",
             "- `conker7_bridge_fp16.svg`",
             "",
             "## Visuals",
+            "",
+            "### Survival Status",
+            "",
+            "![Survival status](./survival_status.svg)",
             "",
             "### Top Full-Eval Rows",
             "",
@@ -791,6 +858,14 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
             "### Bridge vs Full-Eval FP16",
             "",
             "![Bridge vs full fp16](./bridge_vs_full_fp16.svg)",
+            "",
+            "### Bridge vs Full-Eval by Family",
+            "",
+            "![Bridge vs full grouped](./bridge_vs_full_grouped.svg)",
+            "",
+            "### Delta Distribution (FP16)",
+            "",
+            "![Delta histogram](./delta_fp16_histogram.svg)",
             "",
             "### Conker-7 Bridge Rows",
             "",
