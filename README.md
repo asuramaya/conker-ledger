@@ -146,3 +146,23 @@ Current examples:
 - [`examples/carver-quick-check-2026-03-28`](./examples/carver-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)
+
+## Brutal Example
+
+If you want the point of validity packaging in one page, read the `conker` quick check:
+
+- [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
+
+The short version is ugly:
+
+- `conker4b_tandem` looked strong on score at `0.5718232495381582 bpb` on full eval, but its extracted causal mask still carried forbidden-region structure with `upper_plus_diag_frac = 0.04358700722704721`.
+- `conker4b_strict` removed that leak completely and the score collapsed to `2.0971244136143423 bpb`.
+- `conker6_mask_geometry` had smaller-looking forbidden mass, `upper_frac = 0.011201489739837839` and `diag_frac = 0.017354798229237627`, but replacing the learned mask with its Toeplitz mean still detonated `full_test_bpb` from `0.07209327818598087` to `5.752106388513692`.
+
+That is the whole reason this repo exists:
+
+- a branch can look frontier on paper and still be invalid
+- a tiny illegal region can carry most of the win
+- once the leak is removed, the miracle often turns back into an ordinary bad model
+
+If a result dies the moment you enforce the rule it was supposed to satisfy, it was not a breakthrough. It was a side channel.
