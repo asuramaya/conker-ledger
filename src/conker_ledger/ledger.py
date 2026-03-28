@@ -496,6 +496,67 @@ def write_pie_svg(
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 
 
+def write_histogram_svg(
+    path: Path,
+    title: str,
+    values: list[float],
+    *,
+    bins: int = 10,
+    width: int = 960,
+    height: int = 400,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not values:
+        path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
+        return
+    margin_left = 60
+    margin_right = 40
+    margin_top = 50
+    margin_bottom = 50
+    plot_width = width - margin_left - margin_right
+    plot_height = height - margin_top - margin_bottom
+    vmin, vmax = min(values), max(values)
+    if vmax == vmin:
+        vmax = vmin + 1e-9
+    bin_width = (vmax - vmin) / bins
+    counts = [0] * bins
+    for v in values:
+        idx = min(int((v - vmin) / bin_width), bins - 1)
+        counts[idx] += 1
+    max_count = max(counts) if counts else 1
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333}'
+        ' .title{font-size:16px;font-weight:700;fill:#111}'
+        ' .axis{stroke:#888;stroke-width:1}'
+        ' .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4}'
+        ' .tick{font-size:10px;fill:#666}'
+        ' .bar{fill:#2f6fed;opacity:0.85}</style>',
+        f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
+    ]
+    # y-axis gridlines
+    for tick in _nice_ticks(0, max_count, 4):
+        py = margin_top + plot_height - (tick / max(max_count, 1)) * plot_height
+        parts.append(f'<line class="grid" x1="{margin_left}" y1="{py:.1f}" x2="{width - margin_right}" y2="{py:.1f}"/>')
+        parts.append(f'<text class="tick" x="{margin_left - 6}" y="{py + 4:.1f}" text-anchor="end">{int(tick)}</text>')
+    # axes
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>')
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top}" x2="{margin_left}" y2="{margin_top + plot_height}"/>')
+    # bars
+    rect_w = plot_width / bins - 2
+    for i, count in enumerate(counts):
+        x = margin_left + i * (plot_width / bins) + 1
+        bar_h = (count / max(max_count, 1)) * plot_height
+        y = margin_top + plot_height - bar_h
+        parts.append(f'<rect class="bar" x="{x:.1f}" y="{y:.1f}" width="{rect_w:.1f}" height="{bar_h:.1f}" rx="1"/>')
+    # x-axis tick labels
+    for tick in _nice_ticks(vmin, vmax, 5):
+        px = margin_left + (tick - vmin) / (vmax - vmin) * plot_width
+        parts.append(f'<text class="tick" x="{px:.1f}" y="{margin_top + plot_height + 16}" text-anchor="middle">{tick:.4f}</text>')
+    parts.append("</svg>")
+    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+
+
 def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
     scanned = scan_results(root)
     records = scanned["records"]

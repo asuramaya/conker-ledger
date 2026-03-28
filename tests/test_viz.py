@@ -9,6 +9,7 @@ from conker_ledger.ledger import (
     write_bar_svg,
     write_scatter_svg,
     write_pie_svg,
+    write_histogram_svg,
 )
 
 
@@ -169,3 +170,23 @@ def test_pie_svg_empty(tmp_path: Path):
     assert "<svg" in content
 
 
+def test_histogram_svg_writes_file(tmp_path: Path):
+    path = tmp_path / "hist.svg"
+    write_histogram_svg(path, "Deltas", [0.01, 0.02, 0.015, 0.008, 0.025, 0.01, 0.012])
+    content = path.read_text()
+    assert content.startswith("<svg")
+    assert "Deltas" in content
+
+
+def test_histogram_svg_single_value(tmp_path: Path):
+    path = tmp_path / "hist.svg"
+    write_histogram_svg(path, "One", [0.5])
+    content = path.read_text()
+    assert "<svg" in content
+
+
+def test_histogram_svg_empty(tmp_path: Path):
+    path = tmp_path / "hist.svg"
+    write_histogram_svg(path, "Empty", [])
+    content = path.read_text()
+    assert "<svg" in content
