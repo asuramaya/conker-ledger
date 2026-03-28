@@ -12,6 +12,7 @@ from conker_ledger.ledger import (
     write_histogram_svg,
     write_grouped_bar_svg,
     render_lineage_mermaid,
+    render_survival_mermaid,
 )
 
 
@@ -231,3 +232,21 @@ def test_render_lineage_mermaid_empty():
     assert "graph TD" in result
 
 
+def test_render_survival_mermaid_basic():
+    rows = [
+        {"status": "bridge_only"},
+        {"status": "bridge_only"},
+        {"status": "survived_full_eval"},
+        {"status": "survived_full_eval"},
+        {"status": "survived_full_eval"},
+        {"status": "full_eval_failed"},
+    ]
+    result = render_survival_mermaid(rows)
+    assert result.startswith("graph LR")
+    assert "6" in result  # total bridge
+    assert "-->" in result
+
+
+def test_render_survival_mermaid_empty():
+    result = render_survival_mermaid([])
+    assert "graph LR" in result

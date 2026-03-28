@@ -663,6 +663,32 @@ def render_lineage_mermaid(rows: list[dict[str, Any]], *, max_nodes: int = 30) -
     return "\n".join(lines)
 
 
+def render_survival_mermaid(rows: list[dict[str, Any]]) -> str:
+    if not rows:
+        return "graph LR\n    empty[No survival data]"
+    total = len(rows)
+    survived = sum(1 for r in rows if r.get("status") == "survived_full_eval")
+    failed = sum(1 for r in rows if r.get("status") == "full_eval_failed")
+    bridge_only = sum(1 for r in rows if r.get("status") == "bridge_only")
+    attempted = survived + failed
+    lines = [
+        "graph LR",
+        f'    A["Bridge Runs<br/>{total}"]',
+        f'    B["Full Eval Attempted<br/>{attempted}"]',
+        f'    C["Survived<br/>{survived}"]',
+        f'    D["Failed<br/>{failed}"]',
+        f'    E["Bridge Only<br/>{bridge_only}"]',
+        "    A --> B",
+        "    A --> E",
+        "    B --> C",
+        "    B --> D",
+        "    style C fill:#2ca02c,color:#fff",
+        "    style D fill:#c23b22,color:#fff",
+        "    style E fill:#7f7f7f,color:#fff",
+    ]
+    return "\n".join(lines)
+
+
 def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
     scanned = scan_results(root)
     records = scanned["records"]
