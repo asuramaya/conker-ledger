@@ -11,6 +11,7 @@ from conker_ledger.ledger import (
     write_pie_svg,
     write_histogram_svg,
     write_grouped_bar_svg,
+    render_lineage_mermaid,
 )
 
 
@@ -211,3 +212,22 @@ def test_grouped_bar_svg_empty(tmp_path: Path):
     write_grouped_bar_svg(path, "Empty", [], key_a="a", key_b="b", label_key="l")
     content = path.read_text()
     assert "<svg" in content
+
+
+def test_render_lineage_mermaid_basic():
+    rows = [
+        {"parent_run_id": "parent_seed42", "child_run_id": "child_a_seed42", "child_bpb": 0.51},
+        {"parent_run_id": "parent_seed42", "child_run_id": "child_b_seed42", "child_bpb": 0.52},
+        {"parent_run_id": "child_a_seed42", "child_run_id": "grandchild_seed42", "child_bpb": 0.50},
+    ]
+    result = render_lineage_mermaid(rows)
+    assert result.startswith("graph TD")
+    assert "parent_seed42" in result or "parent" in result
+    assert "-->" in result
+
+
+def test_render_lineage_mermaid_empty():
+    result = render_lineage_mermaid([])
+    assert "graph TD" in result
+
+

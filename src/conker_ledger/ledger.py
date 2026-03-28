@@ -625,6 +625,44 @@ def write_grouped_bar_svg(
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 
 
+def _mermaid_id(run_id: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9_]", "_", run_id)
+
+
+def render_lineage_mermaid(rows: list[dict[str, Any]], *, max_nodes: int = 30) -> str:
+    if not rows:
+        return "graph TD\n    empty[No lineage data]"
+    # build adjacency and find longest chains
+    children: dict[str, list[str]] = defaultdict(list)
+    bpb_map: dict[str, float | None] = {}
+    for row in rows:
+        p, c = row["parent_run_id"], row["child_run_id"]
+        children[p].append(c)
+        bpb_map[c] = row.get("child_bpb")
+    # collect all unique nodes up to max_nodes
+    seen: set[str] = set()
+    edges: list[tuple[str, str]] = []
+    for row in rows:
+        p, c = row["parent_run_id"], row["child_run_id"]
+        if len(seen) >= max_nodes:
+            break
+        seen.add(p)
+        seen.add(c)
+        edges.append((p, c))
+    lines = ["graph TD"]
+    for node in sorted(seen):
+        mid = _mermaid_id(node)
+        short = _truncate_label(node, 24)
+        bpb = bpb_map.get(node)
+        if bpb is not None:
+            lines.append(f'    {mid}["{short}<br/>{bpb:.4f}"]')
+        else:
+            lines.append(f'    {mid}["{short}"]')
+    for p, c in edges:
+        lines.append(f"    {_mermaid_id(p)} --> {_mermaid_id(c)}")
+    return "\n".join(lines)
+
+
 def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
     scanned = scan_results(root)
     records = scanned["records"]
