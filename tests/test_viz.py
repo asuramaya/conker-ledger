@@ -74,3 +74,31 @@ def test_nice_ticks_basic():
     ticks = _nice_ticks(0.5, 0.6, 5)
     assert len(ticks) >= 2
     assert all(0.5 <= t <= 0.61 for t in ticks)
+
+
+def test_bar_svg_has_gridlines(tmp_path: Path):
+    path = tmp_path / "bar.svg"
+    write_bar_svg(path, "Test", ["a", "b", "c"], [0.5, 0.3, 0.7])
+    content = path.read_text()
+    assert "stroke-dasharray" in content
+
+
+def test_bar_svg_has_tick_labels(tmp_path: Path):
+    path = tmp_path / "bar.svg"
+    write_bar_svg(path, "Test", ["a", "b"], [0.5, 0.3])
+    content = path.read_text()
+    assert 'class="tick"' in content
+
+
+def test_bar_svg_truncates_long_labels(tmp_path: Path):
+    path = tmp_path / "bar.svg"
+    long_label = "a" * 60
+    write_bar_svg(path, "Test", [long_label], [0.5])
+    content = path.read_text()
+    assert "\u2026" in content
+
+
+def test_bar_svg_4dp_values(tmp_path: Path):
+    path = tmp_path / "bar.svg"
+    write_bar_svg(path, "Test", ["a"], [0.123456])
+    content = path.read_text()

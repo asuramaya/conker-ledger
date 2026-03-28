@@ -317,27 +317,42 @@ def write_bar_svg(path: Path, title: str, labels: list[str], values: list[float]
     if not labels or not values:
         path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="120"></svg>\n', encoding="utf-8")
         return
-    margin_left = 220
-    margin_right = 40
+    margin_left = 260
+    margin_right = 80
     margin_top = 50
-    margin_bottom = 30
+    margin_bottom = 40
     plot_width = width - margin_left - margin_right
     plot_height = height - margin_top - margin_bottom
-    bar_gap = 10
+    bar_gap = 6
     bar_height = max(8, (plot_height - bar_gap * (len(values) - 1)) // max(len(values), 1))
     vmax = max(max(values), 1e-12)
+    ticks = _nice_ticks(0, vmax, 5)
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
-        '<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#111} .title{font-size:18px;font-weight:700} .axis{stroke:#888;stroke-width:1} .bar{fill:#2f6fed}</style>',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333}'
+        ' .title{font-size:16px;font-weight:700;fill:#111}'
+        ' .axis{stroke:#888;stroke-width:1}'
+        ' .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4}'
+        ' .tick{font-size:10px;fill:#666}'
+        ' .val{font-size:10px;fill:#333}</style>',
         f'<text class="title" x="{margin_left}" y="28">{_svg_escape(title)}</text>',
-        f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>',
     ]
+    # gridlines and tick labels
+    for tick in ticks:
+        x = margin_left + plot_width * (tick / vmax) if vmax > 0 else margin_left
+        parts.append(f'<line class="grid" x1="{x:.1f}" y1="{margin_top}" x2="{x:.1f}" y2="{margin_top + plot_height}"/>')
+        parts.append(f'<text class="tick" x="{x:.1f}" y="{margin_top + plot_height + 16}" text-anchor="middle">{tick:.4f}</text>')
+    # bottom axis
+    parts.append(f'<line class="axis" x1="{margin_left}" y1="{margin_top + plot_height}" x2="{width - margin_right}" y2="{margin_top + plot_height}"/>')
+    # bars
     for idx, (label, value) in enumerate(zip(labels, values)):
         y = margin_top + idx * (bar_height + bar_gap)
-        bar_w = plot_width * (value / vmax)
-        parts.append(f'<text x="{margin_left - 10}" y="{y + bar_height - 2}" text-anchor="end">{_svg_escape(label)}</text>')
-        parts.append(f'<rect class="bar" x="{margin_left}" y="{y}" width="{bar_w:.2f}" height="{bar_height}"/>')
-        parts.append(f'<text x="{margin_left + bar_w + 8:.2f}" y="{y + bar_height - 2}">{value:.6f}</text>')
+        bar_w = plot_width * (value / vmax) if vmax > 0 else 0
+        color = _family_color(label.split(":")[0])
+        truncated = _truncate_label(_svg_escape(label), 36)
+        parts.append(f'<text x="{margin_left - 8}" y="{y + bar_height - 2}" text-anchor="end">{truncated}</text>')
+        parts.append(f'<rect fill="{color}" x="{margin_left}" y="{y}" width="{bar_w:.2f}" height="{bar_height}" rx="2"/>')
+        parts.append(f'<text class="val" x="{margin_left + bar_w + 6:.2f}" y="{y + bar_height - 2}">{value:.4f}</text>')
     parts.append("</svg>")
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 
