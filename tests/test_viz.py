@@ -8,6 +8,7 @@ from conker_ledger.ledger import (
     _truncate_label,
     write_bar_svg,
     write_scatter_svg,
+    write_pie_svg,
 )
 
 
@@ -137,3 +138,34 @@ def test_scatter_svg_has_reference_line(tmp_path: Path):
     write_scatter_svg(path, "Test", rows, x_key="x", y_key="y", label_key="label", reference_line=True)
     content = path.read_text()
     assert "ref" in content
+
+
+def test_pie_svg_writes_file(tmp_path: Path):
+    path = tmp_path / "pie.svg"
+    write_pie_svg(
+        path, "Status",
+        labels=["survived", "failed", "bridge_only"],
+        values=[10, 3, 50],
+        colors=["#2ca02c", "#c23b22", "#7f7f7f"],
+    )
+    content = path.read_text()
+    assert content.startswith("<svg")
+    assert "Status" in content
+    assert "survived" in content
+
+
+def test_pie_svg_single_segment(tmp_path: Path):
+    path = tmp_path / "pie.svg"
+    write_pie_svg(path, "One", labels=["all"], values=[100], colors=["#2ca02c"])
+    content = path.read_text()
+    assert "<svg" in content
+    assert "all" in content
+
+
+def test_pie_svg_empty(tmp_path: Path):
+    path = tmp_path / "pie.svg"
+    write_pie_svg(path, "Empty", labels=[], values=[], colors=[])
+    content = path.read_text()
+    assert "<svg" in content
+
+

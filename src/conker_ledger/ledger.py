@@ -441,6 +441,61 @@ def write_scatter_svg(
     path.write_text("\n".join(parts) + "\n", encoding="utf-8")
 
 
+def write_pie_svg(
+    path: Path,
+    title: str,
+    labels: list[str],
+    values: list[float],
+    colors: list[str],
+    *,
+    width: int = 480,
+    height: int = 400,
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not values or sum(values) == 0:
+        path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="480" height="120"></svg>\n', encoding="utf-8")
+        return
+    cx, cy = width // 2, height // 2 + 10
+    r = min(cx, cy) - 60
+    total = sum(values)
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}">',
+        '<style>text{font-family:Menlo,Monaco,monospace;font-size:12px;fill:#333}'
+        ' .title{font-size:16px;font-weight:700;fill:#111}'
+        ' .legend{font-size:11px}</style>',
+        f'<text class="title" x="{cx}" y="24" text-anchor="middle">{_svg_escape(title)}</text>',
+    ]
+    angle = -math.pi / 2  # start at 12 o'clock
+    for i, (label, value, color) in enumerate(zip(labels, values, colors)):
+        frac = value / total
+        sweep = frac * 2 * math.pi
+        if len(values) == 1:
+            # full circle
+            parts.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{color}"/>')
+        else:
+            x1 = cx + r * math.cos(angle)
+            y1 = cy + r * math.sin(angle)
+            x2 = cx + r * math.cos(angle + sweep)
+            y2 = cy + r * math.sin(angle + sweep)
+            large = 1 if sweep > math.pi else 0
+            parts.append(
+                f'<path d="M{cx},{cy} L{x1:.2f},{y1:.2f} A{r},{r} 0 {large},1 {x2:.2f},{y2:.2f} Z" fill="{color}"/>'
+            )
+        # label at midpoint of arc
+        mid_angle = angle + sweep / 2
+        lx = cx + (r * 0.65) * math.cos(mid_angle)
+        ly = cy + (r * 0.65) * math.sin(mid_angle)
+        pct = f"{frac * 100:.0f}%"
+        parts.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" fill="#fff" font-weight="700">{int(value)}</text>')
+        # legend entry
+        legend_y = height - 20 * (len(values) - i)
+        parts.append(f'<rect x="10" y="{legend_y - 10}" width="12" height="12" fill="{color}"/>')
+        parts.append(f'<text class="legend" x="28" y="{legend_y}">{_svg_escape(label)} ({pct})</text>')
+        angle += sweep
+    parts.append("</svg>")
+    path.write_text("\n".join(parts) + "\n", encoding="utf-8")
+
+
 def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str, Any]:
     scanned = scan_results(root)
     records = scanned["records"]
