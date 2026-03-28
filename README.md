@@ -1,6 +1,8 @@
 # conker-ledger
 
-`conker-ledger` is the public experiment-memory and result-analysis companion to `conker` and `conker-detect`.
+`conker-ledger` is the public validity-bundle and result-analysis companion to `conker` and `conker-detect`.
+
+The likely sharper long-term scope is not “general lab analysis,” but “validity bundle packaging.” A concrete proposal for that narrowing is in [`docs/VALIDITY_PACKAGER.md`](./docs/VALIDITY_PACKAGER.md).
 
 Where `conker-detect` asks:
 
@@ -19,28 +21,33 @@ It is built for the backlog that accumulates in `conker/out`, but it is generic 
 
 ## What It Does
 
-`conker-ledger` currently supports four commands:
+`conker-ledger` currently supports six commands:
 
-1. `scan`
+1. `bundle`
+- assemble a manifest-first validity bundle
+- package claim metadata, metric evidence, provenance, and copied detector outputs
+- write a portable `claim.json` / `evidence/` / `report/README.md` bundle
+
+2. `scan`
 - walk a directory of JSON outputs
 - normalize bridge runs, full evals, and study/ablation reports
 - emit a machine-readable ledger summary
 
-2. `table`
+3. `table`
 - rank normalized records by metric
 - filter by kind (`bridge`, `full_eval`, `study`)
 - get a quick top-k view without writing a notebook
 
-3. `survival`
+4. `survival`
 - join bridge rows with their full-eval descendants
 - show which runs survived, worsened, or failed with `NaN`
 - surface the exact gap between local search metrics and honest eval
 
-4. `lineage`
+5. `lineage`
 - trace warm-start ancestry through `loaded_state_path -> saved_state_path`
 - identify which branches descend from which checkpoints
 
-5. `report`
+6. `report`
 - write a public report bundle with JSON, CSV, SVG, and a short README
 - useful for publishing backlog state without a notebook
 
@@ -57,6 +64,30 @@ python -m conker_ledger.cli ...
 ```
 
 ## Usage
+
+Assemble a validity bundle from explicit evidence:
+
+```bash
+conker-ledger bundle manifest.json out/validity-bundle
+```
+
+Minimal manifest shape:
+
+```json
+{
+  "bundle_id": "parameter-golf-pr-1028",
+  "claim": "claim.json",
+  "metrics": "metrics.json",
+  "provenance": "provenance.json",
+  "audits": "audits.json",
+  "attachments": [
+    {
+      "source": "../detect-out/legality.json",
+      "dest": "audits/tier3/legality.json"
+    }
+  ]
+}
+```
 
 Scan a backlog:
 
@@ -90,11 +121,12 @@ conker-ledger report /path/to/conker/out examples/conker-backlog-YYYY-MM-DD
 
 ## Current Scope
 
-This tool is intentionally backlog-first, not notebook-first.
+This tool is intentionally validity-first and backlog-second, not notebook-first.
 
 It does not replace:
 
 - `conker-detect` for checkpoint forensics
+- `conker-detect` for structural or behavioral legality audits
 - branch docs for scientific interpretation
 - full custom analysis when a question is genuinely new
 
@@ -105,10 +137,12 @@ But it should replace ad hoc one-off scripts for the recurring questions:
 - “which family actually scales?”
 - “what did this row warm-start from?”
 
-## Public Example
+## Public Examples
 
-This repo can carry public report bundles generated from real experiment backlogs under `examples/`.
+This repo can carry public quick-check and report bundles generated from real experiment backlogs under `examples/`.
 
-Current example:
+Current examples:
 
+- [`examples/carver-quick-check-2026-03-28`](./examples/carver-quick-check-2026-03-28/report/README.md)
+- [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)

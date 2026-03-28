@@ -1,0 +1,9 @@
+{
+  "best_study": {
+    "family_id": "gru_opt_fixed_bank_breakpoint_3seed",
+    "label": "gru_opt",
+    "metric_name": "test_mean",
+    "metric_value": 1.5316754690806071
+  },
+  "study_count": 20
+}

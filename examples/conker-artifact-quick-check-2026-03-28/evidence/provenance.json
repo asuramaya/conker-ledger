@@ -1,0 +1,10 @@
+{
+  "source_repo": "/Users/asuramaya/Code/carving_machine_v3/conker",
+  "source_root": "/Users/asuramaya/Code/carving_machine_v3/conker/out",
+  "report_dir": "/tmp/public_quick_checks/conker-backlog-2026-03-28",
+  "artifact_paths": [
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_2026-03-27.npz",
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.npz",
+    "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker6_mask_geometry_2026-03-28.mask.npy"
+  ]
+}

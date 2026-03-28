@@ -1,0 +1,14 @@
+{
+  "conker4b_tandem": {
+    "bridge_bpb": 0.5623592843313887,
+    "full_eval_bpb": 0.5718232495381582
+  },
+  "conker4b_strict": {
+    "bridge_bpb": 2.0589387458211483,
+    "full_eval_bpb": 2.0971244136143423
+  },
+  "conker6_mask_geometry": {
+    "baseline_full_test_bpb": 0.07209327818598087,
+    "toeplitz_mean_full_test_bpb": 5.752106388513692
+  }
+}

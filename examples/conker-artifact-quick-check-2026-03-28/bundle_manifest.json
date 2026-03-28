@@ -1,0 +1,118 @@
+{
+  "bundle_id": "conker-artifact-quick-check-2026-03-28",
+  "claim": {
+    "candidate_id": "conker-artifact-quick-check-2026-03-28",
+    "requested_label": "Tier-2 structurally audited",
+    "summary": "Public quick-check over selected conker checkpoints and mask artifacts."
+  },
+  "metrics": {
+    "conker4b_tandem": {
+      "bridge_bpb": 0.5623592843313887,
+      "full_eval_bpb": 0.5718232495381582
+    },
+    "conker4b_strict": {
+      "bridge_bpb": 2.0589387458211483,
+      "full_eval_bpb": 2.0971244136143423
+    },
+    "conker6_mask_geometry": {
+      "baseline_full_test_bpb": 0.07209327818598087,
+      "toeplitz_mean_full_test_bpb": 5.752106388513692
+    }
+  },
+  "provenance": {
+    "source_repo": "/Users/asuramaya/Code/carving_machine_v3/conker",
+    "source_root": "/Users/asuramaya/Code/carving_machine_v3/conker/out",
+    "report_dir": "/tmp/public_quick_checks/conker-backlog-2026-03-28",
+    "artifact_paths": [
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_2026-03-27.npz",
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.npz",
+      "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker6_mask_geometry_2026-03-28.mask.npy"
+    ]
+  },
+  "audits": {
+    "tier1": {
+      "status": "pass",
+      "summary": "Bridge/full-eval summaries are attached for the selected artifacts."
+    },
+    "tier2": {
+      "status": "warn",
+      "summary": "Static detector quick-checks attached. Tandem and conker6 masks show forbidden-region structure; strict mask is clean."
+    },
+    "tier3": {
+      "status": "missing",
+      "summary": "No runtime replay adapter attached in this public quick-check bundle."
+    }
+  },
+  "attachments": [
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker6_mask_matrix.json",
+      "dest": "audits/tier2/conker6_mask_matrix.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker6_mask_geometry.json",
+      "dest": "audits/tier2/conker6_mask_geometry.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker4b_tandem_bundle.json",
+      "dest": "audits/tier2/conker4b_tandem_bundle.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker4b_tandem_mask_matrix.json",
+      "dest": "audits/tier2/conker4b_tandem_mask_matrix.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker4b_strict_mask_matrix.json",
+      "dest": "audits/tier2/conker4b_strict_mask_matrix.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/detect/conker4b_mask_compare_strict_vs_tandem.json",
+      "dest": "audits/tier2/conker4b_mask_compare_strict_vs_tandem.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/conker-backlog-2026-03-28/scan_summary.json",
+      "dest": "artifacts/scan_summary.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/conker-backlog-2026-03-28/README.md",
+      "dest": "artifacts/report_README.md",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_2026-03-27.json",
+      "dest": "artifacts/source/conker4b_tandem_bridge.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_none_2026-03-27.json",
+      "dest": "artifacts/source/conker4b_tandem_fullval.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_2026-03-28.json",
+      "dest": "artifacts/source/conker4b_strict_bridge.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker4b_strict_tandem_seq256_steps1000_lr5e4_seed42_fullval_test_none_2026-03-28.json",
+      "dest": "artifacts/source/conker4b_strict_fullval.json",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/conker/out/conker6_mask_geometry_2026-03-28.json",
+      "dest": "artifacts/source/conker6_mask_geometry.json",
+      "kind": "file"
+    }
+  ],
+  "source_manifest": "/private/tmp/public_quick_checks/manifests/conker_manifest.json",
+  "claim_level": {
+    "level": 1,
+    "label": "Bridge metric only"
+  }
+}

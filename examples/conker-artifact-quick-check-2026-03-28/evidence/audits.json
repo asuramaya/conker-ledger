@@ -1,0 +1,14 @@
+{
+  "tier1": {
+    "status": "pass",
+    "summary": "Bridge/full-eval summaries are attached for the selected artifacts."
+  },
+  "tier2": {
+    "status": "warn",
+    "summary": "Static detector quick-checks attached. Tandem and conker6 masks show forbidden-region structure; strict mask is clean."
+  },
+  "tier3": {
+    "status": "missing",
+    "summary": "No runtime replay adapter attached in this public quick-check bundle."
+  }
+}

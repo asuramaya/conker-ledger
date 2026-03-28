@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480">
+<style>text{font-family:Menlo,Monaco,monospace;font-size:11px;fill:#333} .title{font-size:16px;font-weight:700;fill:#111} .axis{stroke:#888;stroke-width:1} .grid{stroke:#ddd;stroke-width:1;stroke-dasharray:4,4} .tick{font-size:10px;fill:#666} .val{font-size:10px;fill:#333}</style>
+<text class="title" x="260" y="28">Top Study Rows</text>
+<line class="grid" x1="260.0" y1="50" x2="260.0" y2="440"/>
+<text class="tick" x="260.0" y="456" text-anchor="middle">0.0000</text>
+<line class="grid" x1="435.9" y1="50" x2="435.9" y2="440"/>
+<text class="tick" x="435.9" y="456" text-anchor="middle">0.5000</text>
+<line class="grid" x1="611.8" y1="50" x2="611.8" y2="440"/>
+<text class="tick" x="611.8" y="456" text-anchor="middle">1.0000</text>
+<line class="grid" x1="787.6" y1="50" x2="787.6" y2="440"/>
+<text class="tick" x="787.6" y="456" text-anchor="middle">1.5000</text>
+<line class="axis" x1="260" y1="440" x2="880" y2="440"/>
+<text x="252" y="75" text-anchor="end">gru_opt_fixed_bank_breakpoint_3seed…</text>
+<rect fill="#ffbb78" x="260" y="50" width="538.78" height="27" rx="2"/>
+<text class="val" x="804.78" y="75">1.5317</text>
+<text x="252" y="108" text-anchor="end">gru_opt_fixed_bank_hard_shift_3seed…</text>
+<rect fill="#c23b22" x="260" y="83" width="538.78" height="27" rx="2"/>
+<text class="val" x="804.78" y="108">1.5317</text>
+<text x="252" y="141" text-anchor="end">v6_dual_channel_3000_3seed:hierarch…</text>
+<rect fill="#c23b22" x="260" y="116" width="547.55" height="27" rx="2"/>
+<text class="val" x="813.55" y="141">1.5566</text>
+<text x="252" y="174" text-anchor="end">look3_coupling_2000:carver_concat</text>
+<rect fill="#17becf" x="260" y="149" width="552.87" height="27" rx="2"/>
+<text class="val" x="818.87" y="174">1.5717</text>
+<text x="252" y="207" text-anchor="end">look4_boundary_2000:carver_base</text>
+<rect fill="#aec7e8" x="260" y="182" width="552.97" height="27" rx="2"/>
+<text class="val" x="818.97" y="207">1.5720</text>
+<text x="252" y="240" text-anchor="end">look5_mask_variance_2000:carver_base</text>
+<rect fill="#d62728" x="260" y="215" width="552.98" height="27" rx="2"/>
+<text class="val" x="818.98" y="240">1.5720</text>
+<text x="252" y="273" text-anchor="end">v6_controller_view_2000:hierarchica…</text>
+<rect fill="#aec7e8" x="260" y="248" width="562.82" height="27" rx="2"/>
+<text class="val" x="828.82" y="273">1.6000</text>
+<text x="252" y="306" text-anchor="end">v6_dual_channel_2000:hierarchical_v6</text>
+<rect fill="#e377c2" x="260" y="281" width="563.21" height="27" rx="2"/>
+<text class="val" x="829.21" y="306">1.6011</text>
+<text x="252" y="339" text-anchor="end">brain_build_pilot:hierarchical_v6</text>
+<rect fill="#e377c2" x="260" y="314" width="590.37" height="27" rx="2"/>
+<text class="val" x="856.37" y="339">1.6783</text>
+<text x="252" y="372" text-anchor="end">v6_coupling_ablation_pilot:hierarch…</text>
+<rect fill="#7f7f7f" x="260" y="347" width="620.00" height="27" rx="2"/>
+<text class="val" x="886.00" y="372">1.7626</text>
+<text x="252" y="405" text-anchor="end">v6_delayline_control_pilot:hierarch…</text>
+<rect fill="#1f77b4" x="260" y="380" width="620.00" height="27" rx="2"/>
+<text class="val" x="886.00" y="405">1.7626</text>
+<text x="252" y="438" text-anchor="end">v6_hybrid_breakpoint_pilot:hierarch…</text>
+<rect fill="#bcbd22" x="260" y="413" width="620.00" height="27" rx="2"/>
+<text class="val" x="886.00" y="438">1.7626</text>
+</svg>

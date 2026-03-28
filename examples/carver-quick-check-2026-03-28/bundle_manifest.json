@@ -1,0 +1,73 @@
+{
+  "bundle_id": "carver-quick-check-2026-03-28",
+  "claim": {
+    "candidate_id": "carver-quick-check-2026-03-28",
+    "requested_label": "Tier-1 reviewed",
+    "summary": "Public quick-check over the main carving_machine_v3 study JSON backlog."
+  },
+  "metrics": {
+    "best_study": {
+      "family_id": "gru_opt_fixed_bank_breakpoint_3seed",
+      "label": "gru_opt",
+      "metric_name": "test_mean",
+      "metric_value": 1.5316754690806071
+    },
+    "study_count": 20
+  },
+  "provenance": {
+    "source_repo": "/Users/asuramaya/Code/carving_machine_v3",
+    "source_root": "/Users/asuramaya/Code/carving_machine_v3/out",
+    "report_dir": "/tmp/public_quick_checks/carver-quick-check-2026-03-28"
+  },
+  "audits": {
+    "tier1": {
+      "status": "pass",
+      "summary": "Study/result JSONs scanned into a public quick-check report."
+    },
+    "tier2": {
+      "status": "missing",
+      "summary": "No serialized tensors or checkpoints were present in the main carver backlog."
+    },
+    "tier3": {
+      "status": "missing",
+      "summary": "No runtime replay artifact or adapter attached."
+    }
+  },
+  "attachments": [
+    {
+      "source": "/private/tmp/public_quick_checks/carver-quick-check-2026-03-28/scan_summary.json",
+      "dest": "artifacts/scan_summary.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/carver-quick-check-2026-03-28/top_study.json",
+      "dest": "artifacts/top_study.json",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/carver-quick-check-2026-03-28/top_study.csv",
+      "dest": "artifacts/top_study.csv",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/carver-quick-check-2026-03-28/top_study.svg",
+      "dest": "artifacts/top_study.svg",
+      "kind": "file"
+    },
+    {
+      "source": "/private/tmp/public_quick_checks/carver-quick-check-2026-03-28/README.md",
+      "dest": "artifacts/report_README.md",
+      "kind": "file"
+    },
+    {
+      "source": "/Users/asuramaya/Code/carving_machine_v3/out/look4_boundary_2000_2026-03-20.json",
+      "dest": "artifacts/source/look4_boundary_2000_2026-03-20.json",
+      "kind": "file"
+    }
+  ],
+  "source_manifest": "/private/tmp/public_quick_checks/manifests/carver_manifest.json",
+  "claim_level": {
+    "level": 1,
+    "label": "Bridge metric only"
+  }
+}

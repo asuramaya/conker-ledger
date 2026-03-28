@@ -1,0 +1,14 @@
+{
+  "tier1": {
+    "status": "pass",
+    "summary": "Study/result JSONs scanned into a public quick-check report."
+  },
+  "tier2": {
+    "status": "missing",
+    "summary": "No serialized tensors or checkpoints were present in the main carver backlog."
+  },
+  "tier3": {
+    "status": "missing",
+    "summary": "No runtime replay artifact or adapter attached."
+  }
+}

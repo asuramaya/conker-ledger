@@ -1,0 +1,222 @@
+[
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/gru_opt_fixed_bank_breakpoint_3seed_2026-03-23.json",
+    "title": "gru-opt fixed-bank breakpoint cell",
+    "run_id": "gru_opt_fixed_bank_breakpoint_3seed",
+    "family_id": "gru_opt_fixed_bank_breakpoint_3seed",
+    "variant_count": 0,
+    "best_label": "gru_opt",
+    "best_metric": 1.5316754690806071,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/gru_opt_fixed_bank_hard_shift_3seed_2026-03-22.json",
+    "title": "gru-opt fixed-bank hard-shift cell",
+    "run_id": "gru_opt_fixed_bank_hard_shift_3seed",
+    "family_id": "gru_opt_fixed_bank_hard_shift_3seed",
+    "variant_count": 0,
+    "best_label": "gru_opt",
+    "best_metric": 1.5316754690806071,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_dual_channel_3000_3seed_2026-03-20.json",
+    "title": "v6 dual channel",
+    "run_id": "v6_dual_channel_3000_3seed",
+    "family_id": "v6_dual_channel_3000_3seed",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.5566029226779936,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/look3_coupling_2000_2026-03-20.json",
+    "title": "look3 coupling",
+    "run_id": "look3_coupling_2000",
+    "family_id": "look3_coupling_2000",
+    "variant_count": 0,
+    "best_label": "carver_concat",
+    "best_metric": 1.5717344164848328,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/look4_boundary_2000_2026-03-20.json",
+    "title": "look4 boundary",
+    "run_id": "look4_boundary_2000",
+    "family_id": "look4_boundary_2000",
+    "variant_count": 0,
+    "best_label": "carver_base",
+    "best_metric": 1.5720204830169677,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/look5_mask_variance_2000_2026-03-20.json",
+    "title": "look5 mask variance",
+    "run_id": "look5_mask_variance_2000",
+    "family_id": "look5_mask_variance_2000",
+    "variant_count": 0,
+    "best_label": "carver_base",
+    "best_metric": 1.5720467579364776,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_controller_view_2000_2026-03-20.json",
+    "title": "v6 controller view",
+    "run_id": "v6_controller_view_2000",
+    "family_id": "v6_controller_view_2000",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6_view512",
+    "best_metric": 1.600001664161682,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_dual_channel_2000_2026-03-20.json",
+    "title": "v6 dual channel",
+    "run_id": "v6_dual_channel_2000",
+    "family_id": "v6_dual_channel_2000",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.6011049902439118,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/brain_build_pilot_2026-03-20.json",
+    "title": "brain build",
+    "run_id": "brain_build_pilot",
+    "family_id": "brain_build_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.67833416223526,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_coupling_ablation_pilot_2026-03-21.json",
+    "title": "v6 coupling ablation",
+    "run_id": "v6_coupling_ablation_pilot",
+    "family_id": "v6_coupling_ablation_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_delayline_control_pilot_2026-03-21.json",
+    "title": "v6 delay-line control",
+    "run_id": "v6_delayline_control_pilot",
+    "family_id": "v6_delayline_control_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_hybrid_breakpoint_pilot_2026-03-21.json",
+    "title": "v6 hybrid breakpoint sweep",
+    "run_id": "v6_hybrid_breakpoint_pilot",
+    "family_id": "v6_hybrid_breakpoint_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_hybrid_hard_shift_pilot_2026-03-21.json",
+    "title": "v6 hybrid hard-shift sweep",
+    "run_id": "v6_hybrid_hard_shift_pilot",
+    "family_id": "v6_hybrid_hard_shift_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_memory_chaos_matrix_pilot_2026-03-21.json",
+    "title": "v6 memory/chaos matrix",
+    "run_id": "v6_memory_chaos_matrix_pilot",
+    "family_id": "v6_memory_chaos_matrix_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_router_matrix_pilot_2026-03-22.json",
+    "title": "v6 router matrix",
+    "run_id": "v6_router_matrix_pilot",
+    "family_id": "v6_router_matrix_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_surprise_coupling_pilot_2026-03-21.json",
+    "title": "v6 surprise-gated coupling",
+    "run_id": "v6_surprise_coupling_pilot",
+    "family_id": "v6_surprise_coupling_pilot",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7625625395774842,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_delayline_breakpoint_3seed_2026-03-21.json",
+    "title": "v6 delay-line breakpoint sweep",
+    "run_id": "v6_delayline_breakpoint_3seed",
+    "family_id": "v6_delayline_breakpoint_3seed",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7762259753545127,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_fast_recurrent_hard_shift_3seed_2026-03-22.json",
+    "title": "v6 fast-recurrent hard-shift sweep",
+    "run_id": "v6_fast_recurrent_hard_shift_3seed",
+    "family_id": "v6_fast_recurrent_hard_shift_3seed",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7762259753545127,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_fixed_bank2_breakpoint_3seed_2026-03-23.json",
+    "title": "v6 alternate-bank breakpoint cell",
+    "run_id": "v6_fixed_bank2_breakpoint_3seed",
+    "family_id": "v6_fixed_bank2_breakpoint_3seed",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7762259753545127,
+    "metric_name": "test_mean"
+  },
+  {
+    "kind": "study",
+    "path": "/Users/asuramaya/Code/carving_machine_v3/out/v6_fixed_bank_breakpoint_3seed_2026-03-23.json",
+    "title": "v6 fixed-bank breakpoint cell",
+    "run_id": "v6_fixed_bank_breakpoint_3seed",
+    "family_id": "v6_fixed_bank_breakpoint_3seed",
+    "variant_count": 0,
+    "best_label": "hierarchical_v6",
+    "best_metric": 1.7762259753545127,
+    "metric_name": "test_mean"
+  }
+]

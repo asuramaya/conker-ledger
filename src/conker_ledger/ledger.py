@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 import re
+import shutil
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -31,12 +32,262 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+CLAIM_LEVELS = {
+    0: "No justified claim yet",
+    1: "Bridge metric only",
+    2: "Fresh-process held-out replay confirmed",
+    3: "Packed-artifact replay confirmed",
+    4: "Structural audit passed",
+    5: "Behavioral legality audit passed",
+}
+
+
 def finite_or_none(value: Any) -> float | None:
     if isinstance(value, (int, float)):
         if math.isfinite(float(value)):
             return float(value)
         return None
     return None
+
+
+def _resolve_input_path(base_dir: Path, value: str | Path) -> Path:
+    path = Path(value)
+    if not path.is_absolute():
+        path = base_dir / path
+    return path.resolve()
+
+
+def _resolve_output_path(value: str | Path) -> Path:
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"Bundle attachment destination must stay inside the bundle: {value}")
+    return path
+
+
+def _load_manifest_value(value: Any, base_dir: Path) -> Any:
+    if value is None:
+        return {}
+    if isinstance(value, str):
+        return load_json(_resolve_input_path(base_dir, value))
+    return value
+
+
+def _dict_has_payload(data: Any, keys: tuple[str, ...]) -> bool:
+    if not isinstance(data, dict):
+        return False
+    for key in keys:
+        if key in data and data[key] not in (None, "", {}, []):
+            return True
+    return False
+
+
+def _audit_status(audits: Any, tier: str) -> str | None:
+    if not isinstance(audits, dict):
+        return None
+    tier_data = audits.get(tier)
+    if not isinstance(tier_data, dict):
+        return None
+    status = tier_data.get("status")
+    return str(status) if status is not None else None
+
+
+def infer_claim_level(claim: Any, metrics: Any, audits: Any) -> dict[str, Any]:
+    level = 0
+    if claim not in (None, "", {}, []) or metrics not in (None, "", {}, []):
+        level = 1
+    if _dict_has_payload(metrics, ("fresh_process_full", "fresh_process_replay", "held_out_replay")):
+        level = max(level, 2)
+    if _dict_has_payload(metrics, ("packed_artifact_full", "packed_artifact_replay", "packed_replay")):
+        level = max(level, 3)
+    if _audit_status(audits, "tier2") == "pass":
+        level = max(level, 4)
+    if _audit_status(audits, "tier3") == "pass":
+        level = max(level, 5)
+    return {"level": level, "label": CLAIM_LEVELS[level]}
+
+
+def _copy_attachment(base_dir: Path, out_dir: Path, spec: dict[str, Any]) -> dict[str, Any]:
+    source_value = spec.get("source") or spec.get("path")
+    if not isinstance(source_value, str):
+        raise ValueError("Each attachment needs a string source/path")
+    source = _resolve_input_path(base_dir, source_value)
+    if not source.exists():
+        raise FileNotFoundError(source)
+    dest_rel = _resolve_output_path(spec.get("dest") or f"artifacts/{source.name}")
+    dest = out_dir / dest_rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if source.is_dir():
+        shutil.copytree(source, dest, dirs_exist_ok=True)
+        kind = "directory"
+    else:
+        shutil.copy2(source, dest)
+        kind = "file"
+    return {
+        "source": str(source),
+        "dest": str(dest_rel),
+        "kind": kind,
+    }
+
+
+def render_validity_bundle_readme(
+    *,
+    bundle_id: str,
+    claim: Any,
+    metrics: Any,
+    provenance: Any,
+    audits: Any,
+    claim_level: dict[str, Any],
+    attachments: list[dict[str, Any]],
+) -> str:
+    requested_label = None
+    if isinstance(claim, dict):
+        requested_label = claim.get("requested_label") or claim.get("requested_claim")
+    bridge_bpb = metrics.get("bridge", {}).get("bpb") if isinstance(metrics, dict) and isinstance(metrics.get("bridge"), dict) else None
+    fresh_bpb = (
+        metrics.get("fresh_process_full", {}).get("bpb")
+        if isinstance(metrics, dict) and isinstance(metrics.get("fresh_process_full"), dict)
+        else None
+    )
+    packed_bpb = (
+        metrics.get("packed_artifact_full", {}).get("bpb")
+        if isinstance(metrics, dict) and isinstance(metrics.get("packed_artifact_full"), dict)
+        else None
+    )
+    provenance_rows: list[str] = []
+    if isinstance(provenance, dict):
+        for key in ("run_id", "family_id", "submission_pr", "source_repo", "source_root", "report_dir", "source_commit"):
+            value = provenance.get(key)
+            if value not in (None, "", [], {}):
+                provenance_rows.append(f"- {key}: `{value}`")
+    tier_lines = []
+    for tier in ("tier1", "tier2", "tier3"):
+        status = _audit_status(audits, tier) or "missing"
+        tier_lines.append(f"- {tier}: `{status}`")
+    attachment_lines = [f"- `{row['dest']}` <= `{row['source']}`" for row in attachments] or ["- none"]
+    metric_lines = []
+    if bridge_bpb is not None:
+        metric_lines.append(f"- bridge bpb: `{bridge_bpb}`")
+    if fresh_bpb is not None:
+        metric_lines.append(f"- fresh-process full bpb: `{fresh_bpb}`")
+    if packed_bpb is not None:
+        metric_lines.append(f"- packed-artifact full bpb: `{packed_bpb}`")
+    if not metric_lines:
+        if isinstance(metrics, dict) and metrics:
+            for key, value in list(metrics.items())[:8]:
+                if isinstance(value, dict):
+                    fields = []
+                    for subkey, subvalue in value.items():
+                        if subvalue in (None, "", [], {}):
+                            continue
+                        fields.append(f"{subkey}={subvalue}")
+                        if len(fields) == 3:
+                            break
+                    metric_lines.append(f"- {key}: " + (", ".join(fields) if fields else "object"))
+                else:
+                    metric_lines.append(f"- {key}: `{value}`")
+        else:
+            metric_lines.append("- no structured metric summary provided")
+    lines = [
+        "# Validity Bundle",
+        "",
+        f"- bundle id: `{bundle_id}`",
+        f"- strongest justified claim: `Tier {claim_level['level']}: {claim_level['label']}`",
+    ]
+    if requested_label:
+        lines.append(f"- requested label: `{requested_label}`")
+    lines.extend(
+        [
+            "",
+            "## Audit Coverage",
+            "",
+            *tier_lines,
+            "",
+            "## Metrics",
+            "",
+            *metric_lines,
+            "",
+            "## Provenance",
+            "",
+            *(provenance_rows or ["- no provenance summary provided"]),
+            "",
+            "## Attachments",
+            "",
+            *attachment_lines,
+            "",
+            "## Files",
+            "",
+            "- `claim.json`",
+            "- `evidence/metrics.json`",
+            "- `evidence/provenance.json`",
+            "- `evidence/audits.json`",
+            "- `bundle_manifest.json`",
+            "- `report/README.md`",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
+    manifest = load_json(manifest_path)
+    if not isinstance(manifest, dict):
+        raise ValueError("Bundle manifest must be a JSON object")
+    base_dir = manifest_path.parent.resolve()
+
+    claim = _load_manifest_value(manifest.get("claim"), base_dir)
+    metrics = _load_manifest_value(manifest.get("metrics"), base_dir)
+    provenance = _load_manifest_value(manifest.get("provenance"), base_dir)
+    audits = _load_manifest_value(manifest.get("audits"), base_dir)
+
+    bundle_id = (
+        manifest.get("bundle_id")
+        or (claim.get("candidate_id") if isinstance(claim, dict) else None)
+        or manifest_path.stem
+    )
+    claim_level = infer_claim_level(claim, metrics, audits)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    attachments = [
+        _copy_attachment(base_dir, out_dir, spec)
+        for spec in manifest.get("attachments", [])
+    ]
+
+    normalized_manifest = {
+        "bundle_id": bundle_id,
+        "claim": claim,
+        "metrics": metrics,
+        "provenance": provenance,
+        "audits": audits,
+        "attachments": attachments,
+        "source_manifest": str(manifest_path.resolve()),
+        "claim_level": claim_level,
+    }
+
+    (out_dir / "claim.json").write_text(dumps_json(claim) + "\n", encoding="utf-8")
+    (out_dir / "evidence" / "metrics.json").parent.mkdir(parents=True, exist_ok=True)
+    (out_dir / "evidence" / "metrics.json").write_text(dumps_json(metrics) + "\n", encoding="utf-8")
+    (out_dir / "evidence" / "provenance.json").write_text(dumps_json(provenance) + "\n", encoding="utf-8")
+    (out_dir / "evidence" / "audits.json").write_text(dumps_json(audits) + "\n", encoding="utf-8")
+    (out_dir / "bundle_manifest.json").write_text(dumps_json(normalized_manifest) + "\n", encoding="utf-8")
+    (out_dir / "report").mkdir(parents=True, exist_ok=True)
+    (out_dir / "report" / "README.md").write_text(
+        render_validity_bundle_readme(
+            bundle_id=str(bundle_id),
+            claim=claim,
+            metrics=metrics,
+            provenance=provenance,
+            audits=audits,
+            claim_level=claim_level,
+            attachments=attachments,
+        ),
+        encoding="utf-8",
+    )
+
+    return {
+        "bundle_id": str(bundle_id),
+        "claim_level": claim_level,
+        "attachment_count": len(attachments),
+        "out_dir": str(out_dir),
+    }
 
 
 def infer_run_id_from_stem(stem: str) -> str:
@@ -117,13 +368,33 @@ def parse_full_eval_record(path: Path, data: dict[str, Any]) -> dict[str, Any]:
 
 def parse_study_record(path: Path, data: dict[str, Any]) -> dict[str, Any]:
     variants = data.get("variants", [])
+    models = data.get("models", [])
+    best_label = None
+    best_metric = None
+    metric_name = None
+    if isinstance(models, list):
+        ranked: list[tuple[float, str]] = []
+        for model in models:
+            if not isinstance(model, dict):
+                continue
+            label = model.get("label")
+            test_mean = finite_or_none(model.get("test_mean"))
+            if label and test_mean is not None:
+                ranked.append((test_mean, str(label)))
+        if ranked:
+            ranked.sort()
+            best_metric, best_label = ranked[0]
+            metric_name = "test_mean"
     return {
         "kind": "study",
         "path": str(path),
         "title": data.get("title"),
         "run_id": infer_run_id_from_stem(path.stem),
         "family_id": infer_family_id(infer_run_id_from_stem(path.stem)),
-        "variant_count": len(variants) if isinstance(variants, list) else 0,
+        "variant_count": len(variants) if isinstance(variants, list) else len(models) if isinstance(models, list) else 0,
+        "best_label": best_label,
+        "best_metric": best_metric,
+        "metric_name": metric_name,
     }
 
 
@@ -135,7 +406,7 @@ def classify_record(path: Path, data: Any) -> dict[str, Any] | None:
     model = data.get("model")
     if isinstance(model, dict) and "test_bpb" in model:
         return parse_bridge_record(path, data)
-    if "variants" in data:
+    if "variants" in data or "models" in data:
         return parse_study_record(path, data)
     return None
 
@@ -695,6 +966,7 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
     records = scanned["records"]
     top_full_eval = sort_records([r for r in records if r["kind"] == "full_eval"], "bpb")[:top]
     top_bridge = sort_records([r for r in records if r["kind"] == "bridge"], "bpb")[:top]
+    top_study = sort_records([r for r in records if r["kind"] == "study"], "best_metric")[:top]
     survival = survival_rows(records)
     survival_non_bridge = [row for row in survival if row["status"] != "bridge_only"]
     failed = [row for row in survival if row["status"] == "full_eval_failed"]
@@ -717,19 +989,27 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
     )
     (out_dir / "top_full_eval.json").write_text(dumps_json(top_full_eval) + "\n", encoding="utf-8")
     (out_dir / "top_bridge.json").write_text(dumps_json(top_bridge) + "\n", encoding="utf-8")
+    (out_dir / "top_study.json").write_text(dumps_json(top_study) + "\n", encoding="utf-8")
     (out_dir / "survival.json").write_text(dumps_json(survival_non_bridge) + "\n", encoding="utf-8")
     (out_dir / "failed_full_eval.json").write_text(dumps_json(failed) + "\n", encoding="utf-8")
     (out_dir / "lineage.json").write_text(dumps_json(lineage) + "\n", encoding="utf-8")
 
     write_csv(out_dir / "top_full_eval.csv", top_full_eval, ["family_id", "run_id", "seed", "quant_label", "bpb", "artifact_bytes", "path"])
+    write_csv(out_dir / "top_study.csv", top_study, ["family_id", "run_id", "best_label", "best_metric", "metric_name", "variant_count", "path"])
     write_csv(out_dir / "survival.csv", survival_non_bridge, ["family_id", "run_id", "seed", "bridge_fp16", "full_fp16", "bridge_int6", "full_int6", "delta_fp16", "delta_int6", "status"])
     write_csv(out_dir / "failed_full_eval.csv", failed, ["family_id", "run_id", "seed", "bridge_fp16", "bridge_int6", "status", "bridge_path"])
 
     # --- existing SVG charts (improved) ---
     full_labels = [f"{row['family_id']}:{row.get('quant_label')}" for row in top_full_eval[: min(12, len(top_full_eval))]]
     full_values = [row["bpb"] for row in top_full_eval[: min(12, len(top_full_eval))] if row.get("bpb") is not None]
-    if full_values:
-        write_bar_svg(out_dir / "top_full_eval.svg", "Top Full-Eval Rows", full_labels[: len(full_values)], full_values)
+    write_bar_svg(out_dir / "top_full_eval.svg", "Top Full-Eval Rows", full_labels[: len(full_values)], full_values)
+    study_rows = [row for row in top_study if row.get("best_metric") is not None][:12]
+    write_bar_svg(
+        out_dir / "top_study.svg",
+        "Top Study Rows",
+        [f"{row['family_id']}:{row.get('best_label') or 'study'}" for row in study_rows],
+        [float(row["best_metric"]) for row in study_rows],
+    )
 
     gap_rows = [row for row in survival_non_bridge if row.get("bridge_fp16") is not None and row.get("full_fp16") is not None][:20]
     write_scatter_svg(
@@ -817,6 +1097,11 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
         summary_lines.append(
             f"- best normalized full eval in this backlog: `{best['family_id']}` `{best['quant_label']}` at `{best['bpb']:.6f} bpb`"
         )
+    elif top_study:
+        best = top_study[0]
+        summary_lines.append(
+            f"- best study quick-check in this backlog: `{best['family_id']}` `{best.get('best_label')}` at `{best['best_metric']:.6f}` `{best.get('metric_name') or 'metric'}`"
+        )
     if failed:
         summary_lines.append(f"- full-eval failures detected after optimistic bridge results: `{len(failed)}`")
     summary_lines.extend(
@@ -839,6 +1124,7 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
             "- `scan_summary.json`",
             "- `top_full_eval.json` / `top_full_eval.csv` / `top_full_eval.svg`",
             "- `top_bridge.json`",
+            "- `top_study.json` / `top_study.csv` / `top_study.svg`",
             "- `survival.json` / `survival.csv` / `survival_status.svg`",
             "- `failed_full_eval.json` / `failed_full_eval.csv`",
             "- `lineage.json`",
@@ -847,6 +1133,10 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
             "- `conker7_bridge_fp16.svg`",
             "",
             "## Visuals",
+            "",
+            "### Top Study Rows",
+            "",
+            "![Top study rows](./top_study.svg)",
             "",
             "### Survival Status",
             "",

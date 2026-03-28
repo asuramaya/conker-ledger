@@ -1,0 +1,70 @@
+{
+  "config": {
+    "data": {
+      "alphabet": " abcdefghijklmnopqrstuvwxyz",
+      "limit_chars": 10000000,
+      "path": "/Users/asuramaya/Code/carving_machine_v3/data/text8",
+      "split": 0.9
+    },
+    "profile": "pilot",
+    "reservoir": {
+      "connectivity": 0.1,
+      "embedding_dim": 32,
+      "seed": 42,
+      "size": 5000,
+      "spectral_radius": 0.99
+    },
+    "train": {
+      "batch_size": 24,
+      "eval_batches": 100,
+      "grad_clip": 1.0,
+      "learning_rate": 0.001,
+      "log_every": 200,
+      "seeds": [
+        42
+      ],
+      "seq_len": 64,
+      "steps": 2000,
+      "weight_decay": 1e-05
+    }
+  },
+  "models": [
+    {
+      "label": "carver_base",
+      "overfit_mean": 3.5513240188098427,
+      "params": 3239171,
+      "runs": [
+        {
+          "overfit_pct": 3.5513240188098427,
+          "params": 3239171,
+          "seed": 42,
+          "test_loss": 1.5720204830169677,
+          "train_loss": 1.5181075644493103,
+          "train_time_sec": 151.8672230243683
+        }
+      ],
+      "test_mean": 1.5720204830169677,
+      "test_std": 0.0,
+      "time_mean_sec": 151.8672230243683
+    },
+    {
+      "label": "carver_boundary",
+      "overfit_mean": -0.011693150450586831,
+      "params": 3239171,
+      "runs": [
+        {
+          "overfit_pct": -0.011693150450586831,
+          "params": 3239171,
+          "seed": 42,
+          "test_loss": 2.459900233745575,
+          "train_loss": 2.460187907218933,
+          "train_time_sec": 160.6065537929535
+        }
+      ],
+      "test_mean": 2.459900233745575,
+      "test_std": 0.0,
+      "time_mean_sec": 160.6065537929535
+    }
+  ],
+  "title": "look4 boundary"
+}

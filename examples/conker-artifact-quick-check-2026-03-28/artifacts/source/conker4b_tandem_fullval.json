@@ -1,0 +1,14 @@
+{
+  "summary_json": "/Users/asuramaya/code/carving_machine_V3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_saveeval_2026-03-27.json",
+  "state_npz": "/Users/asuramaya/code/carving_machine_V3/conker/out/conker4b_tandem_seq256_steps1000_lr5e4_seed42_2026-03-27.npz",
+  "split": "test",
+  "transform": "none",
+  "transform_seed": 42,
+  "full_split": true,
+  "quant_bits": 0,
+  "eval_loss": 0.9654996041427467,
+  "eval_bits_per_token": 1.392921490876998,
+  "eval_bpb": 0.5718232495381582,
+  "eval_tokens": 62021632,
+  "source_tokens": 62021632
+}

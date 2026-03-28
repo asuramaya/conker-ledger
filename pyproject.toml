@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "conker-ledger"
 version = "0.1.0"
-description = "Experiment-memory and backlog-analysis tooling for Conker-style research outputs."
+description = "Validity-bundle packaging and backlog-analysis tooling for Conker-style research outputs."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
@@ -15,4 +15,3 @@ conker-ledger = "conker_ledger.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

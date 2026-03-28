@@ -3,12 +3,26 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from .ledger import dumps_json, lineage_rows, render_table, scan_results, sort_records, survival_rows, write_report_bundle
+from .ledger import (
+    dumps_json,
+    lineage_rows,
+    render_table,
+    scan_results,
+    sort_records,
+    survival_rows,
+    write_report_bundle,
+    write_validity_bundle,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Public backlog-analysis tool for Conker-style experiment outputs.")
+    parser = argparse.ArgumentParser(description="Validity packaging and backlog-analysis tool for Conker-style experiment outputs.")
     sub = parser.add_subparsers(dest="command", required=True)
+
+    p_bundle = sub.add_parser("bundle", help="Assemble a manifest-first validity bundle")
+    p_bundle.add_argument("manifest")
+    p_bundle.add_argument("out_dir")
+    p_bundle.add_argument("--json")
 
     p_scan = sub.add_parser("scan", help="Scan a directory of experiment JSON outputs")
     p_scan.add_argument("root")
@@ -52,6 +66,12 @@ def write_output(text: str, json_path: str | None) -> None:
 def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
+
+    if args.command == "bundle":
+        result = write_validity_bundle(Path(args.manifest), Path(args.out_dir))
+        write_output(dumps_json(result), args.json)
+        return
+
     root = Path(args.root)
     scanned = scan_results(root)
 
