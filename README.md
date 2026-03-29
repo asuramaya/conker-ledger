@@ -73,7 +73,7 @@ Assemble a validity bundle from explicit evidence:
 conker-ledger bundle manifest.json out/validity-bundle
 ```
 
-Minimal manifest shape:
+Detect-generated handoff shape:
 
 ```json
 {
@@ -102,6 +102,13 @@ Minimal manifest shape:
   ]
 }
 ```
+
+That shape matches the detector-side handoff files:
+
+- `submission.json`
+- `provenance.json`
+- `legality.json`
+- `replay.json`
 
 Scan a backlog:
 

@@ -61,7 +61,10 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
             "profile": "parameter-golf",
             "verdict": "warn",
             "submission": {"name": "Demo Submission"},
-            "checks": {"claim_consistency": {"pass": False}},
+            "checks": {
+                "presence": {"pass": True},
+                "claim_consistency": {"pass": False},
+            },
         },
     )
     _write_json(
@@ -70,7 +73,10 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
             "profile": "parameter-golf",
             "verdict": "warn",
             "provenance": {"submitted_run_id": "run-7", "selection_mode": "best_of_k"},
-            "checks": {"selection_disclosure": {"pass": True}},
+            "checks": {
+                "selection_disclosure": {"pass": True},
+                "dataset_fingerprints": {"pass": False},
+            },
         },
     )
     _write_json(
@@ -91,16 +97,16 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
             "audits": "audits.json",
             "attachments": [
                 {
-                    "source": "legality.json",
-                    "dest": "audits/tier3/legality.json",
-                },
-                {
                     "source": "submission_report.json",
                     "dest": "audits/tier1/submission.json",
                 },
                 {
                     "source": "provenance_report.json",
                     "dest": "audits/tier1/provenance.json",
+                },
+                {
+                    "source": "legality.json",
+                    "dest": "audits/tier3/legality.json",
                 },
                 {
                     "source": "replay_report.json",
@@ -120,6 +126,9 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
     assert (out_dir / "evidence" / "provenance.json").exists()
     assert (out_dir / "evidence" / "audits.json").exists()
     assert (out_dir / "audits" / "tier3" / "legality.json").exists()
+    assert (out_dir / "audits" / "tier1" / "submission.json").exists()
+    assert (out_dir / "audits" / "tier1" / "provenance.json").exists()
+    assert (out_dir / "audits" / "tier3" / "replay.json").exists()
     readme = (out_dir / "report" / "README.md").read_text(encoding="utf-8")
     assert "Tier 4: Structural audit passed" in readme
     assert "audits/tier3/legality.json" in readme
