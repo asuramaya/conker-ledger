@@ -116,6 +116,10 @@ def _copy_attachment(base_dir: Path, out_dir: Path, spec: dict[str, Any]) -> dic
     dest_rel = _resolve_output_path(spec.get("dest") or f"artifacts/{source.name}")
     dest = out_dir / dest_rel
     dest.parent.mkdir(parents=True, exist_ok=True)
+    resolved_dest = dest.resolve()
+    resolved_out = out_dir.resolve()
+    if not resolved_dest.is_relative_to(resolved_out):
+        raise ValueError(f"Resolved attachment destination escapes bundle: {dest_rel} -> {resolved_dest}")
     if source.is_dir():
         shutil.copytree(source, dest, dirs_exist_ok=True)
         kind = "directory"
@@ -522,7 +526,10 @@ def sort_records(records: list[dict[str, Any]], metric: str, *, ascending: bool 
         value = record.get(metric)
         if value is None:
             return (1, float("inf"))
-        return (0, float(value))
+        try:
+            return (0, float(value))
+        except (TypeError, ValueError):
+            return (1, float("inf"))
 
     return sorted(records, key=key_fn, reverse=not ascending)
 
@@ -539,8 +546,10 @@ def survival_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
     for run_id, group in sorted(grouped.items()):
         bridge = group["bridge"]
         full = group["full"]
-        bridge_bpb = bridge.get("bpb") if bridge else None
-        bridge_int6 = bridge.get("int6_bpb") if bridge else None
+        if bridge is None:
+            continue
+        bridge_bpb = bridge.get("bpb")
+        bridge_int6 = bridge.get("int6_bpb")
         full_fp16 = full.get("fp16", {}).get("bpb") if "fp16" in full else None
         full_int6 = full.get("int6", {}).get("bpb") if "int6" in full else None
         status = "bridge_only"
@@ -553,7 +562,7 @@ def survival_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
             {
                 "run_id": run_id,
                 "family_id": infer_family_id(run_id),
-                "seed": bridge.get("seed") if bridge else None,
+                "seed": bridge.get("seed"),
                 "bridge_fp16": bridge_bpb,
                 "bridge_int6": bridge_int6,
                 "full_fp16": full_fp16,
@@ -561,7 +570,7 @@ def survival_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "delta_fp16": None if bridge_bpb is None or full_fp16 is None else full_fp16 - bridge_bpb,
                 "delta_int6": None if bridge_int6 is None or full_int6 is None else full_int6 - bridge_int6,
                 "status": status,
-                "bridge_path": bridge.get("path") if bridge else None,
+                "bridge_path": bridge.get("path"),
                 "full_paths": {k: v.get("path") for k, v in full.items()},
             }
         )
@@ -653,6 +662,8 @@ def _nice_ticks(vmin: float, vmax: float, target_count: int = 5) -> list[float]:
         step = nice * magnitude
         if step >= raw_step:
             break
+    if step <= 0:
+        return [vmin, vmax]
     start = math.ceil(vmin / step) * step
     ticks: list[float] = []
     val = start
@@ -934,7 +945,7 @@ def write_grouped_bar_svg(
     group_height = max(16, (plot_height - group_gap * (len(filtered) - 1)) // max(len(filtered), 1))
     sub_bar = (group_height - bar_gap) // 2
     all_vals = [r[key_a] for r in filtered] + [r[key_b] for r in filtered]
-    vmax = max(all_vals) if all_vals else 1e-12
+    vmax = max(max(all_vals), 1e-12) if all_vals else 1e-12
     ticks = _nice_ticks(0, vmax, 5)
     color_a = "#2f6fed"
     color_b = "#c23b22"
@@ -994,10 +1005,10 @@ def render_lineage_mermaid(rows: list[dict[str, Any]], *, max_nodes: int = 30) -
     edges: list[tuple[str, str]] = []
     for row in rows:
         p, c = row["parent_run_id"], row["child_run_id"]
-        if len(seen) >= max_nodes:
+        new_nodes = {p, c} - seen
+        if len(seen) + len(new_nodes) > max_nodes:
             break
-        seen.add(p)
-        seen.add(c)
+        seen.update(new_nodes)
         edges.append((p, c))
     lines = ["graph TD"]
     for node in sorted(seen):
@@ -1078,9 +1089,10 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
     write_csv(out_dir / "failed_full_eval.csv", failed, ["family_id", "run_id", "seed", "bridge_fp16", "bridge_int6", "status", "bridge_path"])
 
     # --- existing SVG charts (improved) ---
-    full_labels = [f"{row['family_id']}:{row.get('quant_label')}" for row in top_full_eval[: min(12, len(top_full_eval))]]
-    full_values = [row["bpb"] for row in top_full_eval[: min(12, len(top_full_eval))] if row.get("bpb") is not None]
-    write_bar_svg(out_dir / "top_full_eval.svg", "Top Full-Eval Rows", full_labels[: len(full_values)], full_values)
+    full_eval_with_bpb = [row for row in top_full_eval[:12] if row.get("bpb") is not None]
+    full_labels = [f"{row['family_id']}:{row.get('quant_label')}" for row in full_eval_with_bpb]
+    full_values = [row["bpb"] for row in full_eval_with_bpb]
+    write_bar_svg(out_dir / "top_full_eval.svg", "Top Full-Eval Rows", full_labels, full_values)
     study_rows = [row for row in top_study if row.get("best_metric") is not None][:12]
     write_bar_svg(
         out_dir / "top_study.svg",
@@ -1170,12 +1182,12 @@ def write_report_bundle(root: Path, out_dir: Path, *, top: int = 20) -> dict[str
         "## Headline",
         "",
     ]
-    if top_full_eval:
+    if top_full_eval and top_full_eval[0].get("bpb") is not None:
         best = top_full_eval[0]
         summary_lines.append(
             f"- best normalized full eval in this backlog: `{best['family_id']}` `{best['quant_label']}` at `{best['bpb']:.6f} bpb`"
         )
-    elif top_study:
+    elif top_study and top_study[0].get("best_metric") is not None:
         best = top_study[0]
         summary_lines.append(
             f"- best study quick-check in this backlog: `{best['family_id']}` `{best.get('best_label')}` at `{best['best_metric']:.6f}` `{best.get('metric_name') or 'metric'}`"
