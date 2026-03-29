@@ -51,7 +51,34 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
         {
             "tool": "conker-detect",
             "profile": "parameter-golf",
-            "summary": {"status": "warn"},
+            "checks": {"normalization": {"covered": True, "pass": True}},
+            "obligations": {"prefix_causal_distribution": {"status": "partially_covered"}},
+        },
+    )
+    _write_json(
+        manifest_dir / "submission_report.json",
+        {
+            "profile": "parameter-golf",
+            "verdict": "warn",
+            "submission": {"name": "Demo Submission"},
+            "checks": {"claim_consistency": {"pass": False}},
+        },
+    )
+    _write_json(
+        manifest_dir / "provenance_report.json",
+        {
+            "profile": "parameter-golf",
+            "verdict": "warn",
+            "provenance": {"submitted_run_id": "run-7", "selection_mode": "best_of_k"},
+            "checks": {"selection_disclosure": {"pass": True}},
+        },
+    )
+    _write_json(
+        manifest_dir / "replay_report.json",
+        {
+            "profile": "parameter-golf",
+            "aggregate": {"mean_bpb": 0.8},
+            "repeatability": {"covered": True, "pass": True},
         },
     )
     _write_json(
@@ -66,6 +93,18 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
                 {
                     "source": "legality.json",
                     "dest": "audits/tier3/legality.json",
+                },
+                {
+                    "source": "submission_report.json",
+                    "dest": "audits/tier1/submission.json",
+                },
+                {
+                    "source": "provenance_report.json",
+                    "dest": "audits/tier1/provenance.json",
+                },
+                {
+                    "source": "replay_report.json",
+                    "dest": "audits/tier3/replay.json",
                 }
             ],
         },
@@ -84,6 +123,12 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
     readme = (out_dir / "report" / "README.md").read_text(encoding="utf-8")
     assert "Tier 4: Structural audit passed" in readme
     assert "audits/tier3/legality.json" in readme
+    assert "audits/tier1/submission.json" in readme
+    assert "audits/tier1/provenance.json" in readme
+    assert "audits/tier3/replay.json" in readme
+    assert "kind=`submission`" in readme
+    assert "kind=`provenance`" in readme
+    assert "kind=`replay`" in readme
 
 
 def test_write_validity_bundle_rejects_escape_destinations(tmp_path: Path):

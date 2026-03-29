@@ -142,7 +142,7 @@ def render_validity_bundle_readme(
     audits: Any,
     claim_level: dict[str, Any],
     attachments: list[dict[str, Any]],
-    legality_summaries: list[dict[str, Any]],
+    detector_summaries: list[dict[str, Any]],
 ) -> str:
     requested_label = None
     if isinstance(claim, dict):
@@ -169,13 +169,31 @@ def render_validity_bundle_readme(
         status = _audit_status(audits, tier) or "missing"
         tier_lines.append(f"- {tier}: `{status}`")
     attachment_lines = [f"- `{row['dest']}` <= `{row['source']}`" for row in attachments] or ["- none"]
-    legality_lines: list[str] = []
-    for row in legality_summaries:
-        checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
-        obligations = ", ".join(f"{key}={value}" for key, value in row["obligations"].items()) or "none"
-        legality_lines.append(f"- `{row['dest']}` profile=`{row['profile']}`")
-        legality_lines.append(f"  checks: {checks}")
-        legality_lines.append(f"  obligations: {obligations}")
+    detector_lines: list[str] = []
+    for row in detector_summaries:
+        kind = row.get("kind", "detector")
+        detector_lines.append(f"- `{row['dest']}` kind=`{kind}`")
+        if kind == "legality":
+            checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
+            obligations = ", ".join(f"{key}={value}" for key, value in row["obligations"].items()) or "none"
+            detector_lines.append(f"  profile: `{row['profile']}`")
+            detector_lines.append(f"  checks: {checks}")
+            detector_lines.append(f"  obligations: {obligations}")
+        elif kind == "submission":
+            checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
+            detector_lines.append(f"  verdict: `{row['verdict']}`")
+            detector_lines.append(f"  checks: {checks}")
+        elif kind == "provenance":
+            checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
+            detector_lines.append(f"  verdict: `{row['verdict']}`")
+            detector_lines.append(f"  selection: submitted_run_id=`{row.get('submitted_run_id')}`, selection_mode=`{row.get('selection_mode')}`")
+            detector_lines.append(f"  checks: {checks}")
+        elif kind == "replay":
+            repeatability = row.get("repeatability", "unknown")
+            mean_bpb = row.get("mean_bpb")
+            detector_lines.append(f"  profile: `{row['profile']}`")
+            detector_lines.append(f"  mean_bpb: `{mean_bpb}`")
+            detector_lines.append(f"  repeatability: `{repeatability}`")
     metric_lines = []
     if bridge_bpb is not None:
         metric_lines.append(f"- bridge bpb: `{bridge_bpb}`")
@@ -226,9 +244,9 @@ def render_validity_bundle_readme(
             "",
             *attachment_lines,
             "",
-            "## Legality Summaries",
+            "## Detector Summaries",
             "",
-            *(legality_lines or ["- no legality JSON attachments summarized"]),
+            *(detector_lines or ["- no detector JSON attachments summarized"]),
             "",
             "## Files",
             "",
@@ -266,7 +284,7 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
         _copy_attachment(base_dir, out_dir, spec)
         for spec in manifest.get("attachments", [])
     ]
-    legality_summaries = _collect_legality_attachment_summaries(out_dir, attachments)
+    detector_summaries = _collect_detector_attachment_summaries(out_dir, attachments)
 
     normalized_manifest = {
         "bundle_id": bundle_id,
@@ -295,7 +313,7 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
             audits=audits,
             claim_level=claim_level,
             attachments=attachments,
-            legality_summaries=legality_summaries,
+            detector_summaries=detector_summaries,
         ),
         encoding="utf-8",
     )
@@ -304,12 +322,13 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
         "bundle_id": str(bundle_id),
         "claim_level": claim_level,
         "attachment_count": len(attachments),
-        "legality_attachment_count": len(legality_summaries),
+        "detector_attachment_count": len(detector_summaries),
+        "legality_attachment_count": sum(1 for row in detector_summaries if row.get("kind") == "legality"),
         "out_dir": str(out_dir),
     }
 
 
-def _collect_legality_attachment_summaries(
+def _collect_detector_attachment_summaries(
     out_dir: Path,
     attachments: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
@@ -330,16 +349,52 @@ def _collect_legality_attachment_summaries(
         checks = data.get("checks")
         obligations = data.get("obligations")
         profile = data.get("profile")
-        if not isinstance(checks, dict) or not isinstance(obligations, dict) or profile is None:
+        if isinstance(checks, dict) and isinstance(obligations, dict) and profile is not None:
+            rows.append(
+                {
+                    "kind": "legality",
+                    "dest": dest,
+                    "profile": str(profile),
+                    "checks": _flatten_legality_checks(checks),
+                    "obligations": _flatten_legality_obligations(obligations),
+                }
+            )
             continue
-        rows.append(
-            {
-                "dest": dest,
-                "profile": str(profile),
-                "checks": _flatten_legality_checks(checks),
-                "obligations": _flatten_legality_obligations(obligations),
-            }
-        )
+        if isinstance(checks, dict) and "submission" in data and "verdict" in data:
+            rows.append(
+                {
+                    "kind": "submission",
+                    "dest": dest,
+                    "verdict": str(data.get("verdict")),
+                    "checks": _flatten_generic_checks(checks),
+                }
+            )
+            continue
+        if isinstance(checks, dict) and "provenance" in data and "verdict" in data:
+            provenance = data.get("provenance", {})
+            rows.append(
+                {
+                    "kind": "provenance",
+                    "dest": dest,
+                    "verdict": str(data.get("verdict")),
+                    "submitted_run_id": provenance.get("submitted_run_id"),
+                    "selection_mode": provenance.get("selection_mode"),
+                    "checks": _flatten_generic_checks(checks),
+                }
+            )
+            continue
+        aggregate = data.get("aggregate")
+        repeatability = data.get("repeatability")
+        if profile is not None and isinstance(aggregate, dict) and isinstance(repeatability, dict):
+            rows.append(
+                {
+                    "kind": "replay",
+                    "dest": dest,
+                    "profile": str(profile),
+                    "mean_bpb": aggregate.get("mean_bpb"),
+                    "repeatability": "pass" if repeatability.get("pass") is True else "fail" if repeatability.get("pass") is False else "unknown",
+                }
+            )
     return rows
 
 
@@ -367,6 +422,22 @@ def _flatten_legality_obligations(obligations: dict[str, Any]) -> dict[str, str]
     for key, value in obligations.items():
         if isinstance(value, dict):
             rows[key] = str(value.get("status", "unknown"))
+        else:
+            rows[key] = str(value)
+    return rows
+
+
+def _flatten_generic_checks(checks: dict[str, Any]) -> dict[str, str]:
+    rows: dict[str, str] = {}
+    for key, value in checks.items():
+        if isinstance(value, dict):
+            passed = value.get("pass")
+            if passed is True:
+                rows[key] = "pass"
+            elif passed is False:
+                rows[key] = "fail"
+            else:
+                rows[key] = "unknown"
         else:
             rows[key] = str(value)
     return rows

@@ -28,7 +28,7 @@ It is built for the backlog that accumulates in `conker/out`, but it is generic 
 - assemble a manifest-first validity bundle
 - package claim metadata, metric evidence, provenance, and copied detector outputs
 - write a portable `claim.json` / `evidence/` / `report/README.md` bundle
-- summarize attached legality JSONs into human-readable check/obligation lines inside the bundle README
+- summarize attached `conker-detect` JSONs into human-readable detector lines inside the bundle README
 
 2. `scan`
 - walk a directory of JSON outputs
@@ -84,8 +84,20 @@ Minimal manifest shape:
   "audits": "audits.json",
   "attachments": [
     {
+      "source": "../detect-out/submission.json",
+      "dest": "audits/tier1/submission.json"
+    },
+    {
+      "source": "../detect-out/provenance.json",
+      "dest": "audits/tier1/provenance.json"
+    },
+    {
       "source": "../detect-out/legality.json",
       "dest": "audits/tier3/legality.json"
+    },
+    {
+      "source": "../detect-out/replay.json",
+      "dest": "audits/tier3/replay.json"
     }
   ]
 }
