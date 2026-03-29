@@ -138,6 +138,7 @@ def render_validity_bundle_readme(
     audits: Any,
     claim_level: dict[str, Any],
     attachments: list[dict[str, Any]],
+    legality_summaries: list[dict[str, Any]],
 ) -> str:
     requested_label = None
     if isinstance(claim, dict):
@@ -164,6 +165,13 @@ def render_validity_bundle_readme(
         status = _audit_status(audits, tier) or "missing"
         tier_lines.append(f"- {tier}: `{status}`")
     attachment_lines = [f"- `{row['dest']}` <= `{row['source']}`" for row in attachments] or ["- none"]
+    legality_lines: list[str] = []
+    for row in legality_summaries:
+        checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
+        obligations = ", ".join(f"{key}={value}" for key, value in row["obligations"].items()) or "none"
+        legality_lines.append(f"- `{row['dest']}` profile=`{row['profile']}`")
+        legality_lines.append(f"  checks: {checks}")
+        legality_lines.append(f"  obligations: {obligations}")
     metric_lines = []
     if bridge_bpb is not None:
         metric_lines.append(f"- bridge bpb: `{bridge_bpb}`")
@@ -214,6 +222,10 @@ def render_validity_bundle_readme(
             "",
             *attachment_lines,
             "",
+            "## Legality Summaries",
+            "",
+            *(legality_lines or ["- no legality JSON attachments summarized"]),
+            "",
             "## Files",
             "",
             "- `claim.json`",
@@ -250,6 +262,7 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
         _copy_attachment(base_dir, out_dir, spec)
         for spec in manifest.get("attachments", [])
     ]
+    legality_summaries = _collect_legality_attachment_summaries(out_dir, attachments)
 
     normalized_manifest = {
         "bundle_id": bundle_id,
@@ -278,6 +291,7 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
             audits=audits,
             claim_level=claim_level,
             attachments=attachments,
+            legality_summaries=legality_summaries,
         ),
         encoding="utf-8",
     )
@@ -286,8 +300,72 @@ def write_validity_bundle(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
         "bundle_id": str(bundle_id),
         "claim_level": claim_level,
         "attachment_count": len(attachments),
+        "legality_attachment_count": len(legality_summaries),
         "out_dir": str(out_dir),
     }
+
+
+def _collect_legality_attachment_summaries(
+    out_dir: Path,
+    attachments: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for spec in attachments:
+        dest = spec.get("dest")
+        if not isinstance(dest, str) or not dest.endswith(".json"):
+            continue
+        path = out_dir / dest
+        if not path.is_file():
+            continue
+        try:
+            data = load_json(path)
+        except Exception:
+            continue
+        if not isinstance(data, dict):
+            continue
+        checks = data.get("checks")
+        obligations = data.get("obligations")
+        profile = data.get("profile")
+        if not isinstance(checks, dict) or not isinstance(obligations, dict) or profile is None:
+            continue
+        rows.append(
+            {
+                "dest": dest,
+                "profile": str(profile),
+                "checks": _flatten_legality_checks(checks),
+                "obligations": _flatten_legality_obligations(obligations),
+            }
+        )
+    return rows
+
+
+def _flatten_legality_checks(checks: dict[str, Any]) -> dict[str, str]:
+    rows: dict[str, str] = {}
+    for key, value in checks.items():
+        if isinstance(value, dict):
+            covered = value.get("covered")
+            passed = value.get("pass")
+            if covered is False:
+                rows[key] = "uncovered"
+            elif passed is True:
+                rows[key] = "pass"
+            elif passed is False:
+                rows[key] = "fail"
+            else:
+                rows[key] = "unknown"
+        else:
+            rows[key] = str(value)
+    return rows
+
+
+def _flatten_legality_obligations(obligations: dict[str, Any]) -> dict[str, str]:
+    rows: dict[str, str] = {}
+    for key, value in obligations.items():
+        if isinstance(value, dict):
+            rows[key] = str(value.get("status", "unknown"))
+        else:
+            rows[key] = str(value)
+    return rows
 
 
 def infer_run_id_from_stem(stem: str) -> str:
