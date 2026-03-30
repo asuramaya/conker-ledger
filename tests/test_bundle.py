@@ -43,7 +43,13 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
         {
             "tier1": {"status": "pass"},
             "tier2": {"status": "pass"},
-            "tier3": {"status": "warn", "scope": "prefix-only"},
+            "tier3": {
+                "status": "warn",
+                "scope": "one_shot_runtime_handoff",
+                "trust_level_requested": "strict",
+                "trust_level_achieved": "basic",
+                "trust_satisfied": False,
+            },
         },
     )
     _write_json(
@@ -51,6 +57,7 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
         {
             "tool": "conker-detect",
             "profile": "parameter-golf",
+            "trust": {"requested": "strict", "achieved": "basic", "satisfied": False},
             "checks": {"normalization": {"covered": True, "pass": True}},
             "obligations": {"prefix_causal_distribution": {"status": "partially_covered"}},
         },
@@ -135,9 +142,12 @@ def test_write_validity_bundle_packages_detector_outputs(tmp_path: Path):
     assert "audits/tier1/submission.json" in readme
     assert "audits/tier1/provenance.json" in readme
     assert "audits/tier3/replay.json" in readme
+    assert "tier3 scope: `one_shot_runtime_handoff`" in readme
+    assert "tier3 trust: requested=`strict`, achieved=`basic`, satisfied=`False`" in readme
     assert "kind=`submission`" in readme
     assert "kind=`provenance`" in readme
     assert "kind=`replay`" in readme
+    assert "trust: requested=`strict`, achieved=`basic`, satisfied=`False`" in readme
 
 
 def test_write_validity_bundle_rejects_escape_destinations(tmp_path: Path):

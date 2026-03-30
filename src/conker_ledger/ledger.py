@@ -168,6 +168,7 @@ def render_validity_bundle_readme(
     for tier in ("tier1", "tier2", "tier3"):
         status = _audit_status(audits, tier) or "missing"
         tier_lines.append(f"- {tier}: `{status}`")
+    tier3_details = _tier3_detail_lines(audits)
     attachment_lines = [f"- `{row['dest']}` <= `{row['source']}`" for row in attachments] or ["- none"]
     detector_lines: list[str] = []
     for row in detector_summaries:
@@ -177,6 +178,13 @@ def render_validity_bundle_readme(
             checks = ", ".join(f"{key}={value}" for key, value in row["checks"].items()) or "none"
             obligations = ", ".join(f"{key}={value}" for key, value in row["obligations"].items()) or "none"
             detector_lines.append(f"  profile: `{row['profile']}`")
+            if row.get("trust_requested") is not None:
+                detector_lines.append(
+                    "  trust: "
+                    f"requested=`{row.get('trust_requested')}`, "
+                    f"achieved=`{row.get('trust_achieved')}`, "
+                    f"satisfied=`{row.get('trust_satisfied')}`"
+                )
             detector_lines.append(f"  checks: {checks}")
             detector_lines.append(f"  obligations: {obligations}")
         elif kind == "submission":
@@ -231,6 +239,7 @@ def render_validity_bundle_readme(
             "## Audit Coverage",
             "",
             *tier_lines,
+            *tier3_details,
             "",
             "## Metrics",
             "",
@@ -350,11 +359,15 @@ def _collect_detector_attachment_summaries(
         obligations = data.get("obligations")
         profile = data.get("profile")
         if isinstance(checks, dict) and isinstance(obligations, dict) and profile is not None:
+            trust = data.get("trust", {}) if isinstance(data.get("trust"), dict) else {}
             rows.append(
                 {
                     "kind": "legality",
                     "dest": dest,
                     "profile": str(profile),
+                    "trust_requested": trust.get("requested"),
+                    "trust_achieved": trust.get("achieved"),
+                    "trust_satisfied": trust.get("satisfied"),
                     "checks": _flatten_legality_checks(checks),
                     "obligations": _flatten_legality_obligations(obligations),
                 }
@@ -441,6 +454,29 @@ def _flatten_generic_checks(checks: dict[str, Any]) -> dict[str, str]:
         else:
             rows[key] = str(value)
     return rows
+
+
+def _tier3_detail_lines(audits: Any) -> list[str]:
+    if not isinstance(audits, dict):
+        return []
+    tier3 = audits.get("tier3")
+    if not isinstance(tier3, dict):
+        return []
+    lines: list[str] = []
+    scope = tier3.get("scope")
+    if scope not in (None, "", [], {}):
+        lines.append(f"- tier3 scope: `{scope}`")
+    trust_requested = tier3.get("trust_level_requested")
+    trust_achieved = tier3.get("trust_level_achieved")
+    trust_satisfied = tier3.get("trust_satisfied")
+    if trust_requested not in (None, "", [], {}):
+        lines.append(
+            "- tier3 trust: "
+            f"requested=`{trust_requested}`, "
+            f"achieved=`{trust_achieved}`, "
+            f"satisfied=`{trust_satisfied}`"
+        )
+    return lines
 
 
 def infer_run_id_from_stem(stem: str) -> str:

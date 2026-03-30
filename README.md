@@ -110,6 +110,15 @@ That shape matches the detector-side handoff files:
 - `legality.json`
 - `replay.json`
 
+When the detector generated the bundle through `handoff`, the packaged `audits.json` can also carry Tier 3 scope and trust metadata such as:
+
+- `scope = one_shot_runtime_handoff`
+- `trust_level_requested = strict`
+- `trust_level_achieved = basic`
+- `trust_satisfied = false`
+
+and the attached `legality.json` can carry the detector-side `trust` block for the live runtime probe itself.
+
 Scan a backlog:
 
 ```bash
