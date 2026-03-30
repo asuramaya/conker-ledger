@@ -119,6 +119,11 @@ When the detector generated the bundle through `handoff`, the packaged `audits.j
 
 and the attached `legality.json` can carry the detector-side `trust` block for the live runtime probe itself.
 
+`conker-ledger` now uses that metadata for claim promotion as well as display:
+
+- a Tier 3 `pass` only upgrades the strongest justified claim when the achieved legality trust is at least `traced`
+- explicitly limited scopes such as `prefix-only` or `one_shot_runtime_handoff` do not promote the claim ladder even if the attached legality report itself looked clean
+
 Scan a backlog:
 
 ```bash

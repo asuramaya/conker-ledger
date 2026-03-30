@@ -40,6 +40,8 @@ CLAIM_LEVELS = {
     4: "Structural audit passed",
     5: "Behavioral legality audit passed",
 }
+TIER3_PROMOTION_TRUST_LEVELS = {"traced", "strict"}
+LIMITED_TIER3_SCOPES = {"prefix-only", "one_shot_runtime_handoff"}
 
 
 def finite_or_none(value: Any) -> float | None:
@@ -101,9 +103,18 @@ def infer_claim_level(claim: Any, metrics: Any, audits: Any) -> dict[str, Any]:
         level = max(level, 3)
     if _audit_status(audits, "tier2") == "pass":
         level = max(level, 4)
-    if _audit_status(audits, "tier3") == "pass":
+    tier3_credit = _tier3_claim_credit(audits)
+    if tier3_credit["credited"]:
         level = max(level, 5)
-    return {"level": level, "label": CLAIM_LEVELS[level]}
+    label = CLAIM_LEVELS[level]
+    if level == 5 and tier3_credit.get("trust_achieved") in TIER3_PROMOTION_TRUST_LEVELS:
+        label = f"{label} ({tier3_credit['trust_achieved']})"
+    return {
+        "level": level,
+        "label": label,
+        "tier3_credit": tier3_credit,
+        "notes": tier3_credit.get("notes", []),
+    }
 
 
 def _copy_attachment(base_dir: Path, out_dir: Path, spec: dict[str, Any]) -> dict[str, Any]:
@@ -231,6 +242,8 @@ def render_validity_bundle_readme(
         f"- bundle id: `{bundle_id}`",
         f"- strongest justified claim: `Tier {claim_level['level']}: {claim_level['label']}`",
     ]
+    for note in claim_level.get("notes", []):
+        lines.append(f"- claim note: {note}")
     if requested_label:
         lines.append(f"- requested label: `{requested_label}`")
     lines.extend(
@@ -454,6 +467,48 @@ def _flatten_generic_checks(checks: dict[str, Any]) -> dict[str, str]:
         else:
             rows[key] = str(value)
     return rows
+
+
+def _tier3_claim_credit(audits: Any) -> dict[str, Any]:
+    if not isinstance(audits, dict):
+        return {"considered": False, "credited": False, "notes": []}
+    tier3 = audits.get("tier3")
+    if not isinstance(tier3, dict):
+        return {"considered": False, "credited": False, "notes": []}
+    status = str(tier3.get("status")) if tier3.get("status") is not None else None
+    scope = tier3.get("scope")
+    trust_achieved = tier3.get("trust_level_achieved")
+    trust_satisfied = tier3.get("trust_satisfied")
+    notes: list[str] = []
+    credited = status == "pass"
+    if status != "pass":
+        return {
+            "considered": True,
+            "credited": False,
+            "status": status,
+            "scope": scope,
+            "trust_achieved": trust_achieved,
+            "trust_satisfied": trust_satisfied,
+            "notes": notes,
+        }
+    if scope in LIMITED_TIER3_SCOPES:
+        credited = False
+        notes.append(f"Tier 3 was not promoted because its scope was limited: `{scope}`.")
+    if trust_achieved is not None and str(trust_achieved) not in TIER3_PROMOTION_TRUST_LEVELS:
+        credited = False
+        notes.append(
+            "Tier 3 was not promoted because the achieved legality trust level was "
+            f"`{trust_achieved}`, below the promotion floor of `traced`."
+        )
+    return {
+        "considered": True,
+        "credited": credited,
+        "status": status,
+        "scope": scope,
+        "trust_achieved": trust_achieved,
+        "trust_satisfied": trust_satisfied,
+        "notes": notes,
+    }
 
 
 def _tier3_detail_lines(audits: Any) -> list[str]:

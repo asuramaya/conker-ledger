@@ -171,3 +171,94 @@ def test_write_validity_bundle_rejects_escape_destinations(tmp_path: Path):
 
     with pytest.raises(ValueError):
         write_validity_bundle(manifest_dir / "manifest.json", tmp_path / "bundle")
+
+
+def test_write_validity_bundle_does_not_promote_limited_or_basic_tier3_pass(tmp_path: Path):
+    manifest_dir = tmp_path / "manifest"
+    _write_json(manifest_dir / "claim.json", {"candidate_id": "demo-submission"})
+    _write_json(
+        manifest_dir / "metrics.json",
+        {
+            "fresh_process_full": {"bpb": 0.79},
+            "packed_artifact_full": {"bpb": 0.8},
+        },
+    )
+    _write_json(manifest_dir / "provenance.json", {"run_id": "demo_seed7"})
+    _write_json(
+        manifest_dir / "audits.json",
+        {
+            "tier2": {"status": "pass"},
+            "tier3": {
+                "status": "pass",
+                "scope": "prefix-only",
+                "trust_level_requested": "strict",
+                "trust_level_achieved": "basic",
+                "trust_satisfied": False,
+            },
+        },
+    )
+    _write_json(
+        manifest_dir / "manifest.json",
+        {
+            "bundle_id": "demo-submission",
+            "claim": "claim.json",
+            "metrics": "metrics.json",
+            "provenance": "provenance.json",
+            "audits": "audits.json",
+        },
+    )
+
+    out_dir = tmp_path / "bundle"
+    result = write_validity_bundle(manifest_dir / "manifest.json", out_dir)
+
+    assert result["claim_level"]["level"] == 4
+    assert result["claim_level"]["tier3_credit"]["credited"] is False
+    assert result["claim_level"]["tier3_credit"]["trust_achieved"] == "basic"
+    readme = (out_dir / "report" / "README.md").read_text(encoding="utf-8")
+    assert "Tier 4: Structural audit passed" in readme
+    assert "claim note: Tier 3 was not promoted because its scope was limited: `prefix-only`." in readme
+    assert "claim note: Tier 3 was not promoted because the achieved legality trust level was `basic`, below the promotion floor of `traced`." in readme
+
+
+def test_write_validity_bundle_promotes_strong_tier3_pass(tmp_path: Path):
+    manifest_dir = tmp_path / "manifest"
+    _write_json(manifest_dir / "claim.json", {"candidate_id": "demo-submission"})
+    _write_json(
+        manifest_dir / "metrics.json",
+        {
+            "fresh_process_full": {"bpb": 0.79},
+            "packed_artifact_full": {"bpb": 0.8},
+        },
+    )
+    _write_json(manifest_dir / "provenance.json", {"run_id": "demo_seed7"})
+    _write_json(
+        manifest_dir / "audits.json",
+        {
+            "tier2": {"status": "pass"},
+            "tier3": {
+                "status": "pass",
+                "trust_level_requested": "strict",
+                "trust_level_achieved": "strict",
+                "trust_satisfied": True,
+            },
+        },
+    )
+    _write_json(
+        manifest_dir / "manifest.json",
+        {
+            "bundle_id": "demo-submission",
+            "claim": "claim.json",
+            "metrics": "metrics.json",
+            "provenance": "provenance.json",
+            "audits": "audits.json",
+        },
+    )
+
+    out_dir = tmp_path / "bundle"
+    result = write_validity_bundle(manifest_dir / "manifest.json", out_dir)
+
+    assert result["claim_level"]["level"] == 5
+    assert result["claim_level"]["label"] == "Behavioral legality audit passed (strict)"
+    assert result["claim_level"]["tier3_credit"]["credited"] is True
+    readme = (out_dir / "report" / "README.md").read_text(encoding="utf-8")
+    assert "Tier 5: Behavioral legality audit passed (strict)" in readme
