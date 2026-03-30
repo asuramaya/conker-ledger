@@ -182,12 +182,14 @@ Current examples:
 - [`examples/conker-artifact-quick-check-2026-03-28`](./examples/conker-artifact-quick-check-2026-03-28/report/README.md)
 - [`examples/conker-backlog-2026-03-28`](./examples/conker-backlog-2026-03-28/README.md)
 - [`examples/conker-frontier-reset-2026-03-28`](./examples/conker-frontier-reset-2026-03-28/report/README.md)
+- [`examples/parameter-golf-pr998-replacement-2026-03-29`](./examples/parameter-golf-pr998-replacement-2026-03-29/report/README.md)
 
 The `conker` examples are intentionally split:
 
 - `conker-artifact-quick-check` is the artifact-boundary and invalidation layer
 - `conker-backlog` is the run-history, lineage, and survival layer
 - `conker-frontier-reset` is the reset-era strict-anchor bundle after the contaminated frontier died
+- `parameter-golf-pr998-replacement` is the same-PR update packet for the still-open invalid `#998` submission, anchored on a fresh legal `Conker-11` rerun instead of the old `Conker-5` claim
 
 ## Brutal Example
 
